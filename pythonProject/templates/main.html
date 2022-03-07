@@ -2,25 +2,119 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport">
     <title>Lazytitle</title>
     <style>
-        .box{
-            width : 80%;
-            height : 1000px;
-            margin : auto;
+        html{
+            scroll-behavior: smooth;
+        }
+        .box {
+            width: 100%;
+            height:1360px;
+            margin:auto;
+            text-align: center;
 
-            background-color : red;
         }
-        #btn_title{
-            font-size : 30px;
-            margin : 0px 0px 0px 20px;
+        .bgimg {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position : center;
+            padding: 0;
         }
+        ul {
+            position: relative;
+        }
+        li{
+            list-style-type: none;
+            vertical-align: center;
+            float: left;
+            height: 100px;
+            line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
+            text-align: center; /* 텍스트 가운데 정렬 */
+            ;
+        }
+        li button {
+            display: inline-block;
+            height: 150px;
+            width: 250px;
+            background-color: transparent;
+            border: none;
+            font-size: 25px ;
+            font-weight: bold;
+            font-family: hoonFont
+
+        }
+        #btn_Main {
+            position: absolute; top:51px; left: 350px;
+            width: 330px;
+        }
+        #btn_Howto {
+            position: absolute; top:51px; left: 725px;
+
+        }
+        #btn_menuTimer {
+            position: absolute; top:51px; left: 1120px;
+        }
+        #btn_menuCommu {
+            position: absolute; top:51px; left: 1500px;
+        }
+        #btn_Login {
+            position: absolute; top:51px; left: 1800px;
+        }
+        @font-face {
+            font-family: hoonFont;
+            src: url("/font/윤고딕330.ttf");
+        }
+
     </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+
 </head>
+
 <body>
     <div class = "box">
-        <p id = "btn_title">btn_title</p>
-        <p>a_description</p>
+        <div class="bgimg" style="background-image: url('/image/main_01.png')">
+            <ul class="navbar-nav">
+                <li>
+                    <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1390'});">이용방법</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_menuTimer" onclick="location. href='/timer.html'">생활용품 기간 설정</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_menuCommu" onclick="location. href="''">커뮤니티</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_Login" onclick="location. href="''">로그인</button>
+                </li>
+            </ul>
+        </div>
     </div>
+    <div class = "box">
+        <div class="bgimg" style="background-image: url('/image/main_02.png')">
+            <ul class="navbar-nav">
+                <li>
+                    <button class="main-menu" id="btn_Main" onclick="$('html, body').stop().animate({scrollTop : '0'});"></button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1390'});">이용방법</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_menuTimer" onclick="location. href="#none">생활용품 기간 설정</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_menuCommu" onclick="location. href="#none">커뮤니티</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_Login" onclick="location. href="#none">로그인</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </body>
 </html>
