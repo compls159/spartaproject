@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport">
-    <title>Lazytitle</title>
+    <title>Main</title>
     <style>
+        @font-face {
+            font-family: "hoonFont";
+            src: url("/font/hoon330.ttf") format("truetype");
+            src: url("/font/hoon330.eot") format("embedded-opentype");
+            src: url("/font/hoon330.woff") format("woff");
+        }
         html{
             scroll-behavior: smooth;
+            font-family: hoonFont;
         }
         .box {
             width: 100%;
-            height:1360px;
-            margin:auto;
+            height: 1360px;
+            margin: auto;
             text-align: center;
-
         }
         .bgimg {
             width: 100%;
@@ -22,97 +28,120 @@
             background-position : center;
             padding: 0;
         }
-        ul {
-            position: relative;
+        .navbar-nav {
+            display: flex; /* display : inline-flex; */
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: stretch;
+            padding: 15px;
+
         }
         li{
             list-style-type: none;
-            vertical-align: center;
-            float: left;
-            height: 100px;
             line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
             text-align: center; /* 텍스트 가운데 정렬 */
-            ;
         }
         li button {
-            display: inline-block;
-            height: 150px;
+            height: 140px;
             width: 250px;
             background-color: transparent;
             border: none;
-            font-size: 25px ;
-            font-weight: bold;
-            font-family: hoonFont
-
+            font-size: 25px;
+        }
+        #btn_nothing1{
+            width: 115px;
         }
         #btn_Main {
-            position: absolute; top:51px; left: 350px;
-            width: 330px;
+            width: 343px;
+        }
+        #btn_nothing2 {
+            width: 100px;
+        }
+        header {
+            /*position: fixed;*/
+            top:0;
+            left: 0;
+            right: 0;
         }
         #btn_Howto {
-            position: absolute; top:51px; left: 725px;
-
+            width: auto;
         }
         #btn_menuTimer {
-            position: absolute; top:51px; left: 1120px;
+            width: auto;
         }
         #btn_menuCommu {
-            position: absolute; top:51px; left: 1500px;
+            width: auto;
         }
         #btn_Login {
-            position: absolute; top:51px; left: 1800px;
+            width: auto;
         }
-        @font-face {
-            font-family: hoonFont;
-            src: url("/font/윤고딕330.ttf");
+        #btn_nothing3 {
+            width: 70px;
         }
 
+        .main02 {
+            display: grid;
+            grid-template-columns: 53.5% 12% 1fr;.
+            grid-height
+            /*grid-template-rows: 53.5% 12% 44.5%);*/
+            grid-template-areas:
+        "first second third"
+        "fourth fifth sixth"
+        "seventh eighth ninth";
+        }
+        .grid-item {
+            grid-area: first;
+        }
+
+
+
     </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 
 </head>
 
 <body>
     <div class = "box">
         <div class="bgimg" style="background-image: url('/image/main_01.png')">
-            <ul class="navbar-nav">
-                <li>
-                    <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1390'});">이용방법</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_menuTimer" onclick="location. href='/timer.html'">생활용품 기간 설정</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_menuCommu" onclick="location. href="''">커뮤니티</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_Login" onclick="location. href="''">로그인</button>
-                </li>
-            </ul>
+            <header>
+                <ul class="navbar-nav">
+                    <li>
+                        <button id="btn_nothing1"></button>
+                    </li>
+                    <li>
+                        <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
+                    </li>
+                    <li>
+                        <button id="btn_nothing2"></button>
+                    </li>
+                    <li>
+                        <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1365'});">이용방법</button>
+                    </li>
+                    <li>
+                        <button class="menu" id="btn_menuTimer" onclick="location. href='/timer.html'">생활용품 기간 설정</button>
+                    </li>
+                    <li>
+                        <button class="menu" id="btn_menuCommu" onclick="location. href='/commu.html'">커뮤니티</button>
+                    </li>
+                    <li>
+                        <button class="menu" id="btn_Login" onclick="location. href=''">로그인</button>
+                    </li>
+                    <li>
+                        <button id="btn_nothing3"></button>
+                    </li>
+                </ul>
+            </header>
         </div>
     </div>
     <div class = "box">
         <div class="bgimg" style="background-image: url('/image/main_02.png')">
-            <ul class="navbar-nav">
-                <li>
-                    <button class="main-menu" id="btn_Main" onclick="$('html, body').stop().animate({scrollTop : '0'});"></button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1390'});">이용방법</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_menuTimer" onclick="location. href="#none">생활용품 기간 설정</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_menuCommu" onclick="location. href="#none">커뮤니티</button>
-                </li>
-                <li>
-                    <button class="menu" id="btn_Login" onclick="location. href="#none">로그인</button>
-                </li>
-            </ul>
+            <div class = "main02">
+                <div class="grid-item">
+                    <a class="shortcut">zzzzz</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
