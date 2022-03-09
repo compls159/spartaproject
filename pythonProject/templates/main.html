@@ -2,32 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100&family=Stylish&display=swap" rel="stylesheet">
     <style>
         @font-face {
-            font-family: "hoonFont";
-            src: url("/font/hoon330.ttf") format("truetype");
-            src: url("/font/hoon330.eot") format("embedded-opentype");
-            src: url("/font/hoon330.woff") format("woff");
+            font-family: hoonFont;
+            src: url("/static/윤고딕330.ttf") format("truetype");
+            font-weight: normal;
         }
-        html{
-            scroll-behavior: smooth;
+        * {
             font-family: hoonFont;
         }
+        /** {*/
+        /*    font-family: 'Do Hyeon', sans-serif;*/
+        /*}*/
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         .box {
             width: 100%;
-            height: 1360px;
+            height: auto;
             margin: auto;
             text-align: center;
         }
+
         .bgimg {
             width: 100%;
             height: 100vh;
             background-size: cover;
-            background-position : center;
+            background-position: center;
             padding: 0;
         }
+
         .navbar-nav {
             display: flex; /* display : inline-flex; */
             flex-wrap: nowrap;
@@ -35,69 +47,113 @@
             justify-content: space-around;
             align-items: stretch;
             padding: 15px;
-
         }
-        li{
+
+        li {
             list-style-type: none;
             line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
             text-align: center; /* 텍스트 가운데 정렬 */
         }
+
         li button {
             height: 140px;
             width: 250px;
             background-color: transparent;
-            border: none;
+            /*border: none;*/
             font-size: 25px;
         }
-        #btn_nothing1{
-            width: 115px;
+
+        #btn_nothing1 {
+            width: 5vw;
         }
+
         #btn_Main {
-            width: 343px;
+            width: 14vw;
         }
-        #btn_nothing2 {
-            width: 100px;
-        }
+
         header {
-            /*position: fixed;*/
-            top:0;
+            top: 0;
             left: 0;
             right: 0;
         }
+
         #btn_Howto {
             width: auto;
         }
+
         #btn_menuTimer {
             width: auto;
         }
-        #btn_menuCommu {
-            width: auto;
-        }
+
         #btn_Login {
             width: auto;
         }
+
         #btn_nothing3 {
-            width: 70px;
+            width: 170px;
         }
 
-        .main02 {
-            display: grid;
-            grid-template-columns: 53.5% 12% 1fr;.
-            grid-height
-            /*grid-template-rows: 53.5% 12% 44.5%);*/
-            grid-template-areas:
-        "first second third"
-        "fourth fifth sixth"
-        "seventh eighth ninth";
-        }
-        .grid-item {
-            grid-area: first;
+        .flex-container {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            min-height: 105vh;
         }
 
+        .flex-firstcolumn {
+            flex-basis: 53.5%;
+            display: flex;
+            flex-direction: column;
+            background-color: blue;
+        }
 
+        .flex-secondcolumn {
+            flex-basis: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            text-align: left;
+            font-size: 35px;
+        }
 
+        .flex-thirdcolumn {
+            flex-basis: 30%;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+        }
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        // 페이지가 새로 리로드 될때만 실행
+        var top_space = 0;
+        if ($('header').length) {
+            top_space = $('header').outerHeight();
+        }  //해더에 바가 있는 경우 오프셋 하는 경우 필요
+        var hash = window.location.hash;
+        if (hash && document.getElementById(hash.slice(1))) { // #값이 있을때만 실행됨
+            var $this = $(hash);
+            $('html, body').animate({
+                scrollTop: $this.offset().top - top_space
+            }, 1000, 'easeInOutExpo', function () {
+                window.history.pushState ? window.history.pushState(null, null, hash) : window.location.hash = hash;
+            });
+        }
+
+        $('.main-nav a, .mobile-nav a, .scrollto').on('click', function () {
+            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+                var target = $(this.hash);
+                if (target.length) {
+
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - top_space
+                    }, 0); //숫자는 스크롤 되는 시간
+
+                    return false;
+                }
+            }
+        });
+    </script> <!--이용방법으로 자동 이동-->
 
 </head>
 
@@ -113,16 +169,16 @@
                         <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
                     </li>
                     <li>
-                        <button id="btn_nothing2"></button>
+                        <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1339'});">이용방법</button>
                     </li>
                     <li>
-                        <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1365'});">이용방법</button>
+                        <button id="btn_nothing1"></button>
                     </li>
                     <li>
-                        <button class="menu" id="btn_menuTimer" onclick="location. href='/timer.html'">생활용품 기간 설정</button>
+                        <button class="menu" id="btn_menuTimer" onclick="location. href='timer.html'">생활용품 기간 설정</button>
                     </li>
                     <li>
-                        <button class="menu" id="btn_menuCommu" onclick="location. href='/commu.html'">커뮤니티</button>
+                        <button id="btn_nothing1"></button>
                     </li>
                     <li>
                         <button class="menu" id="btn_Login" onclick="location. href=''">로그인</button>
@@ -134,12 +190,12 @@
             </header>
         </div>
     </div>
-    <div class = "box">
+    <div id="btn_Main2" class = "box">
         <div class="bgimg" style="background-image: url('/image/main_02.png')">
-            <div class = "main02">
-                <div class="grid-item">
-                    <a class="shortcut">zzzzz</a>
-                </div>
+            <div class = "flex-container">
+                <div class="flex-firstcolumn"></div>
+                <div class="flex-secondcolumn" onclick="$('html, body').stop().animate({scrollTop : '0'});">>>바로가기</div>
+                <div class="flex-thirdcolumn"></div>
             </div>
 
         </div>
