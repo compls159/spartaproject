@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login or Sign up</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100&family=Stylish&display=swap"
+          rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: hoonFont;
+            src: url("/static/윤고딕350.ttf") format("truetype");
+        }
+
+        * {
+            font-family: hoonFont;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar-nav {
+            display: flex; /* display : inline-flex; */
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: stretch;
+            padding: 15px;
+        }
+
+        li {
+            list-style-type: none;
+            line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        li button {
+            height: 140px;
+            width: 250px;
+            background-color: transparent;
+            border: none;
+            font-size: 25px;
+        }
+
+        #btn_nothing1 {
+            width: 5vw;
+        }
+
+        #btn_Main {
+            width: 12vw;
+            height: 11vh;
+            background-image: url("/static/logo.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        header {
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        #btn_Howto {
+            width: auto;
+        }
+
+        #btn_menuTimer {
+            width: auto;
+        }
+
+        #btn_Login {
+            width: auto;
+        }
+
+        #btn_nothing3 {
+            width: 170px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1c1e21;
+        }
+
+        main {
+            height: 90vh;
+            width: 100vw;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .home {
+            display: block;
+            position: relative;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .colm-logo {
+            flex: 0 0 50%;
+            text-align: left;
+            position: center;
+        }
+
+        .colm-form {
+            flex: 50%, 50%, 50%;
+            text-align: center;
+            position: center;
+        }
+
+        .colm-logo img {
+            max-width: 400px;
+        }
+
+        .colm-logo h2 {
+            font: 26px;
+            font-weight: 400;
+            padding: 0 30px;
+            line-height: 32px;
+        }
+
+        .colm-form .form-container {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .email {
+            position: center;
+            width: 240px;
+            border: none;
+            background-color: #fff;
+            display: block;
+            width: 100%;
+            box-sizing: border-box
+            position: absolute;
+            top: 2px;
+            right: 5px
+            background-image: url("photo/logo.png");
+            background-position: right top;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .colm-form .form-container input, .colm-form .form-container .btn-login {
+            width: 100%;
+            margin: 5px 0;
+            height: 45px;
+            vertical-align: middle;
+            font-size: 16px;
+        }
+
+        .colm-form .form-container input {
+            border: 1px solid #dddfe2;
+            color: #1d2129;
+            padding: 0 8px;
+            outline: none;
+        }
+
+        .colm-form .form-container input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .colm-form .form-container .btn-login {
+            background-color: #4C07A0;
+            border: none;
+            border-radius: 2px;
+            font-size: 20px;
+            padding: 0 5px;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .colm-form .form-container a {
+            display: block;
+            color: #924CF9;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid #dadde1;
+            position: center;
+        }
+
+        .colm-form .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        .colm-form .form-container .btn-new {
+            background-color: #FFB8B5;
+            border: none;
+            border-radius: 2Px;
+            font-size: 17px;
+            line-height: 48px;
+            padding: 0 16px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .colm-form p {
+            font-size: 14px;
+        }
+
+        .colm-form p a {
+            text-decoration: none;
+            color: #1c1e21;
+            font-weight: 600;
+        }
+
+        .colm-form p a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        // 페이지가 새로 리로드 될때만 실행
+        var top_space = 0;
+        if ($('header').length) {
+            top_space = $('header').outerHeight();
+        }  //해더에 바가 있는 경우 오프셋 하는 경우 필요
+        var hash = window.location.hash;
+        if (hash && document.getElementById(hash.slice(1))) { // #값이 있을때만 실행됨
+            var $this = $(hash);
+            $('html, body').animate({
+                scrollTop: $this.offset().top - top_space
+            }, 1000, 'easeInOutExpo', function () {
+                window.history.pushState ? window.history.pushState(null, null, hash) : window.location.hash = hash;
+            });
+        }
+
+        $('.main-nav a, .mobile-nav a, .scrollto').on('click', function () {
+            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+                var target = $(this.hash);
+                if (target.length) {
+
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - top_space
+                    }, 0); //숫자는 스크롤 되는 시간
+
+                    return false;
+                }
+            }
+        });
+    </script> <!--이용방법으로 자동 이동-->
+
+</head>
+
+<body>
+<header>
+    <ul class="navbar-nav">
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1339'});">
+                이용방법
+            </button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='timer.html'">생활용품 기간 설정</button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Login" onclick="location. href=''">로그인</button>
+        </li>
+        <li>
+            <button id="btn_nothing3"></button>
+        </li>
+    </ul>
+</header>
+
+
+<main>
+    <div class="box">
+        <div class="home">
+            <img src="static/logo.png" width="96" height="28">
+        </div>
+        <div class="row">
+            <div class="colm-logo">
+                <img src="photo/logo.png" width="200" height="100">
+            </div>
+            <div class="colm-form">
+                <div class="form-container">
+                    <div class="email">
+                        <div>
+                            <input type="text" width="25" height="25" placeholder="이메일">
+                            <img src="static/person.png" width="25" height="25">
+                        </div>
+                        <div>
+                            <input type="password" placeholder="비밀번호">
+                            <img src="static/lock.png" width="25" height="25">
+                        </div>
+                    </div>
+                    <img src="photo/login.png" width="200" height="30" >
+                    <img src="photo/register.png" width="200" height="30">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>
