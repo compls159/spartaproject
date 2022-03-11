@@ -11,7 +11,7 @@ app = Flask(__name__)
 # 메인 페이지
 @app.route('/') #메인페이지 API
 def main():
-    return render_template('main.html')
+    return render_template('mainPage.html')
 
 @app.route('/item') #생활용품 API
 def item():
@@ -21,23 +21,18 @@ def item():
 def login():
     return render_template('loginPage.html')
 
-<<<<<<< HEAD
 @app.route('/signup')
 def signup():
     return render_template('mainPage.html')
 #로그인 페이지
-=======
-@app.route('/signup') #회원가입페이지 API
-def signup():
-    return render_template('signUpPage.html')
->>>>>>> 4e272c1dedeb401597e8ced47854bcf0581da41d
+
 
 @app.route('/item', methods = ['GET'])
 def itemlistLogin(): #로그인시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.form['id']
         upwd = request.form['pw']
-        session['']
+        # session['']
 
 
 @app.route('/item', methods = ['DELETE'])
