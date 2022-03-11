@@ -21,10 +21,16 @@ def item():
 def login():
     return render_template('loginPage.html')
 
+<<<<<<< HEAD
 @app.route('/signup')
 def signup():
     return render_template('mainPage.html')
 #로그인 페이지
+=======
+@app.route('/signup') #회원가입페이지 API
+def signup():
+    return render_template('signUpPage.html')
+>>>>>>> 4e272c1dedeb401597e8ced47854bcf0581da41d
 
 @app.route('/item', methods = ['GET'])
 def itemlistLogin(): #로그인시 아이템 리스트 출력
