@@ -9,7 +9,7 @@ db = client.mc10th
 app = Flask(__name__)
 
 # 메인 페이지
-@app.route('/main') #메인페이지 API
+@app.route('/') #메인페이지 API
 def main():
     return render_template('mainPage.html')
 
