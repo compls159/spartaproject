@@ -13,25 +13,26 @@ app = Flask(__name__)
 def main():
     return render_template('mainPage.html')
 
-@app.route('/item') #생활용품 API
+@app.route('/timerPage') #생활용품 API
 def item():
-    return render_template('itemPage.html')
+    return render_template('timer.html')
 
 @app.route('/login') #로그인 API
 def login():
     return render_template('loginPage.html')
 
-@app.route('/signup') #회원가입페이지 API
+@app.route('/signup')
 def signup():
-    return render_template('signUpPage.html')
+    return render_template('mainPage.html')
+#로그인 페이지
+
 
 @app.route('/item', methods = ['GET'])
 def itemlistLogin(): #로그인시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.form['id']
         upwd = request.form['pw']
-        session['']
-
+        # session['']
 
 
 @app.route('/item', methods = ['DELETE'])
