@@ -13,65 +13,86 @@ app = Flask(__name__)
 def main():
     return render_template('mainPage.html')
 
-@app.route('/main') #생활용품 API
+@app.route('/item') #생활용품 API
 def item():
     return render_template('itemPage.html')
 
-@app.route('/main') #로그인 API
+@app.route('/login') #로그인 API
 def login():
     return render_template('loginPage.html')
 
+@app.route('/signup')
+def signup():
+    return render_template('mainPage.html')
 #로그인 페이지
-@app.route('/login') #메인페이지 API
+@app.route('/main') #메인페이지 API
 def main():
     return render_template('mainPage.html')
 
-@app.route('/login') #회원가입페이저 API
+@app.route('/signup') #회원가입페이저 API
 def signup():
     return render_template('signUpPage.html')
 
 #회원가입 페이지
-@app.route('/signup') #메인페이지API
+@app.route('/main') #메인페이지API
 def signup():
     return render_template('mainPage.html')
 
 #생활용품페이지
-@app.route('/life') #메인페이지API
+@app.route('/main') #메인페이지API
 def main():
     return render_template('mainPage.html')
 
-@app.route('/life') #이용방법API
+@app.route('/main') #이용방법API
 def goitem():
     return render_template('itemPage.html')
 
-@app.route('/life')
+@app.route('/login')
 def gologin():
     return render_template('loginPage.html')
 
-@app.route('/life', methods = ['GET'])
-def itemlist():
-    return
+@app.route('/item', methods = ['GET'])
+def itemlistLogin(): #로그인시 아이템 리스트 출력
+    if request.method == 'GET':
+        uid = request.form['id']
+        upwd = request.form['pw']
+        session['']
 
-@app.route('/life', methods = ['DELETE'])
-def delete():
-    return
 
-@app.route('/life', methods = ['GET'])
-def itemListModal():
+
+@app.route('/item', methods = ['DELETE'])
+def delete(): #선택시 물품 삭제
+    item_receive = request.form['item_give']
+    db.CYCL.delete_one({'name':item_receive})
+    return jsonify({'alarm' : '삭제 되었습니다.'})
+
+@app.route('/item', methods = ['GET'])
+def itemListModal(): #아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({},{'_id':False}).sort('number'))
     return jsonify({'item_lists': item_list})
 
-@app.route('/life', methods = ['GET'])
+@app.route('/item', methods = ['GET'])
 def itemFilterModal():
-    return
+    item_kitchen = list(db.CYCL.find({'option':'부엌'},{'_id': False}))
+    item
+    item_bed = list(db.CYCL.find({'option':'침실'},{'_id' : False}))
+    item_bath = list(db.CYCL.find({'option':'화장실'},{'_id' : False}))
+    return jsonify({'items_kitchen' : item_kitchen})
 
-@app.route('/life',methods = ['GET'])
+@app.route('/item',methods = ['GET'])
 def itemSelectModal():
-    return
+    item_receive = request.form['item_give']
+    item_list = db.CYCL.find({'name' : item_receive},{'_id': False})
+    print(item_list['img'])
+    print(item_list['name'])
+    print(item_list['timer'])
+    return #jsonify({''})
 
-@app.route('/life', methods = ['POST'])
+@app.route('/item', methods = ['POST'])
 def addItemModal():
+
     return
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
+
