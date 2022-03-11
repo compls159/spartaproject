@@ -21,35 +21,9 @@ def item():
 def login():
     return render_template('loginPage.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('mainPage.html')
-#로그인 페이지
-@app.route('/main') #메인페이지 API
-def main():
-    return render_template('mainPage.html')
-
-@app.route('/signup') #회원가입페이저 API
+@app.route('/signup') #회원가입페이지 API
 def signup():
     return render_template('signUpPage.html')
-
-#회원가입 페이지
-@app.route('/main') #메인페이지API
-def signup():
-    return render_template('mainPage.html')
-
-#생활용품페이지
-@app.route('/main') #메인페이지API
-def main():
-    return render_template('mainPage.html')
-
-@app.route('/main') #이용방법API
-def goitem():
-    return render_template('itemPage.html')
-
-@app.route('/login')
-def gologin():
-    return render_template('loginPage.html')
 
 @app.route('/item', methods = ['GET'])
 def itemlistLogin(): #로그인시 아이템 리스트 출력
