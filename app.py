@@ -13,36 +13,30 @@ app = Flask(__name__)
 def main():
     return render_template('mainPage.html')
 
-@app.route('/main') #생활용품 API
+@app.route('/item') #생활용품 API
 def item():
     return render_template('itemPage.html')
 
-@app.route('/main') #로그인 API
+@app.route('/login') #로그인 API
 def login():
     return render_template('loginPage.html')
 
 #로그인 페이지
-@app.route('/login') #메인페이지 API
-def main():
-    return render_template('mainPage.html')
 
-@app.route('/login') #회원가입페이저 API
+
+@app.route('/signup') #회원가입페이저 API
 def signup():
     return render_template('signUpPage.html')
 
 #회원가입 페이지
-@app.route('/signup') #메인페이지API
-def signup():
-    return render_template('mainPage.html')
+
 
 #생활용품페이지
 @app.route('/life') #메인페이지API
 def main():
     return render_template('mainPage.html')
 
-@app.route('/life') #이용방법API
-def goitem():
-    return render_template('itemPage.html')
+
 
 @app.route('/life')
 def gologin():
