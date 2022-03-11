@@ -58,7 +58,8 @@ def delete():
 
 @app.route('/life', methods = ['GET'])
 def itemListModal():
-    return
+    item_list = list(db.CYCL.find({},{'_id':False}).sort('number'))
+    return jsonify({'item_lists': item_list})
 
 @app.route('/life', methods = ['GET'])
 def itemFilterModal():
