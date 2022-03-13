@@ -36,17 +36,17 @@ def itemlistLogin(): #로그인시 아이템 리스트 출력
 
 
 @app.route('/item', methods = ['DELETE'])
-def delete(): #선택시 물품 삭제
+def delete(): #선택시 물품 삭제(로그인 되었을 때)
     item_receive = request.form['item_give']
-    db.CYCL.delete_one({'name':item_receive})
+    db.userdb.delete_one({'name':item_receive})
     return jsonify({'alarm' : '삭제 되었습니다.'})
 
-@app.route('/item', methods = ['GET'])
+@app.route('/item/List', methods = ['GET'])
 def itemListModal(): #아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({},{'_id':False}).sort('number'))
     return jsonify({'item_lists': item_list})
 
-@app.route('/item', methods = ['GET'])
+@app.route('/item/Filter', methods = ['GET'])
 def itemFilterModal():
     item_kitchen = list(db.CYCL.find({'option':'부엌'},{'_id': False}))
     item
@@ -54,7 +54,7 @@ def itemFilterModal():
     item_bath = list(db.CYCL.find({'option':'화장실'},{'_id' : False}))
     return jsonify({'items_kitchen' : item_kitchen})
 
-@app.route('/item',methods = ['GET'])
+@app.route('/item/select',methods = ['GET'])
 def itemSelectModal():
     item_receive = request.form['item_give']
     item_list = db.CYCL.find({'name' : item_receive},{'_id': False})
@@ -63,8 +63,37 @@ def itemSelectModal():
     print(item_list['timer'])
     return #jsonify({''})
 
-@app.route('/item', methods = ['POST'])
-def addItemModal():
+@app.route('/item/add', methods = ['POST'])
+def addItemModal(): #모달 아이템을 추가
+    user_id_receive = request.form['id_give']
+    item_name_receive = request.form['item_name_give']
+    start_date_receive = request.form['start_date_give']
+    # modal_give로 가져온 값을 가져오면 modal_receive
+    print(user_id_receive,item_name_receive,start_date_receive)
+
+    # item_name_receive 값으로 CYCL db에서 해당 name 아이템을 찾아라
+    item_name = db.CYCL.find_one({'name' : item_name_receive}, {'_id':False})
+    if
+
+    #db.userdb.insert 유저 아이디(user_id), 아이템 이름(item_name), 남은 일자(timer)
+    #userdb에.
+    item_img = db.CYCL.find_one({'img' : 'item_name')
+    item_option = db.CYCL.find_one({'option' : 'item_name'})
+    item_
+    timer_data =
+
+    db.userdb.insert_one({'uid':'user_id_receive', 'name':'item_name_receive', 'option':'item_option','timer':'timer_data', 'img:item_img'})
+
+    return jsonify({'result':'success', 'select_item':select_item})
+
+
+
+
+
+
+
+
+
 
     return
 
