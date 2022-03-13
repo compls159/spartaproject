@@ -38,25 +38,25 @@ def delete(): #선택시 물품 삭제(로그인 되었을 때)
     db.userdb.delete_one({'name':item_receive})
     return jsonify({'alarm' : '삭제 되었습니다.'})
 
-@app.route('/item', methods = ['GET'])
+@app.route('/item/List', methods = ['GET'])
 def itemListModal(): #아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({},{'_id':False}).sort('number'))
     return jsonify({'item_lists': item_list})
 
-@app.route('/item', methods = ['GET'])
+@app.route('/item/Filter', methods = ['GET'])
 def itemFilterModal():
     item_place = request.args.get('place')
     item_lists = list(db.CYCL.find({'option' : item_place}, {'_id' : False}))
     return jsonify({'items_lists' : item_lists})
 
-@app.route('/item',methods = ['GET'])
+@app.route('/item/select',methods = ['GET'])
 def itemSelectModal():
     item_receive = request.form['item_give']
     item_list = db.CYCL.find({'name' : item_receive},{'_id': False})
     items = [item_list['img'], item_list['name'], item['timer']]
     return jsonify({'items' : items})
 
-@app.route('/item', methods = ['POST'])
+@app.route('/item/add', methods = ['POST'])
 def addItemModal():
 
     return
