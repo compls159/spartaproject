@@ -13,6 +13,7 @@
 
 
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="menubar.css?ver=1">
     <style>
         * {
             font-family: 'Do Hyeon', sans-serif;
@@ -23,7 +24,7 @@
             padding: 0;
         }
 
-        /* ---Header 시작--- */
+                /* ---Header 시작--- */
         .navbar-nav {
             display: flex;
             flex-wrap: nowrap;
@@ -100,7 +101,6 @@
         .imgbox {
             position: relative;
             width: 100%;
-
         }
 
         .imgbox .img_Main {
@@ -108,7 +108,6 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            background: #000;
         }
 
         .imgbox .img_Main:nth-child(1) {
@@ -147,7 +146,6 @@
             background-image: url("/static/img/shortcut.png");
             background-size: contain;
             margin-left: 8vw;
-
         }
 
         .flex-thirdcolumn {
@@ -161,15 +159,47 @@
 
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn_Main").click(function () {
+                $.ajax({
+                    url: "/",
+                    success: function (data) {
+                        $("mainPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_menuTimer").click(function () {
+                $.ajax({
+                    url: "/item",
+                    success: function (data) {
+                        $("itemPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_Login").click(function () {
+                $.ajax({
+                    url: "/login",
+                    success: function (data) {
+                        $("loginPage").html(data);
+                    }
+                })
+            })
+        })
+    </script>
     <script type="text/javascript">
         // 페이지가 새로 리로드 될때만 실행
-        var top_space = 0;
-        if ($('header').length) {
+        let top_space = 0;
+        if ($("header").length) {
             top_space = $('header').outerHeight();
         }  //해더에 바가 있는 경우 오프셋 하는 경우 필요
-        var hash = window.location.hash;
+        let hash = window.location.hash;
         if (hash && document.getElementById(hash.slice(1))) { // #값이 있을때만 실행됨
-            var $this = $(hash);
+            let $this = $(hash);
             $('html, body').animate({
                 scrollTop: $this.offset().top - top_space
             }, 1000, 'easeInOutExpo', function () {
@@ -179,7 +209,7 @@
 
         $('.main-nav a, .mobile-nav a, .scrollto').on('click', function () {
             if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
-                var target = $(this.hash);
+                let target = $(this.hash);
                 if (target.length) {
 
                     $('html, body').animate({
@@ -202,13 +232,13 @@
             <button id="btn_nothing1"></button>
         </li>
         <li>
-            <button class="main-menu" id="btn_Main" onclick="location.href='mainPage.html'"></button>
+            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
         </li>
         <li>
             <button id="btn_nothing1"></button>
         </li>
         <li>
-            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1400'},700);">
+            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
                 이용방법
             </button>
         </li>
@@ -216,13 +246,13 @@
             <button id="btn_nothing1"></button>
         </li>
         <li>
-            <button class="menu" id="btn_menuTimer" onclick="location. href='itemPage.html'">생활용품 기간 설정</button>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
         </li>
         <li>
             <button id="btn_nothing1"></button>
         </li>
         <li>
-            <button class="menu" id="btn_Login" onclick="location. href='loginPage.html'">로그인</button>
+            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
         </li>
         <li>
             <button id="btn_nothing3"></button>
@@ -237,15 +267,17 @@
     <div class="imgbox">
         <div class="img_Main"></div>
         <div class="img_Main">
-                <div class="flex-container"> <!-- 바로가기 버튼 -->
-                    <div class="flex-firstcolumn"></div>
-                    <div class="flex-secondcolumn"
-                         onclick="location. href='itemPage.html'"></div>
-                    <div class="flex-thirdcolumn"></div>
-                </div>
+            <div class="flex-container"> <!-- 바로가기 버튼 -->
+                <div class="flex-firstcolumn"></div>
+                <div class="flex-secondcolumn"
+                     onclick="location. href='/item'"></div>
+                <div class="flex-thirdcolumn"></div>
+            </div>
         </div>
     </div>
 </main>
-
+<div style="position: fixed; bottom: 5px; right: 5px;">
+    <a onclick="$('html, body').stop().animate({scrollTop : '0'},200);">위로 가기</a>
+</div>
 </body>
 </html>
