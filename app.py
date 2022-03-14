@@ -13,9 +13,9 @@ app = Flask(__name__)
 def main():
     return render_template('main.html')
 
-@app.route('/item') #생활용품 API
+@app.route('/timerPage') #생활용품 API
 def item():
-    return render_template('itemPage.html')
+    return render_template('timer.html')
 
 @app.route('/login') #로그인 API
 def login():
