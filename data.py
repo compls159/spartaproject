@@ -274,7 +274,7 @@ docs = [
   {
     "number": 39,
     "name": "운동화",
-    "option": "",
+    "option": "침실",
     "timer": 365,
     "img": "https://thumbnail9.coupangcdn.com/thumbnails/remote/230x230ex/image/rs_quotation_api/hiwibsjq/23620c4467f84eaeb36198a0cf1a690d.jpg"
   }

@@ -1,183 +1,494 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>timer</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100&family=Stylish&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>CYCL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+
     <style>
-        * {
-            font-family: 'Do Hyeon', sans-serif;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .box {
+        .Box {
             width: 100%;
-            height: auto;
+            height: 529px;
             margin: auto;
-            text-align: center;            ;
+            text-align: center;
+
         }
 
-        .bgimg {
-            display: inline-block;
-            width: 70%;
-            height: 100vh;
+        .Backimg {
+            width: 100%;
+            height: 800px;
+            margin-top: 129px;
             background-size: cover;
-            background-position: center;
-            padding: 0;
-
+            background-attachment: fixed;
         }
 
-        .navbar-nav {
-            display: flex; /* display : inline-flex; */
-            flex-wrap: nowrap;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: stretch;
-            padding: 15px;
-        }
 
-        li {
-            list-style-type: none;
-            line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
-            text-align: center; /* 텍스트 가운데 정렬 */
-        }
-
-        li button {
-            height: 140px;
+        .menu {
+            display: inline;
+            height: 150px;
             width: 250px;
             background-color: transparent;
-            /*border: none;*/
-            font-size: 25px;
+            border: none;
+            font-size: 20px;
         }
 
-        #btn_nothing1 {
-            width: 5vw;
-        }
-
-        #btn_Main {
-            width: 14vw;
-        }
-
-        header {
-            top: 0;
-            left: 0;
-            right: 0;
+        #btn_main {
+            position: absolute;
+            top: -10px;
+            left: 250px;
         }
 
         #btn_Howto {
-            width: auto;
+            position: absolute;
+            top: -10px;
+            right: 1000px;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         #btn_menuTimer {
-            width: auto;
+            position: absolute;
+            top: -10px;
+            right: 550px;
+            font-family: 'Do Hyeon', sans-serif;
         }
+
 
         #btn_Login {
-            width: auto;
+            position: absolute;
+            top: -10px;
+            right: 100px;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
-        #btn_nothing3 {
-            width: 170px;
+        .btn {
+            background-color: transparent;
+            border: none;
         }
 
-        .flex-container {
-            display: flex;
-            width: 100%;
-            justify-content: space-around;
-            align-items: stretch;
-            align-content: flex-start;
-            min-height: 105vh;
-            border: green;
-            flex-flow: row wrap
-        }
-
-        .flex-firstcolumn {
-            flex-basis : 1 1 40%;
-            display: flex;
-            flex-direction: column;
-            background-color: blue;
+        .timer1 {
+            width: 400px;
+            margin-left: 400px;
 
         }
 
-        .flex-secondcolumn {
-            flex-basis: 40%;
-            display: flex;
-            flex-direction: column;
-            background-color: green;
-            text-align: left;
-            font-size: 35px;
+        #first {
+            height: 300px;
+            margin-top: 50px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
         }
 
-        .flex-thirdcolumn {
-            flex-basis: auto;
-            display: flex;
-            flex-direction: column;
-            background-color: yellow;
+        #btn_first {
+            width: 100px;
+            height: 100px;
+            margin-top: 80px;
         }
+
+        /*#modal.modal-overlay {*/
+        /*    width: 100%;*/
+        /*    height: 120%;*/
+        /*    position: absolute;*/
+        /*    left: 0;*/
+        /*    top: 0;*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    background: rgba(255, 255, 255, 0.25);*/
+        /*    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);*/
+        /*    backdrop-filter: blur(1.5px);*/
+        /*    -webkit-backdrop-filter: blur(1.5px);*/
+        /*    border-radius: 10px;*/
+        /*    border: 1px solid rgba(255, 255, 255, 0.18);*/
+        /*}*/
+
+        /*#modal .modal-window {*/
+        /*    background: rgba(69, 139, 197, 0.70);*/
+        /*    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);*/
+        /*    backdrop-filter: blur(13.5px);*/
+        /*    -webkit-backdrop-filter: blur(13.5px);*/
+        /*    border-radius: 10px;*/
+        /*    border: 1px solid rgba(255, 255, 255, 0.18);*/
+        /*    width: 400px;*/
+        /*    height: 500px;*/
+        /*    position: relative;*/
+        /*    top: -100px;*/
+        /*    padding: 10px;*/
+        /*}*/
+
+        /*#modal .title {*/
+        /*    padding-left: 10px;*/
+        /*    display: inline;*/
+        /*    margin-left: 120px;*/
+        /*    text-shadow: 1px 1px 2px gray;*/
+        /*    color: white;*/
+
+        /*}*/
+
+        /*#modal .title h2 {*/
+        /*    display: inline;*/
+        /*}*/
+
+        /*#modal .close-area {*/
+        /*    display: inline;*/
+        /*    float: right;*/
+        /*    padding-right: 10px;*/
+        /*    cursor: pointer;*/
+        /*    text-shadow: 1px 1px 2px gray;*/
+        /*    color: white;*/
+        /*}*/
+
+        /*#modal .content {*/
+        /*    margin-top: 30px;*/
+        /*    padding: 0px 10px;*/
+        /*    text-shadow: 1px 1px 2px gray;*/
+        /*    color: white;*/
+        /*}*/
+
+        /*.space-select {*/
+        /*    width: 130px;*/
+        /*    height: 35px;*/
+        /*    border-radius: 3px;*/
+        /*}*/
+
+        /*.form-control {*/
+        /*    width: 220px;*/
+        /*    margin-top: -35px;*/
+        /*    margin-left: 140px;*/
+        /*}*/
+
+        /*.modal-img {*/
+        /*}*/
+
+        /*#select-img {*/
+        /*    width: 350px;*/
+        /*    height: 270px;*/
+        /*    margin-left: 4px;*/
+        /*}*/
+
+        .timer {
+            display: inline-flex;
+            margin-top: 30px;
+
+        }
+
+        #recomm {
+            font-size: 20px;
+        }
+
+        .modal-ac {
+            margin-left: 130px;
+        }
+
+        .timer2 {
+            width: 450px;
+            margin-left: 400px;
+            margin-bottom: 10px;
+
+        }
+
+        #second {
+            height: 150px;
+            margin-top: -300px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_second {
+            width: 100px;
+            height: 100px;
+            margin-top: 23px;
+        }
+
+        .timer3 {
+            width: 220px;
+            margin-left: 400px;
+            margin-bottom: 10px;
+
+        }
+
+        #third {
+            height: 150px;
+            margin-top: 10px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_third {
+            width: 100px;
+            height: 100px;
+            margin-top: 23px;
+        }
+
+        .timer4 {
+            width: 220px;
+            margin-left: 630px;
+            margin-bottom: 10px;
+
+        }
+
+        #fourth {
+            height: 150px;
+            margin-top: -160px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_fourth {
+            width: 100px;
+            height: 100px;
+            margin-top: 23px;
+        }
+
+        .timer5 {
+            width: 270px;
+            margin-left: 850px;
+            margin-bottom: 10px;
+
+        }
+
+        #five {
+            height: 400px;
+            margin-top: -320px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_five {
+            width: 100px;
+            height: 100px;
+            margin-top: 140px;
+        }
+
+        .timer6 {
+            width: 550px;
+            margin-left: 0px;
+
+        }
+
+        #sixth {
+            height: 300px;
+            margin-top: -70px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_sixth {
+            width: 100px;
+            height: 100px;
+            margin-top: 80px;
+        }
+
+        .timer7 {
+            width: 300px;
+            margin-left: 550px;
+            margin-bottom: 10px;
+
+        }
+
+        #seven {
+            height: 300px;
+            margin-top: -300px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_seven {
+            width: 100px;
+            height: 100px;
+            margin-top: 100px;
+        }
+
+        .timer8 {
+            width: 270px;
+            margin-left: 850px;
+            margin-bottom: 10px;
+
+        }
+
+        #eight {
+            height: 200px;
+            margin-top: -210px;
+            margin-left: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            border-color: #bcbcbc;
+        }
+
+        #btn_eight {
+            width: 100px;
+            height: 100px;
+            margin-top: 50px;
+        }
+
+
     </style>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        var move = function () {
-            location.href = "main.html#btn_Main2";
-        };
-    </script>
+
+
 </head>
-
 <body>
-    <div class = "box">
-        <div class="bgimg" style="background-image: url('/image/main_01.png')">
-            <header>
-                <ul class="navbar-nav">
-                    <li>
-                        <button id="btn_nothing1"></button>
-                    </li>
-                    <li>
-                        <button class="main-menu" id="btn_Main" onclick="location.href='main.html'"></button>
-                    </li>
-                    <li>
-                        <button class="menu" id="btn_Howto" onclick="move()">이용방법</button>
-                    </li>
-                    <li>
-                        <button id="btn_nothing1"></button>
-                    </li>
-                    <li>
-                        <button class="menu" id="btn_menuTimer" onclick="location. href='timer.html'">생활용품 기간 설정</button>
-                    </li>
-                    <li>
-                        <button id="btn_nothing1"></button>
-                    </li>
-                    <li>
-                        <button class="menu" id="btn_Login" onclick="location. href=''">로그인</button>
-                    </li>
-                    <li>
-                        <button id="btn_nothing3"></button>
-                    </li>
-                </ul>
-            </header>
-        </div>
-    </div>
-    <div class = "box">
-        <div class="bgimg" style="background-image: url('/')">
-            <div class = "flex-container">
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-secondcolumn">1324135</div>
-                <div class="flex-thirdcolumn">890789</div>
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-firstcolumn">123123</div>
-                <div class="flex-firstcolumn">123123</div>
+<div class="Box">
+    <div class="Backimg" style="background-image: url('/image/배경.png')">
 
+        <header>
+            <ui class="navbar-nav">
+                <li>
+                    <button class="menu" id="btn_main"><img src='/image/로고.png' onclick="location. href='/mainPage.html'">
+                    </button>
+                </li>
+
+                <li>
+                    <button class="menu" id="btn_Howto" onclick="location. href='/howto.html'">이용방법</button>
+                </li>
+                <li>
+                    <button class="menu" id="btn_menuTimer" onclick="location. href='/timer.html'">생활용품 기간 설정</button>
+                </li>
+
+                <li>
+                    <button class="menu" id="btn_Login" onclick="location. href='/login.html'">로그인</button>
+                </li>
+            </ui>
+        </header>
+
+        <div class="timer1">
+            <div class=" w3-hover-shadow w3-center" id="first">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_first">
+                    <img src="/image/버튼.png"></button>
             </div>
+
+                        <div class="timer2">
+                            <div class=" w3-hover-shadow w3-center" id="second">
+                                <button class="A_button" id="btn_second"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer3">
+                            <div class=" w3-hover-shadow w3-center" id="third">
+                                <button class="A_button" id="btn_third"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer4">
+                            <div class=" w3-hover-shadow w3-center" id="fourth">
+                                <button class="A_button" id="btn_fourth"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer5">
+                            <div class=" w3-hover-shadow w3-center" id="five">
+                                <button class="A_button" id="btn_five"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer6">
+                            <div class=" w3-hover-shadow w3-center" id="sixth">
+                                <button class="A_button" id="btn_sixth"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer7">
+                            <div class=" w3-hover-shadow w3-center" id="seven">
+                                <button class="A_button" id="btn_seven"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+                        <div class="timer8">
+                            <div class=" w3-hover-shadow w3-center" id="eight">
+                                <button class="A_button" id="btn_eight"><img src="/image/버튼.png"></button>
+                            </div>
+                        </div>
+
+<!--            <div id="modal" class="modal-overlay">-->
+<!--                <div class="modal-window">-->
+<!--                    <div class="title">-->
+<!--                        <h2>추가하기</h2>-->
+<!--                    </div>-->
+<!--                    <div class="close-area">X</div>-->
+
+<!--                    <div class="content">-->
+<!--                        <select class="space-select" aria-label="Default select example">-->
+<!--                            <option selected>공간 선택</option>-->
+<!--                            <option value="1">현관</option>-->
+<!--                            <option value="2">거실</option>-->
+<!--                            <option value="3">부엌</option>-->
+<!--                            <option value="1">안방</option>-->
+<!--                            <option value="2">화장실</option>-->
+<!--                        </select>-->
+
+<!--                        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="물품 검색">-->
+<!--                        <datalist id="datalistOptions">-->
+<!--                            <option value="칫솔">-->
+<!--                            <option value="수세미">-->
+<!--                            <option value="이불">-->
+<!--                            <option value="배게">-->
+<!--                        </datalist>-->
+
+<!--                        <hr>-->
+
+<!--                        <div class="modal-img">-->
+<!--                            <img id="select-img"-->
+<!--                                 src="https://previews.123rf.com/images/phittavas/phittavas1410/phittavas141000252/32961335-%EC%B9%AB%EC%86%94.jpg">-->
+<!--                        </div>-->
+
+<!--                        <div class="timer">-->
+<!--                            <p id="recomm">추천주기 : 35일</p>-->
+
+<!--                            <div class="modal-ac">-->
+<!--                                <button type="submit" class="btn btn-primary mb-3">설정 완료</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
         </div>
+
     </div>
+
+</div>
 
 </body>
 </html>

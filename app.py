@@ -13,9 +13,9 @@ app = Flask(__name__)
 def main():
     return render_template('main.html')
 
-@app.route('/item') #생활용품 API
+@app.route('/timerPage') #생활용품 API
 def item():
-    return render_template('itemPage.html')
+    return render_template('timer.html')
 
 @app.route('/login') #로그인 API
 def login():
@@ -56,11 +56,73 @@ def itemSelectModal():
     items = [item_list['img'], item_list['name'], item['timer']]
     return jsonify({'items' : items})
 
-@app.route('/item/add', methods = ['POST'])
-def addItemModal():
+@app.route('/item/add', methods=['POST'])
+def addItemModal():  # 모달 아이템을 추가
+    user_id_receive = request.form['id_give']
+    item_name_receive = request.form['item_name_give']
+    start_date_receive = request.form['start_date_give']
+    # ID, 아이템 이름, 주기시작일을 API값으로 받아온다.
 
-    return
+    # 아이템 이름으로 찾을 값(name 중복여부, option, timer, img)
+
+    # if 아이템 이름 또는 item name이 없을 때 insert else 있을 때 update
+
+    if (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) == none:
+        # uid가 없을 때 insert
+        user_id = db.CYCL.find_one({'uid': user_id_receive}, {'_id': False})
+        user_name = db.user.find_one({'userName': user_id_receive}, {'_id': False})
+        item_name = db.CYCL.find_one({'name': item_name_receive}, {'_id': False})
+        item_place = db.CYCL.find_one({'option': item_name_receive}, {'_id': False})
+        item_img = db.CYCL.find_one({'img': item_name_receive}, {'_id': False})
+        start_date = datetime.datetime(start_date_receive)
+        # ↑주기시작일 값을 Timer 기준일로 설정.
+        # day = db.CYCL.find_one({'timer':item_name_receive})
+        day = item_name['timer']
+        # ↑item name 값으로 db에서 추천 주기를 find. 필요 시 나중에 yyyy, m, d로 format 변경
+        user_timer = (start_date + day).days
+        # ↑userdb에 insert할 user_timer 값 일 단위 계산
+        # ↓db.userdb.insert  Uid, 아이템 이름(item_name), 장소(option), 남은 일자(timer), img, startDate
+        db.userdb.insert_one(
+            {'uid': user_id, 'name': item_name_receive, 'option': item_place, 'timer': user_timer, 'img': item_img,
+             'startDate': start_date})
+        return jsonify({'result': 'success', 'username': user_name, 'item_name': item_name, 'timer': user_timer})
+        # alert ㅇㅇ님 name의 timer가 추가되었습니다.
+    elif (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) != none and (
+        db.CYCL.find_one({'name': item_name_receive}, {'_id': False})) == none:
+        # uid는 있고 아이템 name은 없을때 insert
+        item_name = db.CYCL.find_one({'name': item_name_receive}, {'_id': False})
+        user_name = db.user.find_one({'userName': user_id_receive}, {'_id': False})
+        item_place = db.CYCL.find_one({'option': item_name_receive}, {'_id': False})
+        item_img = db.CYCL.find_one({'img': item_name_receive}, {'_id': False})
+        start_date = datetime.datetime(start_date_receive)
+        # ↑주기시작일 값을 Timer 기준일로 설정.
+        # day = db.CYCL.find_one({'timer':item_name_receive})
+        day = item_name['timer']
+        # ↑item name 값으로 db에서 추천 주기를 find. 필요 시 나중에 yyyy, m, d로 format 변경
+        user_timer = (start_date + day).days
+        # ↑userdb에 insert할 user_timer 값 일 단위 계산
+        # ↓db.userdb.insert  아이템 이름(item_name), 남은 일자(timer), img
+        db.userdb.insert_one({'option': item_place, 'timer': user_timer})
+        return jsonify({'result': 'success', 'username': user_name, 'item_name': item_name, 'timer': user_timer})
+        # alert ㅇㅇ님 name의 timer가 추가되었습니다.
+    elif (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) != "" and (
+        db.CYCL.find_one({'name': item_name_receive}, {'_id': False})) != "":
+        # uid도 있고 아이템 name도 있을 때 update
+        item_name = db.CYCL.find_one({'name': item_name_receive}, {'_id': False})
+        user_name = db.user.find_one({'userName': user_id_receive}, {'_id': False})
+        item_place = db.CYCL.find_one({'option': item_name_receive}, {'_id': False})
+        item_img = db.CYCL.find_one({'img': item_name_receive}, {'_id': False})
+        start_date = datetime.datetime(start_date_receive)
+        # ↑주기시작일 값을 Timer 기준일로 설정.
+        # day = db.CYCL.find_one({'timer':item_name_receive})
+        day = item_name['timer']
+        # ↑item name 값으로 db에서 추천 주기를 find. 필요 시 나중에 yyyy, m, d로 format 변경
+        user_timer = (start_date + day).days
+        # ↑userdb에 insert할 user_timer 값 일 단위 계산
+        # ↓db.userdb.insert  아이템 이름(item_name), 남은 일자(timer), img
+        db.userdb.update_one({'option': item_place, 'timer': user_timer})
+        return jsonify({'result': 'success', 'username': user_name, 'item_name': item_name, 'timer': user_timer})
+        # alert ㅇㅇ님 name의 timer가 변경되었습니다.
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
