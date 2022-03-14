@@ -1,10 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <title>Main</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="menubar.css?ver=1">
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+                /* ---Header 시작--- */
+        .navbar-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: stretch;
+            padding: 15px;
+        }
+
+        li {
+            list-style-type: none;
+            line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        li button {
+            height: 140px;
+            width: 250px;
+            background-color: transparent;
+            border: none;
+            font-size: 25px;
+        }
+
+        #btn_nothing1 {
+            width: 5vw;
+        }
+
+        #btn_Main {
+            width: 12vw;
+            height: 11vh;
+            background-image: url("/static/img/logo.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        header {
+            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        #btn_Howto {
+            width: auto;
+        }
+
+        #btn_menuTimer {
+            width: auto;
+        }
+
+        #btn_Login {
+            width: auto;
+        }
+
+        #btn_nothing3 {
+            width: 170px;
+        }
+
+        /* ---Header 종료--- */
+
+        hr {
+            color: #924CF9;
+            width: 90%;
+            align: center;
+            margin-left: 4.5%;
+        }
+
+        main {
+            margin: 0;
+            padding: 0;
+        }
+
+        .imgbox {
+            position: relative;
+            width: 100%;
+        }
+
+        .imgbox .img_Main {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .imgbox .img_Main:nth-child(1) {
+            background: url('/static/img/main_01.png');
+            background-size: cover;
+        }
+
+        .imgbox .img_Main:nth-child(2) {
+            background: url('/static/img/main_02.png');
+            background-size: cover;
+        }
+
+        /* 바로가기 버튼 시작 */
+        .flex-container {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            min-height: 108vh;
+            flex-direction: column;
+        }
+
+        .flex-firstcolumn {
+            flex-basis: 34vh;
+            display: flex;
+            flex-direction: column;
+            background-color: blue;
+        }
+
+        .flex-secondcolumn {
+            flex-basis: auto;
+            display: flex;
+            flex-direction: column;
+            width: 10vw;
+            height: 5vh;
+            background-repeat: no-repeat;
+            background-image: url("/static/img/shortcut.png");
+            background-size: contain;
+            margin-left: 8vw;
+        }
+
+        .flex-thirdcolumn {
+            flex-basis: 30%;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+        }
+
+        /* 바로가기 버튼 끝 */
+
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn_Main").click(function () {
+                $.ajax({
+                    url: "/",
+                    success: function (data) {
+                        $("mainPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_menuTimer").click(function () {
+                $.ajax({
+                    url: "/item",
+                    success: function (data) {
+                        $("itemPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_Login").click(function () {
+                $.ajax({
+                    url: "/login",
+                    success: function (data) {
+                        $("loginPage").html(data);
+                    }
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        // 페이지가 새로 리로드 될때만 실행
+        let top_space = 0;
+        if ($("header").length) {
+            top_space = $('header').outerHeight();
+        }  //해더에 바가 있는 경우 오프셋 하는 경우 필요
+        let hash = window.location.hash;
+        if (hash && document.getElementById(hash.slice(1))) { // #값이 있을때만 실행됨
+            let $this = $(hash);
+            $('html, body').animate({
+                scrollTop: $this.offset().top - top_space
+            }, 1000, 'easeInOutExpo', function () {
+                window.history.pushState ? window.history.pushState(null, null, hash) : window.location.hash = hash;
+            });
+        }
+
+        $('.main-nav a, .mobile-nav a, .scrollto').on('click', function () {
+            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+                let target = $(this.hash);
+                if (target.length) {
+
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - top_space
+                    }, 0); //숫자는 스크롤 되는 시간
+
+                    return false;
+                }
+            }
+        });
+    </script> <!--이용방법으로 자동 이동-->
+
 </head>
+
 <body>
 
+<header>
+    <ul class="navbar-nav">
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
+                이용방법
+            </button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+        </li>
+        <li>
+            <button id="btn_nothing3"></button>
+        </li>
+    </ul>
+</header>
+
+<hr>
+
+
+<main>
+    <div class="imgbox">
+        <div class="img_Main"></div>
+        <div class="img_Main">
+            <div class="flex-container"> <!-- 바로가기 버튼 -->
+                <div class="flex-firstcolumn"></div>
+                <div class="flex-secondcolumn"
+                     onclick="location. href='/item'"></div>
+                <div class="flex-thirdcolumn"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<div style="position: fixed; bottom: 5px; right: 5px;">
+    <a onclick="$('html, body').stop().animate({scrollTop : '0'},200);">위로 가기</a>
+</div>
 </body>
 </html>
