@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 
+from datetime import datetime
+
 from pymongo import MongoClient
 
 # client = MongoClient('mongodb://test:test@localhost', 27017)
@@ -11,7 +13,7 @@ app = Flask(__name__)
 # 메인 페이지
 @app.route('/') #메인페이지 API
 def main():
-    return render_template('main.html')
+    return render_template('mainPage.html')
 
 @app.route('/timerPage') #생활용품 API
 def item():
@@ -19,7 +21,7 @@ def item():
 
 @app.route('/login') #로그인 API
 def login():
-    return render_template('loginPage.html')
+    return render_template('login sophia.html')
 
 @app.route('/signup') #회원가입페이지 API
 def signup():
@@ -67,7 +69,7 @@ def addItemModal():  # 모달 아이템을 추가
 
     # if 아이템 이름 또는 item name이 없을 때 insert else 있을 때 update
 
-    if (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) == none:
+    if (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) == None:
         # uid가 없을 때 insert
         user_id = db.CYCL.find_one({'uid': user_id_receive}, {'_id': False})
         user_name = db.user.find_one({'userName': user_id_receive}, {'_id': False})
@@ -87,8 +89,8 @@ def addItemModal():  # 모달 아이템을 추가
              'startDate': start_date})
         return jsonify({'result': 'success', 'username': user_name, 'item_name': item_name, 'timer': user_timer})
         # alert ㅇㅇ님 name의 timer가 추가되었습니다.
-    elif (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) != none and (
-        db.CYCL.find_one({'name': item_name_receive}, {'_id': False})) == none:
+    elif (db.CYCL.find_one({'id': user_id_receive}, {'_id': False})) != None and (
+        db.CYCL.find_one({'name': item_name_receive}, {'_id': False})) == None:
         # uid는 있고 아이템 name은 없을때 insert
         item_name = db.CYCL.find_one({'name': item_name_receive}, {'_id': False})
         user_name = db.user.find_one({'userName': user_id_receive}, {'_id': False})
