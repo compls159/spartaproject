@@ -11,7 +11,7 @@ app = Flask(__name__)
 # 메인 페이지
 @app.route('/') #메인페이지 API
 def main():
-    return render_template('main.html')
+    return render_template('mainPage.html')
 
 @app.route('/item') #생활용품 API
 def item():
@@ -19,7 +19,7 @@ def item():
 
 @app.route('/login') #로그인 API
 def login():
-    return render_template('loginPage.html')
+    return render_template('login sophia.html')
 
 @app.route('/signup') #회원가입페이지 API
 def signup():

@@ -1,8 +1,19 @@
 from pymongo import MongoClient
 
-client = MongoClient('localhost',27017)
+client = MongoClient('localhost', 27017)
 
-db = client.mc11th
+db = client.mc11th_ys
 
-data = {'uid' : 'id', 'pw' : 'password', 'email' : 'e-mail', 'un' : 'username','name' : 'product', 'option' : 'place', 'img' : 'image', 'timer': 'time'}
-db.userdb.insert_one(data)
+doc = [
+
+    {
+        "user_id": "admin",
+        "item_name": "칫솔",
+        "item_place": "화장실",
+        "item_timer": 90,
+        "item_img": "src",
+        "item_startDate": "2022-03-01"
+    }
+]
+
+db.UserItem.insert_many(doc)
