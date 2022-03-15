@@ -1,7 +1,5 @@
 from flask import Flask, render_template, jsonify, request
 
-from datetime import datetime
-
 from pymongo import MongoClient
 
 # client = MongoClient('mongodb://test:test@localhost', 27017)
@@ -13,7 +11,7 @@ app = Flask(__name__)
 # 메인 페이지
 @app.route('/') #메인페이지 API
 def main():
-    return render_template('mainPage.html')
+    return render_template('main.html')
 
 @app.route('/timerPage') #생활용품 API
 def item():
@@ -21,7 +19,7 @@ def item():
 
 @app.route('/login') #로그인 API
 def login():
-    return render_template('login sophia.html')
+    return render_template('loginPage.html')
 
 @app.route('/signup') #회원가입페이지 API
 def signup():
@@ -31,33 +29,43 @@ def signup():
 def itemlistLogin(): #로그인시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.args.get['id']
-        user_item = list(db.userdb.find({'id' : uid},{'_id' : False}))
+        user_item = list(db.UserItem.find({'user_id' : uid},{'_id' : False}))
         return jsonify({'user_item' : user_item})
 
 @app.route('/item', methods = ['DELETE'])
 def delete(): #선택시 물품 삭제(로그인 되었을 때)
     item_receive = request.form['item_give']
-    db.userdb.delete_one({'name':item_receive})
+    db.UserItem.delete_one({'item_name':item_receive})
     return jsonify({'alarm' : '삭제 되었습니다.'})
 
 @app.route('/item/List', methods = ['GET'])
 def itemListModal(): #아이템 리스트 모달 출력
-    item_list = list(db.CYCL.find({},{'_id':False}).sort('number'))
+    item_list = list(db.CYCL.find({},{'_id':False}))
     return jsonify({'item_lists': item_list})
 
 @app.route('/item/Filter', methods = ['GET'])
 def itemFilterModal():
     item_place = request.args.get('place')
-    item_lists = list(db.CYCL.find({'option' : item_place}, {'_id' : False}))
+    item_lists = list(db.CYCL.find({'item_place' : item_place}, {'_id' : False}))
     return jsonify({'items_lists' : item_lists})
 
 @app.route('/item/select',methods = ['GET'])
 def itemSelectModal():
     item_receive = request.form['item_give']
-    item_list = db.CYCL.find({'name' : item_receive},{'_id': False})
-    items = [item_list['img'], item_list['name'], item['timer']]
+    item_list = db.CYCL.find({'item_name' : item_receive},{'_id': False})
+    items = [item_list['item_img'], item_list['item_name'], item['item_timer']]
     return jsonify({'items' : items})
 
+@app.route('/item/add', methods=['POST'])
+def addItemModal():  # 모달 아이템을 추가
+    user_id_receive = request.form['id_give']
+    item_name_receive = request.form['item_name_give']
+    start_date_receive = request.form['start_date_give']
+    # ID, 아이템 이름, 주기시작일을 API값으로 받아온다.
+
+    # 아이템 이름으로 찾을 값(name 중복여부, option, timer, img)
+
+    # if 아이템 이름 또는 item name이 없을 때 insert else 있을 때 update
 @app.route('/item/add', methods=['POST'])
 def addItemModal():  # 모달 아이템을 추가
     user_id_receive = request.form['id_give']
