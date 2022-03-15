@@ -29,13 +29,13 @@ def signup():
 def itemlistLogin(): #로그인시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.args.get['id']
-        user_item = list(db.UserItem.find({'user_id' : uid},{'_id' : False}))
+        user_item = list(db.userdb.find({'user_id' : uid},{'_id' : False}))
         return jsonify({'user_item' : user_item})
 
 @app.route('/item', methods = ['DELETE'])
 def delete(): #선택시 물품 삭제(로그인 되었을 때)
     item_receive = request.form['item_give']
-    db.UserItem.delete_one({'item_name':item_receive})
+    db.userdb.delete_one({'item_name':item_receive})
     return jsonify({'alarm' : '삭제 되었습니다.'})
 
 @app.route('/item/List', methods = ['GET'])
