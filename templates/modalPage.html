@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal</title>
+    <style>
+
+        .btn {
+            background-color: transparent;
+            border: none;
+        }
+
+        #boxWrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        #boxWrap button + button {
+            margin-left: 120px;
+            margin-bottom: 100px;
+        }
+
+
+        #boxWrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        #boxWrap .hover_Box {
+            display: inline-block;
+            float: left; /* 사진이나 그림 띄우기 */
+            width: 300px;
+            height: 300px;
+            margin-left: 200px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            background-color: #cbcbcb;
+            border-color: #bcbcbc;
+        }
+
+        #modal.modal-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        #modal .modal-window {
+            background: rgba(69, 139, 197, 0.70);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(13.5px);
+            -webkit-backdrop-filter: blur(13.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 400px;
+            height: 500px;
+            position: relative;
+            top: -100px;
+            padding: 10px;
+        }
+
+        #modal .title {
+            padding-left: 10px;
+            display: inline;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+
+        }
+
+        #modal .title h2 {
+            display: inline;
+        }
+
+        #modal .close-area {
+            display: inline;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
+
+        #modal .content {
+            margin-top: 20px;
+            padding: 0px 10px;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div class="btnWrap">
+    <button class="btn" id="add_Button"><img src="/static/img/timerButton2.png"></button>
+</div>
+
+<div id="boxWrap">
+    <button class="hover_Box" onclick="modalOn()">박스열기</button>
+</div>
+
+<div id="modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            <h2>모달</h2>
+        </div>
+        <div class="close-area" onclick="modalOff()">X</div>
+        <div class="content">
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    const modal = document.getElementById("modal")
+
+    function modalOn() {
+        modal.style.display = "flex"
+    }
+
+    function isModalOn() {
+        return modal.style.display === "flex"
+    }
+
+    function modalOff() {
+        modal.style.display = "none"
+    }
+
+    const btnModal = document.getElementById("btn-modal")
+    btnModal.addEventListener("click", e => {
+        modalOn()
+    })
+    const closeBtn = modal.querySelector(".close-area")
+    closeBtn.addEventListener("click", e => {
+        modalOff()
+    })
+    modal.addEventListener("click", e => {
+        const evTarget = e.target
+        if (evTarget.classList.contains("modal-overlay")) {
+            modalOff()
+        }
+    })
+    window.addEventListener("keyup", e => {
+        if (isModalOn() && e.key === "Escape") {
+            modalOff()
+        }
+    })
+
+    $(document).ready(function () { /* 함수 실행 */
+        var i = 1; // 변수설정은 함수의 바깥에 설정!
+
+        $("#add_Button").click(function () {
+            $("#boxWrap").append("<button class='hover_Box'></button>");
+
+        });
+    });
+
+</script>
+</body>
+</html>
