@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, session, url_for, redirect
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
 
 import hashlib
 
@@ -35,15 +35,18 @@ def signUpCheck():
 
     # 조건문 - 클라이언트 폼에서 작성되지 않은 항목 체크
     if id_receive == '' or pw_receive == '' or pw2_receive == '' or name_receive == '' or email_receive == '' :
-        return jsonify({'msg': '작성되지 않은 항목이 있습니다'}), url_for("home")
+        flash('작성되지 않은 항목이 있습니다')
+        return redirect(url_for("home"))
     else:
         # 조건문 - 비밀번호 일치 체크
         if pw_receive != pw2_receive :
-            return jsonify({'msg': '비밀번호가 일치하지 않습니다'}), url_for("home")
+            flash('비밀번호가 일치하지 않습니다')
+            return redirect(url_for("home"))
         else:
             # 조건문 - DB조회 아이디 일치여부
             if id_receive == checkDB :
-                return jsonify({'msg': '이미 존재하는 ID입니다'}), url_for("home")
+                flash('이미 존재하는 ID입니다')
+                return redirect(url_for("home"))
             else:
                 # Request 데이터 DB에 추가
                 doc = [
@@ -55,16 +58,15 @@ def signUpCheck():
                     }
                 ]
                 db.Login.insert_many(doc)
-
                 # Session 추가
                 session['user_id'] = id_receive
-
-                return jsonify({'msg': '회원가입에 성공하였습니다'}), url_for("home")
+                flash('회원가입 완료되었습니다. 감사합니다')
+                return redirect(url_for("home"))
 
 @app.route("/logout")
 def logout():
-	session.pop('user_id')
-	return redirect(url_for("home"))
+    session.pop('user_id')
+    return redirect(url_for("home"))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

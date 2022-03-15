@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify, request, session, url_for, redirect
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
 
+#해시립. 사용자 비밀번호 암호화 하기 위한 라이브러리.
 import hashlib
 
 from pymongo import MongoClient
@@ -9,7 +10,7 @@ client = MongoClient('localhost', 27017)
 db = client.mc11th
 
 app = Flask(__name__)
-app.secret_key="mc11th_key"
+app.secret_key="mc11th_key"		# 비밀키가 존재해야 로그인, 회원가입 기능을 시동할 수 있음
 
 @app.route("/")
 def home():
@@ -34,8 +35,10 @@ def login():
 
 	if id_db == id_receive and pw_db == pw_receive:
 		session['user_id'] = id_receive
+		flash('로그인에 성공하였습니다')
 		return redirect(url_for("home"))
 	else:
+		flash('로그인에 실패하였습니다')
 		return redirect(url_for("home"))
 
 @app.route("/logout")
