@@ -1,41 +1,46 @@
-from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect
+
+import hashlib
 
 from pymongo import MongoClient
 
-# client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient('localhost', 27017)
-db = client.mc10th
+
+db = client.mc11th
 
 app = Flask(__name__)
-app.secret_key="webSecret@123"
-
-ID = "hello"
-PW = "world"
+app.secret_key="mc11th_key"
 
 @app.route("/")
 def home():
-    if "userID" in session:
-        return render_template("login_test.html", username = session.get("userID"), login=True)
+    if "user_id" in session:
+        return render_template("login_test.html", username=session.get("user_id"), login=True)
     else:
         return render_template("login_test.html", login=False)
 
-@app.route("/login", methods=["get"])
+# 회원가입 API
+@app.route("/login", methods=['GET'])
 def login():
-    global ID, PW
-    _id_ = request.args.get("loginId")
-    _password_ = request.args.get("loginPw")
+	id_receive = request.args.get('login_id')
+	pw_receive = hashlib.sha256(request.args.get('login_pw').encode()).hexdigest()
 
-    if ID == _id_ and _password_ == PW:
-        session["userID"] = _id_
-        return redirect(url_for("home"))
-    else:
-        return redirect(url_for("home"))
+	id_db = db.Login.find({'user_id': id_receive})
+	for id in id_db:
+		id_db = id['user_id']
+
+	pw_db = db.Login.find({'user_pw': pw_receive})
+	for pw in pw_db:
+		pw_db = pw['user_pw']
+
+	if id_db == id_receive and pw_db == pw_receive:
+		session['user_id'] = id_receive
+		return redirect(url_for("home"))
+	else:
+		return redirect(url_for("home"))
 
 @app.route("/logout")
 def logout():
-    session.pop("userID")
-    return redirect(url_for("home"))
-
-
+	session.pop('user_id')
+	return redirect(url_for("home"))
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+	app.run('0.0.0.0', port=5000, debug=True)

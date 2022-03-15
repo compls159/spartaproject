@@ -11,8 +11,8 @@
 
 {% else %}
     <form methods="get" id="login" action= {{ url_for("login") }}>
-        <input type="id" id="loginId" name="loginId" placeholder="ID">
-        <input type="password" id="loginPw" name="loginPw" placeholder="Password">
+        <input type="id" id="login_id" name="login_id" placeholder="ID">
+        <input type="password" id="login_pw" name="login_pw" placeholder="Password">
         <button type="submit" class="login">로그인</button>
     </form>
 {% endif %}
