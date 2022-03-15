@@ -8,15 +8,15 @@
 
 
  <style>
-.* {
+.*{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-image:url("photo/backgoround.png");
+    font-family: 'Poppins',sans-serif;
+    background-image:url("/static/img/backgoround.png");
     background-position:bottom;
     background-repeat:no-repeat;
     background-size: 1500px;
@@ -46,18 +46,18 @@ main {
 .colm-form .form-container {
     background-color: #ffffff;
     border: none;
-    border-radius: 10px;
+    border-radius:10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    padding: 20px;
-    max-width: 400px;
+    margin-bottom:30px;
+    padding:20px;
+    max-width:700px;
 }
 .colm-form .form-container input, .colm-form .form-container .btn-login {
     width: 100%;
-    margin: 5px 0;
-    height: 45px;
+    margin:5px 0;
+    height:45px;
     vertical-align:middle;
-    font-size: 16px;
+    font-size:16px;
     display: table; margin-left: auto; margin-right: auto;
 }
 
@@ -79,30 +79,20 @@ main {
     font-size: 14px;
     text-decoration: none;
     padding: 10px 0 20px;
-    border-bottom: 1px solid #dadde1;
+    border-bottom:1px solid #dadde1;
 }
-email{
-    border:none; display:block; width: 100%; box-sizing: border-box;
-    position: absolute; top: 2px; right:5px;
-    background-image:url("photo/logo.png");
-    background-position: right top;
-    background-repeat: no-repeat;
-    background-size: contain;
-    border-radius:10px;
-}
+
 #txt1{
-    background-image:url("photo/person.png");
+    background-image:url("/static/img/person.png");
     position:center;
-    padding-left:50px;
-    padding-right:20px;
+    padding-left:30px;
     background-size:45px;
     background-repeat: no-repeat;
 }
 #txt2{
-    background-image:url("photo/lock.png");
+    background-image:url("/static/img/lock.png");
     position: center;
-    padding-left:0px;
-    padding-right:20px;
+    padding-left:35px;
     background-size:45px;
     background-repeat: no-repeat;
 }
@@ -124,27 +114,27 @@ email{
     <main>
         <div class="home">
                 <button type="button" onClick="location.href='signup.html'">
-                <img src="photo/home.png" width="96", height="28":>
+                <img src="/static/img/home.png" width="96", height="28":>
                 </button>
             </div>
             <div class="row">
             <div class="colm-logo">
-                <img src="photo/logo.png" width="200", height="100":>
+                <img src="/static/img/logo.png" width="200", height="100":>
             </div>
             <div class="colm-form">
                 <div class="form-container">
                  <div class="email">
                      <input type="text" id="txt1" width="20", height="25": placeholder="이메일">
-                     <input type="password" id="txt2" width="20", height="25": placeholder="비밀번호" >
+                     <input type="password" id="txt2" width="20", height="25": placeholder="비밀번호">
                  </div>
                   <div class="btn-login">
                     <button type="button" onClick="location.href='mainpage.html'">
-                    <img src="photo/login.png" width="200", height="40":>
+                    <img src="/static/img/login.png" width="200", height="40":>
                     </button>
                   </div>
                  <div class="btn-new">
                      <button type="button" onClick="location.href='register.html'">
-                     <img src="photo/register.png" width="200", height="40":>
+                     <img src="/static/img/register.png" width="200", height="40":>
                      </button>
             </div>
         </div>
