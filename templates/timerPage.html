@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>CYCL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+
+    <style>
+
+        /* ---Header 시작--- */
+        .navbar-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: stretch;
+            padding: 15px;
+        }
+
+        li {
+            list-style-type: none;
+            line-height: 50%; /*텍스트 위 아래 중앙 정렬*/
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        li button {
+            height: 140px;
+            width: 250px;
+            background-color: transparent;
+            border: none;
+            font-size: 25px;
+        }
+
+        #btn_nothing1 {
+            width: 5vw;
+        }
+
+        #btn_Main {
+            width: 12vw;
+            height: 11vh;
+            background-image: url("/static/img/logo.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        header {
+            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        #btn_Howto {
+            width: auto;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        #btn_menuTimer {
+            width: auto;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        #btn_Login {
+            width: auto;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        #btn_nothing3 {
+            width: 170px;
+        }
+
+        /* ---Header 종료--- */
+
+
+
+        #boxWrap {
+            display: inline-list-item;
+            width: 100%;
+            height: 758px;
+            margin-top: -684px;
+            background-image: url("/static/img/timerBackground.png");
+            background-size: cover;
+            background-position: center;
+            overflow: scroll; /* 내용이 요소의 크기에 벗어났을 때  */
+        }
+
+        .btn {
+            background-color: transparent;
+            border: none;
+        }
+
+        #boxWrap button + button {
+            margin-left: 100px;
+            margin-bottom: 50px;
+        }
+
+
+        #boxWrap .hover_Box {
+            display: inline-block;
+            float: left; /* 사진이나 그림 띄우기 */
+            width: 300px;
+            height: 300px;
+            margin-left: 250px;
+            margin-top: 40px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            background-color: #cbcbcb;
+            border-color: #bcbcbc;
+        }
+
+
+        #add_Button {
+            margin-left: 1700px;
+            margin-top: 600px;
+        }
+
+        #modal_button {
+
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn_Main").click(function () {
+                $.ajax({
+                    url: "/",
+                    success: function (data) {
+                        $("mainPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_menuTimer").click(function () {
+                $.ajax({
+                    url: "/item",
+                    success: function (data) {
+                        $("itemPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_Login").click(function () {
+                $.ajax({
+                    url: "/login",
+                    success: function (data) {
+                        $("loginPage").html(data);
+                    }
+                })
+            })
+        })
+
+        $(document).ready(function () {
+            var i = 1; // 변수설정은 함수의 바깥에 설정!
+            $("#add_Button").click(function () {
+
+                $("#boxWrap").append("<button class='hover_Box'><img src='/static/img/timerButton.png'></button>");
+
+                i++; // 함수 내 하단에 증가문 설정
+
+
+            });
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+<header>
+    <ul class="navbar-nav">
+        <li>
+            <button class="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+        </li>
+        <li>
+            <button class="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Howto" onclick="$('html, body');">
+                이용방법
+            </button>
+        </li>
+        <li>
+            <button class="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+        </li>
+        <li>
+            <button id="btn_nothing3"></button>
+        </li>
+    </ul>
+</header>
+
+<div id="btn_timer_Main">
+
+    <div class="btnWrap">
+        <button class="btn" id="add_Button" onclick="add()"><img src="/static/img/timerButton2.png"></button>
+    </div>
+
+    <div id="boxWrap">
+        <button class="hover_Box" id="modal_button"><img src="/static/img/timerButton.png"></button>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
