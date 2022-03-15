@@ -25,23 +25,29 @@ def login():
 def signup():
     return render_template('signUpPage.html')
 
-@app.route('/item', methods = ['GET'])
+@app.route('/item/List', methods = ['GET'])
 def itemlistLogin(): #로그인 시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.args.get['id']
         user_item = list(db.UserItem.find({'user_id' : uid},{'_id' : False}))
         return jsonify({'user_item' : user_item})
 
-@app.route('/item', methods = ['DELETE'])
+@app.route('/item/Delete', methods = ['DELETE'])
 def delete(): #선택 시 물품 삭제(로그인 되었을 때)
     item_receive = request.form['item_give']
     db.UserItem.delete_one({'item_name':item_receive})
     return jsonify({'alarm' : '삭제 되었습니다.'})
 
-@app.route('/item/List', methods = ['GET'])
+@app.route('/item/modalList', methods = ['GET'])
 def itemListModal(): #아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({},{'_id':False}))
     return jsonify({'item_lists': item_list})
+
+@app.route('/item/Place', methods = ['POST'])
+def itemFilterPlace():
+    item_place_List = request.form('item_place_List')
+    item_Place = list(db.CYCL.find({'item_place' : item_place_List}, {'_id' : False}))
+    return jsonify({'place_list' : item_Place})
 
 @app.route('/item/Filter', methods = ['GET'])
 def itemFilterModal():
