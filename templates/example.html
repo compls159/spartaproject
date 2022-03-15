@@ -119,25 +119,52 @@
 
     </style>
 
-    <script>
+
+
+</head>
+
+<body>
+
+<div class="btnWrap">
+    <button class="btn" id="add_Button"><img src="/static/img/timerButton2.png"></button>
+</div>
+
+<div id="boxWrap">
+    <button class="hover_Box" onclick="modalOn()">박스열기</button>
+</div>
+
+<div id="modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            <h2>모달</h2>
+        </div>
+        <div class="close-area" onclick="modalOff()">X</div>
+        <div class="content">
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+            <p>가나다라마바사 아자차카타파하</p>
+
+        </div>
+    </div>
+</div>
+
+<script>
 
         $(document).ready(function () {
             var i = 1; // 변수설정은 함수의 바깥에 설정!
 
             $("#add_Button").click(function () {
-                $("#boxWrap").append("<button class='hover_Box'></button>");
+                $("#boxWrap").append("<button onclick='modalOn()' class='hover_Box'></button>");
 
             });
         });
-
-    </script>
-
-    <script>
 
         const modal = document.getElementById("modal")
 
         function modalOn() {
             modal.style.display = "flex"
+            console.log("test")
         }
 
         function isModalOn() {
@@ -169,34 +196,5 @@
         })
 
     </script>
-
-</head>
-
-<body>
-
-<div class="btnWrap">
-    <button class="btn" id="add_Button"><img src="/static/img/timerButton2.png"></button>
-</div>
-
-<div id="boxWrap">
-    <button class="hover_Box" onclick="modalOn()">박스열기</button>
-</div>
-
-<div id="modal" class="modal-overlay">
-    <div class="modal-window">
-        <div class="title">
-            <h2>모달</h2>
-        </div>
-        <div class="close-area" onclick="modalOff()">X</div>
-        <div class="content">
-            <p>가나다라마바사 아자차카타파하</p>
-            <p>가나다라마바사 아자차카타파하</p>
-            <p>가나다라마바사 아자차카타파하</p>
-            <p>가나다라마바사 아자차카타파하</p>
-
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
