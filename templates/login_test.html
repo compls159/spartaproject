@@ -1,3 +1,11 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +18,12 @@
     <a href= {{ url_for("logout") }}>로그아웃</a>
 
 {% else %}
-    <form methods="get" id="login" action= {{ url_for("login") }}>
-        <input type="id" id="loginId" name="loginId" placeholder="ID">
-        <input type="password" id="loginPw" name="loginPw" placeholder="Password">
+    <form methods="get" id="login" action= {{ url_for("loginCheck") }}>
+        <input type="id" id="login_id" name="login_id" placeholder="ID">
+        <input type="password" id="login_pw" name="login_pw" placeholder="Password">
         <button type="submit" class="login">로그인</button>
     </form>
+    <button type="button" onclick="location.href='/signup'">회원가입</button>
 {% endif %}
 </body>
 </html>
