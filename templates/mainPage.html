@@ -1,3 +1,11 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,41 +165,109 @@
 </head>
 
 <body>
-
-<header>
-    <ul class="navbar-nav">
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
-                이용방법
-            </button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
-        </li>
-        <li>
-            <button id="btn_nothing3"></button>
-        </li>
-    </ul>
-</header>
-
+{% if login == True %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" methods="get" id="login" action= {{ url_for("main") }}>로그아웃</button>
+            </li>
+            <li>
+                <button id="btn_nothing3"></button>
+            </li>
+        </ul>
+    </header>
+{% elif login == False %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" methods="get" id="login" action= {{ url_for("login") }}>로그인</button>
+            </li>
+            <li>
+                <button id="btn_nothing3"></button>
+            </li>
+        </ul>
+    </header>
+{% else %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" methods="get" id="login" action= {{ url_for("login") }}>로그인</button>
+            </li>
+            <li>
+                <button id="btn_nothing3"></button>
+            </li>
+        </ul>
+    </header>
+{% endif %}
 <hr>
 
 
