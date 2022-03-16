@@ -81,20 +81,28 @@ main {
     padding: 10px 0 20px;
     border-bottom:1px solid #dadde1;
 }
-
+.btn-login .btn-new {
+    border: none;
+    background-color:transparent;
+    outline: none;
+}
 #txt1{
     background-image:url("/static/img/person.png");
     position:center;
-    padding-left:30px;
     background-size:45px;
     background-repeat: no-repeat;
 }
 #txt2{
     background-image:url("/static/img/lock.png");
     position: center;
-    padding-left:35px;
     background-size:45px;
     background-repeat: no-repeat;
+}
+.email{
+    text: center;
+}
+.password{
+    text:center;
 }
 .colm-form .form-container .btn-login {
     border: none;
@@ -123,9 +131,9 @@ main {
             </div>
             <div class="colm-form">
                 <div class="form-container">
-                 <div class="email">
-                     <input type="text" id="txt1" width="20", height="25": placeholder="이메일">
-                     <input type="password" id="txt2" width="20", height="25": placeholder="비밀번호">
+                 <div>
+                     <input class="email" id="txt1" width="25", height="25":  placeholder="이메일">
+                     <input class="password" id="txt2" width="25", height="25":  placeholder="비밀번호">
                  </div>
                   <div class="btn-login">
                     <button type="button" onClick="location.href='mainpage.html'">
