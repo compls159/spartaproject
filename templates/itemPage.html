@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <title>Main</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/menubar.css">
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            margin: 0;
+            padding: 0;
+        }
+
+        .modal-content .modal-header:nth-child(2) {
+            margin-left: 100px;
+        }
+        .modal-header .btn-close {
+            margin : 0;
+        }
+
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn_Main").click(function () {
+                $.ajax({
+                    url: "/",
+                    success: function (data) {
+                        $("mainPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_menuTimer").click(function () {
+                $.ajax({
+                    url: "/item",
+                    success: function (data) {
+                        $("itemPage").html(data);
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $("#btn_Login").click(function () {
+                $.ajax({
+                    url: "/login",
+                    success: function (data) {
+                        $("loginPage").html(data);
+                    }
+                })
+            })
+        })
+    </script>
+
+
+
+</head>
+
+<body>
+
+<header>
+    <ul class="navbar-nav">
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Howto" onclick="$('html, body').stop().animate({scrollTop : '1270'},700);">
+                이용방법
+            </button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+        </li>
+        <li>
+            <button id="btn_nothing3"></button>
+        </li>
+    </ul>
+</header>
+
+<hr>
+
+
+<main>
+    <button type="submit"  name="Place_List" id="place_button" >노원구
+</button>
+
+    <script type="text/javascript" src="https://unpkg.com/@popperjs/core@2"></script>
+    {#   모달 시작 버튼  #}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+{#   모달 창  #}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="item_place_List">
+                        <div class="dropdown"><!-- 장소선택필터 -->
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                장소 선택하기
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="place_button">
+                                <li><a class="dropdown-item">부엌</a></li>
+                                <li><a class="dropdown-item" href="#">침실</a></li>
+                                <li><a class="dropdown-item" href="#">화장실</a></li>
+                            </ul>
+                        </div>
+                    </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <div class="dropdown" ><!-- 물품 목록 선택 -->
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="place_button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <button id="place_button"></button>
+                            </div>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container" style="display: flex; justify-content: space-around;">
+                        <div class="item_img_box">asdfasdfasfd</div>
+                        <div class="item_img_box">
+                            <div class="item_img_box">Item_Name</div>
+                            <div class="item_img_box">추천주기</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<div style="position: fixed; bottom: 5px; right: 5px;">
+    <a onclick="$('html, body').stop().animate({scrollTop : '0'},200);">위로 가기</a>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#dropdownMenuLink").change(function (e) {
+            var obj1 = { Country: $("#dropdownMenuLink").val() };
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/item/Place",
+                data: JSON.stringify(obj1),
+                dataType: "json",
+                success: function (data1) {
+                    var appenddata1 = "";
+                    //alert(data1.d);
+                    var jsonData1 = JSON.parse(data1.d);
+                    for (var i = 0; i < jsonData1.length; i++) {
+                        appenddata1 += "<option value = '" + jsonData1[i].item_place + " '>" + jsonData1[i].item_name + " </option>";
+                    }
+                    $("#dropdownMenuLink").append(appenddata1);
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+        document.getElementById("place_button").addEventListener("click",place_ListFunc);
+
+            function place_ListFunc() {
+                $.ajax({
+                    type: "GET",
+                    url: "/item/Place",
+                    data: {},
+                    success: function (response) {
+                        list = (response)["all_place"]
+
+                        for (let i = 0; i < list.length; i++) {
+                        place = list[i]['item_place'];
+                        temp_html = `<li>${place}</li>`
+                        $('#place_button').append(temp_html)
+                            console.log(list)
+                    }
+
+                    },
+                    error: function () {
+                        alert("GET 실패")
+                    }
+                })
+            }
+    </script>
+
+{#<script>#}
+{#        document.getElementById("place_button").addEventListener("click",place_ListFunc);#}
+{#            function place_ListFunc() {#}
+{#                $.ajax({#}
+{#                    type: "GET",#}
+{#                    url: "/item/Place",#}
+{#                    data: {},#}
+{#                    success: function (response) {#}
+                        {#appenddata1 = "";#}
+{#                        list = response["all_place"]['item_name'];#}
+{#                        for (let i = 0; i < list.length; i++) {#}
+                        {#    appenddata1 += "<option value = '" + list[i] + "'>" + list[i] + "</option>"#}
+{#                            console.log(list);#}
+{#                        #}
+{#                            place = list[i];#}
+{#                        temp_html = `<a class="dropdown-item" href="#">${place}</a>`#}
+{#                        $('#place_button').append(appenddata1)#}
+{#                    }#}
+{#                    },#}
+{#                    error: function () {#}
+{#                        alert("GET 실패")#}
+{#                    }#}
+{#                })#}
+{#            }#}
+{#    </script>#}
+</html>
