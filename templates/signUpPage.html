@@ -1,0 +1,39 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if login == True %}
+    <h3>로그인에 성공했습니다. {{ username }}님 어서오세요!</h3>
+    <a href= {{ url_for("logout") }}>로그아웃</a>
+
+{% elif login ==False %}
+    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
+        <input type="id" id="signUpId" name="signUpId" placeholder="ID">
+        <input type="password" id="signUpPw" name="signUpPw" placeholder="Password">
+        <input type="password" id="signUpPw2" name="signUpPw2" placeholder="Password Check">
+        <input type="text" id="signUpName" name="signUpName" placeholder="Name">
+        <input type="email" id="signUpEmail" name="signUpEmail" placeholder="Email">
+        <button type="submit" class="signUp">회원가입</button>
+    </form>
+{% else %}
+    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
+        <input type="id" id="signUpId" name="signUpId" placeholder="ID">
+        <input type="password" id="signUpPw" name="signUpPw" placeholder="Password">
+        <input type="password" id="signUpPw2" name="signUpPw2" placeholder="Password Check">
+        <input type="text" id="signUpName" name="signUpName" placeholder="Name">
+        <input type="email" id="signUpEmail" name="signUpEmail" placeholder="Email">
+        <button type="submit" class="signUp">회원가입</button>
+{% endif %}
+</body>
+</html>
