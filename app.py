@@ -25,9 +25,9 @@ def item():
 @app.route('/login')  # 로그인 페이지 API
 def login():
     if "user_id" in session:
-        return render_template("login_test.html", username=session.get("user_id"), login=True)
+        return render_template("loginPage.html", username=session.get("user_id"), login=True)
     else:
-        return render_template("login_test.html", login=False)
+        return render_template("loginPage.html", login=False)
 
 
 @app.route('/signUp')  # 회원가입 페이지 API
@@ -129,18 +129,17 @@ def delete():  # 선택 시 물품 삭제(로그인 되었을 때)
     db.UserItem.delete_one({'item_name': item_receive})
     return jsonify({'alarm': '삭제 되었습니다.'})
 
-
+#if 장소 없으면 modalList , #if 장소 있으면 filter
 @app.route('/item/modalList', methods=['GET'])
 def itemListModal():  # 아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({}, {'_id': False}))
     return jsonify({'item_lists': item_list})
 
 
-@app.route('/item/Place', methods=['POST'])
+@app.route('/item/Place', methods = ['GET'])
 def itemFilterPlace():
-    item_place_List = request.form('item_place_List')
-    item_Place = list(db.CYCL.find({'item_place': item_place_List}, {'_id': False}))
-    return jsonify({'place_list': item_Place})
+    item_Place = list(db.CYCL.find({}, {'_id' : False}))
+    return jsonify({'all_place': item_Place})
 
 
 @app.route('/item/Filter', methods=['GET'])
