@@ -181,6 +181,14 @@
         }
 
         {# Modal Body 끝 #}
+        :root {
+            --color-primary: #007bff;
+            --color-secondary: #6c757d;
+            --color-success: #28a745;
+            --color-info: #17a2b8;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+        }
     </style>
 
 
@@ -356,27 +364,18 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="item_box">
-                            <div class="item_img_box">item img</div>
-                            <div class="item_name_box">Item Name</div>
-                        </div>
-                        <div class="item_box">
-                            <div class="item_timer_box">추천 주기</div>
-                            <div class="item_SDate_box">
-                                <input class="input_start" type="date"></div>
-                        </div>
+                <div class="modal-body" >
+                    <div class="container" id ="middle">
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="postdata()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-
 
 </main>
 
@@ -385,11 +384,6 @@
 </div>
 
 </body>
-
-<script>
-    //document.getElementById("place_button").addEventListener("click",place_ListFunc);
-
-</script>
 
 {# Plus Minus btn #}
 <script>
@@ -416,22 +410,6 @@
 </script>
 
 
-<script>
-
-    const modal = document.getElementById("exampleModal")
-
-    function modalOn() { //모달 창 열기
-        modal.style.display = "flex"
-    }
-
-    function modalOff() { //모달창 닫기
-        modal.style.display = "none"
-    }
-
-</script>
-
-
-{#메뉴바 js#}
 <script>
     $(document).ready(function () {
         $("#btn_Main").click(function () {
@@ -469,15 +447,19 @@
 <script>
     function postdata() {
         const dday = document.querySelector("#input_type").value;
-        let year = dday.substring(0, 4);
-        let month = dday.substring(5, 7);
-        let day = dday.substring(8, 10);
+        const item_name_give = $("#item_name").text()
+        username = $('#username').text().split('님')[0]
+
         $.ajax({
             type: "POST",
             url: "/item/add",
-            // data : {start_date_give : },
+            data : {
+                id_give : username;
+                item_name_give : item_name_give;
+                start_date_give : dday;
+            };
         })
-        window.close()
+        window.location.reload()
     }
 
 
@@ -499,8 +481,19 @@
                         item_name = list[i]['item_name'];
                         item_timer = list[i]['item_timer'];
                         item_option = list[i]['item_place'];
-                        let temp_html = `<a><img src = ${item_img}> <br>    ${item_name} | ${item_timer} | ${item_option} | </a>
-                                            <br><a>날짜를 입력해주세요 : <input id = "input_type" type = "date"></a>`
+                        let temp_html = `<div class="item_box">
+                                            <div class="item_img_box"><a href="#"><img src="${item_img}"></a></div>
+                                            <div class="item_name_box">${item_name}</div>
+                                        </div>
+                                        <div class="item_box">
+                                            <div class="item_timer_box"
+                                                 style="height: 50%;
+                                                 text-align: center;
+                                                 padding-top : 75px">추천 주기는 ${item_timer}일 입니다.</div>
+                                            <div class="item_SDate_box">
+                                                <input id="input_type" class="input_start" type="date" >
+                                            </div>
+                                        </div>`
                         $('#middle').append(temp_html);
                     }
                 }
@@ -647,6 +640,32 @@
 
     }
 </script>
+<script>
+    function getRandomColorFromCSS() {
+        const props = [
+            "--color-primary",
+            "--color-secondary",
+            "--color-success",
+            "--color-info",
+            "--color-warning",
+            "--color-danger"
+        ];
+        const randomProp = props[Math.random() * props.length];
 
+        const root = document.documentElement;
+        const rootStyle = getComputedStyle(root);
+        const randomColor = rootStyle.getPropertyValue(randomProp);
+
+        return randomColor;
+    }
+
+    function changeBoxColor() {
+        const box = document.querySelector(".btn")
+        box.style.backgroundColor = getRandomColorFromCSS();
+    }
+
+    const button = document.querySelector(".btn btn-primary");
+    button.addEventListener("click", changeBoxColor);
+</script>
 
 </html>
