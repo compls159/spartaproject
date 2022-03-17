@@ -14,12 +14,17 @@ app.secret_key = "mc11th_key"
 # 메인 페이지
 @app.route('/')  # 메인 페이지 API
 def main():
-    return render_template('mainPage.html')
-
+    if "user_id" in session:
+        return render_template('mainPage.html', login=True)
+    else:
+        return render_template('mainPage.html', login=False)
 
 @app.route('/item')  # 생활용품 페이지 API
 def item():
-    return render_template('itemPage.html')
+   if "user_id" in session:
+       return render_template('itemPage.html', login=True)
+   else:
+       return render_template('itemPage.html', login=False)
 
 
 @app.route('/login')  # 로그인 페이지 API
@@ -42,23 +47,28 @@ def signUp():
 @app.route("/login/chk", methods=['GET'])
 def loginCheck():
     id_receive = request.args.get('login_id')
-    pw_receive = hashlib.sha256(request.args.get('login_pw').encode()).hexdigest()
-
-    id_db = db.Login.find({'user_id': id_receive})
-    for id in id_db:
-        id_db = id['user_id']
-
-    pw_db = db.Login.find({'user_pw': pw_receive})
-    for pw in pw_db:
-        pw_db = pw['user_pw']
-
-    if id_db == id_receive and pw_db == pw_receive:
-        session['user_id'] = id_receive
-        flash('로그인에 성공하였습니다')
+    pw_receive = request.args.get('login_pw')
+    if pw_receive is None:
+        flash('아이디 및 비밀번호를 입력해주세요')
         return redirect(url_for("login"))
     else:
-        flash('로그인에 실패하였습니다')
-        return redirect(url_for("login"))
+        pw_receive = hashlib.sha256(request.args.get('login_pw').encode()).hexdigest()
+
+        id_db = db.Login.find({'user_id': id_receive})
+        for id in id_db:
+            id_db = id['user_id']
+
+        pw_db = db.Login.find({'user_pw': pw_receive})
+        for pw in pw_db:
+            pw_db = pw['user_pw']
+
+        if id_db == id_receive and pw_db == pw_receive:
+            session['user_id'] = id_receive
+            flash('로그인에 성공하였습니다')
+            return redirect(url_for("login"))
+        else:
+            flash('로그인에 실패하였습니다')
+            return redirect(url_for("login"))
 
 
 @app.route("/login/logout")
@@ -73,8 +83,7 @@ def signUpCheck():
     # 회원가입을 위한 데이터 받아오기(POST형식)
     id_receive = request.args.get('signUpId')  # 사용자 아이디 값
     pw_receive = hashlib.sha256(request.args.get('signUpPw').encode()).hexdigest()  # 사용자 비밀번호 값을 sha256을 사용해 encrypt
-    pw2_receive = hashlib.sha256(
-        request.args.get('signUpPw2').encode()).hexdigest()  # 사용자 비밀번호 일치값을 sha256을 사용해 encrypt
+    pw2_receive = hashlib.sha256(request.args.get('signUpPw2').encode()).hexdigest()  # 사용자 비밀번호 일치값을 sha256을 사용해 encrypt
     name_receive = request.args.get('signUpName')  # 사용자 이름 값
     email_receive = request.args.get('signUpEmail')  # 사용자 이메일 값
 
@@ -85,17 +94,17 @@ def signUpCheck():
     # 조건문 - 클라이언트 폼에서 작성되지 않은 항목 체크
     if id_receive == '' or pw_receive == '' or pw2_receive == '' or name_receive == '' or email_receive == '':
         flash('작성되지 않은 항목이 있습니다')
-        return redirect(url_for("home"))
+        return redirect(url_for("signUp"))
     else:
         # 조건문 - 비밀번호 일치 체크
         if pw_receive != pw2_receive:
             flash('비밀번호가 일치하지 않습니다')
-            return redirect(url_for("home"))
+            return redirect(url_for("signUp"))
         else:
             # 조건문 - DB조회 아이디 일치여부
             if id_receive == checkDB:
                 flash('이미 존재하는 ID입니다')
-                return redirect(url_for("home"))
+                return redirect(url_for("signUp"))
             else:
                 # Request 데이터 DB에 추가
                 doc = [
@@ -110,7 +119,7 @@ def signUpCheck():
                 # Session 추가
                 session['user_id'] = id_receive
                 flash('회원가입 완료되었습니다. 감사합니다')
-                return redirect(url_for("home"))
+                return redirect(url_for("signUp"))
 
 
 
