@@ -85,3 +85,7 @@ fabric.properties
 .DS_Store
 
 __pycache__/
+
+.idea/.gitignore
+.idea/spartaproject2.iml
+.idea/spartaproject1.iml

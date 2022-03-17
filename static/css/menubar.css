@@ -15,7 +15,7 @@
             text-align: center; /* 텍스트 가운데 정렬 */
         }
 
-        li button {
+        header li button {
             height: 140px;
             width: 250px;
             background-color: transparent;
@@ -57,6 +57,9 @@
 
         #btn_nothing3 {
             width: 170px;
+            text-align: right;
+            font-size: smaller;
+            line-height: 1%;
         }
 
         hr {
