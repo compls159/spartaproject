@@ -313,7 +313,11 @@
     let maxAppend = 1;
 
     function plus() {
-        $("#boxWrap").append("<button onclick='modalOn()' class='hover_Box'><img src='/static/img/timerButton.png'></button>");
+        let temp_btn = `<button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <img src="/static/img/timerButton.png">
+                        </button>`
+        $("#boxWrap").append(temp_btn);
         maxAppend++;
 
         console.log(1234)
