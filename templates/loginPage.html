@@ -1,21 +1,22 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
 
 
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/css/menubar.css">
     <style>
-        * {
+        . * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
@@ -23,7 +24,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-image: url("/static/img/background.png");
+            background-image: url("/static/img/backgoround.png");
             background-position: bottom;
             background-repeat: no-repeat;
             background-size: 1500px;
@@ -101,10 +102,15 @@
             border-bottom: 1px solid #dadde1;
         }
 
+        .btn-login .btn-new {
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+
         #txt1 {
             background-image: url("/static/img/person.png");
             position: center;
-            padding-left: 30px;
             background-size: 45px;
             background-repeat: no-repeat;
         }
@@ -112,9 +118,16 @@
         #txt2 {
             background-image: url("/static/img/lock.png");
             position: center;
-            padding-left: 35px;
             background-size: 45px;
             background-repeat: no-repeat;
+        }
+
+        .email {
+            text: center;
+        }
+
+        .password {
+            text: center;
         }
 
         .colm-form .form-container .btn-login {
@@ -129,43 +142,76 @@
             line-height: 48px;
             padding: 0 16px;
         }
-        .logo {
-            width=96;
-            height=28;
-            outline: ;
-        }
     </style>
 
 </head>
 <body>
-<main>
-    <div class="home">
-        <button type="button"  onClick="location.href='signup.html'">
-            <img src="/static/img/logo.png" class="logo">
-        </button>
-    </div>
-    <div class="row">
-        <div class="colm-logo">
-            <img src="/static/img/logo.png" style="width=200; height=100;">
+{% if login == Ture %}
+    <h3>로그인에 성공했습니다. {{ username }}님 어서오세요!</h3>
+    <a href= {{ url_for("item") }}>생활용품 페이지로 이동</a>
+{% elif login == False %}
+ <main>
+        <div class="home">
+            <button type="button" onClick="location.href='/'">
+                <img src="/static/img/home.png" width="96" , height="28" :>
+            </button>
         </div>
-        <div class="colm-form">
-            <div class="form-container">
-                <div class="email">
-                    <input type="text" id="txt1" style=" width=20; height=25;" placeholder="이메일">
-                    <input type="password" id="txt2" style="width=20; height=25;"  placeholder="비밀번호">
-                </div>
-                <div class="btn-login">
-                    <button type="button" onClick="location.href='mainpage.html'">
-                        <img src="/static/img/login.png" style="width=200; height=40;">
-                    </button>
-                </div>
-                <div class="btn-new">
-                    <button type="button" onClick="location.href='register.html'">
-                        <img src="/static/img/register.png" style=" width=200; height=40;">
-                    </button>
+        <div class="row">
+            <div class="colm-logo">
+                <img src="/static/img/logo.png" width="200" , height="100" :>
+            </div>
+            <div class="colm-form">
+                <div class="form-container">
+                    <div>
+                        <input type="id" class="email" id="login_id" width="25" , height="25" : placeholder="아이디">
+                        <input type="password" class="password" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
+                    </div>
+                    <form class="btn-login" methods="get" id="login" action= {{ url_for("loginCheck") }}>
+                        <button type="submit">
+                            <img src="/static/img/login.png" width="200" , height="40" :>
+                        </button>
+                    </form>
+                    <div class="btn-new">
+                        <button type="button" onclick="location.href='/signUp'">
+                            <img src="/static/img/register.png" width="200" , height="40" :>
+                        </button>
+                    </div>
                 </div>
             </div>
-</main>
-</div>
+        </div>
+    </main>
+
+{% else %}
+    <main>
+        <div class="home">
+            <button type="button" onClick="location.href='/'">
+                <img src="/static/img/home.png" width="96" , height="28" :>
+            </button>
+        </div>
+        <div class="row">
+            <div class="colm-logo">
+                <img src="/static/img/logo.png" width="200" , height="100" :>
+            </div>
+            <div class="colm-form">
+                <div class="form-container">
+                    <div>
+                        <input type="id" class="email" id="login_id" width="25" , height="25" : placeholder="아이디">
+                        <input type="password" class="password" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
+                    </div>
+                    <div class="btn-login">
+                        <button type="button" methods="get" id="login" action= {{ url_for("loginCheck") }}>
+                            <img src="/static/img/login.png" width="200" , height="40" :>
+                        </button>
+                    </div>
+                    <div class="btn-new">
+                        <button type="button" methods="get" id="login" action= {{ url_for("signUp") }}>
+                            <img src="/static/img/register.png" width="200" , height="40" :>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endif %}
 </body>
-</html>
