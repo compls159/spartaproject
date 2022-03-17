@@ -10,30 +10,244 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1c1e21;
+            background-image: url("/static/img/backgoround.png");
+            background-position: bottom;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        main {
+            height: 90vh;
+            width: 100vw;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .home {
+            display: block;
+            position: relative;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .colm-logo {
+            flex: 0 0 50%;
+            text-align: left;
+            position: center;
+        }
+
+        .colm-form {
+            flex-basis: 50%;
+            text-align: center;
+            position: center;
+        }
+
+        .colm-logo img {
+            max-width: 400px;
+        }
+
+        .colm-logo h2 {
+            font-size: 26px;
+            font-weight: 400;
+            padding: 0 30px;
+            line-height: 32px;
+        }
+
+        .colm-form .form-container {
+            background-color: #ffffff;
+            margin-bottom: 30px;
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .email {
+            position: center;
+            width: 240px;
+        {#border:none; background-color:#fff; display:block; width: 100%; box-sizing: border-box#}{#position: absolute; top: 2px; right: 5px#} background-position: right top;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .colm-form .form-container input, .colm-form .form-container .btn-login {
+            width: 100%;
+            margin: 5px 0;
+            height: 45px;
+            vertical-align: middle;
+            font-size: 16px;
+        }
+
+        .colm-form .form-container input {
+            border: 1px solid #dddfe2;
+            color: #1d2129;
+            padding: 0 8px;
+            outline: none;
+        }
+
+        .colm-form .form-container .btn-login {
+            background-color: #4C07A0;
+            border: none;
+            border-radius: 2px;
+            font-size: 20px;
+            padding: 0 5px;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .colm-form .form-container a {
+            display: block;
+            color: #924CF9;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid #dadde1;
+            position: center;
+        }
+
+        .colm-form .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        .colm-form .form-container .btn-new {
+            background-color: #FFB8B5;
+            border: none;
+            border-radius: 2Px;
+            font-size: 17px;
+            line-height: 48px;
+            padding: 0 16px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .colm-form p {
+            font-size: 14px;
+        }
+
+        .colm-form p a {
+            text-decoration: none;
+            color: #1c1e21;
+            font-weight: 600;
+        }
+
+        .colm-form p a:hover {
+            text-decoration: underline;
+        }
+
+        .register {
+            margin-top: 30px;
+
+        }
+    </style>
 </head>
 <body>
-{% if login == True %}
+{% if login==True %}
     <h3>로그인에 성공했습니다. {{ username }}님 어서오세요!</h3>
-    <a href= {{ url_for("logout") }}>로그아웃</a>
-
-{% elif login ==False %}
-    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
-        <input type="id" id="signUpId" name="signUpId" placeholder="ID">
-        <input type="password" id="signUpPw" name="signUpPw" placeholder="Password">
-        <input type="password" id="signUpPw2" name="signUpPw2" placeholder="Password Check">
-        <input type="text" id="signUpName" name="signUpName" placeholder="Name">
-        <input type="email" id="signUpEmail" name="signUpEmail" placeholder="Email">
-        <button type="submit" class="signUp">회원가입</button>
-    </form>
+    <a href= {{ url_for("item") }}>생활용품 페이지로 이동</a>
+{% elif login==False %}
+    <main>
+        <div class="home">
+            <button type="button" onClick="location.href='/'">
+                <img src="/static/img/home.png" width="96" , height="28" :>
+            </button>
+        </div>
+        <div class="row">
+            <div class="colm-logo">
+                <img src="/static/img/logo.png" width="200" , height="100" :>
+            </div>
+            <div class="colm-form">
+                <div class="form-container">
+                    <!--
+                    <div class="email">
+                        <input type="text" width="25" , height="25" : placeholder="이메일">
+                        <input type="text" width="25" , height="25" : placeholder="아이디">
+                        <input type="text" width="25" , height="25" : placeholder="비밀번호">
+                        <input type="text" width="25" , height="25" : placeholder="비밀번호 확인">
+                    </div>
+                    !-->
+                    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
+                        <input type="id" id="signUpId" name="signUpId" width="25" , height="25" placeholder="ID">
+                        <input type="password" id="signUpPw" name="signUpPw" width="25" , height="25"
+                               placeholder="Password">
+                        <input type="password" id="signUpPw2" name="signUpPw2" width="25" , height="25"
+                               placeholder="Password Check">
+                        <input type="text" id="signUpName" name="signUpName" width="25" , height="25"
+                               placeholder="Name">
+                        <input type="email" id="signUpEmail" name="signUpEmail" width="25" , height="25"
+                               placeholder="Email">
+                        <div class="register">
+                            <button type="submit" class="navyBtn">
+                                <img src="/static/img/register.png" width="200" , height="30" :>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 {% else %}
-    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
-        <input type="id" id="signUpId" name="signUpId" placeholder="ID">
-        <input type="password" id="signUpPw" name="signUpPw" placeholder="Password">
-        <input type="password" id="signUpPw2" name="signUpPw2" placeholder="Password Check">
-        <input type="text" id="signUpName" name="signUpName" placeholder="Name">
-        <input type="email" id="signUpEmail" name="signUpEmail" placeholder="Email">
-        <button type="submit" class="signUp">회원가입</button>
+    <main>
+        <div class="home">
+            <button type="button" onClick="location.href='/'">
+                <img src="/static/img/home.png" width="96" , height="28" :>
+            </button>
+        </div>
+        <div class="row">
+            <div class="colm-logo">
+                <img src="/static/img/logo.png" width="200" , height="100" :>
+            </div>
+            <div class="colm-form">
+                <div class="form-container">
+                    <!--
+                    <div class="email">
+                        <input type="text" width="25" , height="25" : placeholder="이메일">
+                        <input type="text" width="25" , height="25" : placeholder="아이디">
+                        <input type="text" width="25" , height="25" : placeholder="비밀번호">
+                        <input type="text" width="25" , height="25" : placeholder="비밀번호 확인">
+                    </div>
+                    !-->
+                    <form methods="get" id="signUp" action= {{ url_for("signUpCheck") }}>
+                        <input type="id" id="signUpId" name="signUpId" width="25" , height="25" placeholder="ID">
+                        <input type="password" id="signUpPw" name="signUpPw" width="25" , height="25"
+                               placeholder="Password">
+                        <input type="password" id="signUpPw2" name="signUpPw2" width="25" , height="25"
+                               placeholder="Password Check">
+                        <input type="text" id="signUpName" name="signUpName" width="25" , height="25"
+                               placeholder="Name">
+                        <input type="email" id="signUpEmail" name="signUpEmail" width="25" , height="25"
+                               placeholder="Email">
+                        <div class="register">
+                            <button type="submit" class="navyBtn" onClick="location.href='mainpage.html'">
+                                <img src="/static/img/register.png" width="200" , height="30" :>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endif %}
 </body>
 </html>
