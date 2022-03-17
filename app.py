@@ -173,6 +173,7 @@ def addItemModal():  # 모달 아이템을 추가
     user_id_receive = request.form['id_give']
     item_name_receive = request.form['item_name_give']
     start_date_receive = request.form['start_date_give']
+    print(user_id_receive, item_name_receive, start_date_receive)
     # ID, 아이템 이름, 주기시작일을 API값으로 받아온다.
     # if user_id이 없거나 user_id와 item_name이 둘 다 없을 때 insert else 둘 다 있을 때 update
     if (db.UserItem.find_one({'user_id': user_id_receive}, {'_id': False})) == None:
