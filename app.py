@@ -22,9 +22,9 @@ def main():
 @app.route('/item')  # 생활용품 페이지 API
 def item():
    if "user_id" in session:
-       return render_template('itemPage.html', login=True)
+       return render_template('itemPage2.html', login=True)
    else:
-       return render_template('itemPage.html', login=False)
+       return render_template('itemPage2.html', login=False)
 
 
 @app.route('/login')  # 로그인 페이지 API
