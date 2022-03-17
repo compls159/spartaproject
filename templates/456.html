@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/@popperjs/core@2"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/menubar.css">
+
+    <title>Item Page</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            padding: 0;
+            width: 100%;
+            min-height: 400px;
+            height: auto;
+            margin: 20px 0 0 0;
+            background-color: #E9E9F3;
+            background-position: center;
+            overflow: scroll;
+        }
+
+        .modal-content .modal-header:nth-child(2) {
+            margin-left: 100px;
+        }
+
+        .modal-header .btn-close {
+            margin: 0;
+        }
+
+        #btn_timer_Main {
+            width: 100%;
+            height: 200px;
+            background-image: url("/static/img/timerBackground.png");
+            background-size: cover;
+            background-position: center;
+            overflow: scroll;
+            float: right;
+        }
+
+        #del_button {
+            float: right;
+        }
+
+        #add_Button {
+            float: right;
+        }
+
+        #boxWrap {
+            width: 90%;
+            height: 100%;
+            float: left;
+        }
+
+        .PMbtn {
+            background-color: transparent;
+            border: none;
+        }
+
+        #boxWrap button + button {
+            margin-left: 130px;
+            margin-bottom: 300px;
+        }
+
+        #boxWrap .btn {
+            /* 사진이나 그림 띄우기 */
+            width: 300px;
+            height: 300px;
+            margin-left: 250px;
+            margin-top: -200px;
+            border-style: dashed;
+            border-radius: 10px;
+            border-width: initial;
+            background-color: #cbcbcb;
+            border-color: #bcbcbc;
+        }
+
+        #exampleModal {
+
+        }
+
+        .modal-title {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+        }
+
+        #item_List {
+            margin-left: 20px;
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+{# 메뉴바 헤더 #}
+<header>
+    <ul class="navbar-nav">
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                이용방법
+            </button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+        </li>
+        <li>
+            <button id="btn_nothing1"></button>
+        </li>
+        <li>
+            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+        </li>
+        <li>
+            <button id="btn_nothing3"></button>
+        </li>
+    </ul>
+</header>
+
+<hr>
+
+<main>
+
+
+    <!-- 추가, 삭제 버튼 자리
+    <div id="btn_timer_Main">
+        <button class="PMbtn" id="del_button" onclick="minus()">
+            <img src="/static/img/timerButton3.png">
+        </button>
+        <button class="PMbtn" id="add_Button" onclick="plus()">
+            <img src="/static/img/timerButton2.png">
+        </button>
+    </div> -->
+
+    <!-- 박스랩_화면 덮개 및 버추얼박스 자리
+    <div id="boxWrap">
+        <button type="button" class="btn" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+            <img src="/static/img/timerButton.png">
+        </button>
+
+    </div>-->
+
+    <div id="boxWrap">
+
+    </div>
+
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="item_place_List">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                장소 선택하기
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li></li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('choose')">장소선택하기</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('부엌')">부엌</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('침실')">침실</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('화장실')">화장실</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown" id="item_List">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                dropdown-link
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="품명">
+                                <table id="basic">
+
+                                </table>
+                            </ul>
+                        </div>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 창 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="item_place_List">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                장소 선택하기
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li></li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('choose')">장소선택하기</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('부엌')">부엌</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('침실')">침실</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('화장실')">화장실</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                dropdown-link
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="품명">
+                                <table id="basic">
+
+                                </table>
+                            </ul>
+                        </div>
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="middle">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="postdata()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 모달 창
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="item_place_List">
+                     <div class="dropdown">
+                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                             장소 선택하기
+                         </a>
+                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                             <li></li>
+                             <li>
+                                 <button class="dropdown-item" onclick="basi('choose')">전체</button>
+                             </li>
+                             <li>
+                                 <button class="dropdown-item" onclick="basi('부엌')">부엌</button>
+                             </li>
+                             <li>
+                                 <button class="dropdown-item" onclick="basi('침실')">침실</button>
+                             </li>
+                             <li>
+                                 <button class="dropdown-item" onclick="basi('화장실')">화장실</button>
+                             </li>
+                         </ul>
+                     </div>
+                     <div class="dropdown">
+                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                             dropdown-link
+                         </a>
+                         <ul class="dropdown-menu" aria-labelledby="품명">
+                             <table id="basic">
+
+                             </table>
+                         </ul>
+                     </div>
+                 </h5>
+
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <ul id="middle">
+
+                 </ul>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-primary" id="input_submit" onclick="postdata()">Save changes
+                 </button>
+             </div>
+         </div>
+     </div>
+ </div> -->
+
+</main>
+
+<div style="position: fixed; bottom: 5px; right: 5px;">
+    <a onclick="$('html, body').stop().animate({scrollTop : '0'},200);">위로 가기</a>
+</div>
+
+</body>
+
+<script>
+    //document.getElementById("place_button").addEventListener("click",place_ListFunc);
+
+</script>
+
+<!-- Plus & Minus BTN -->
+<script>
+
+    let maxAppend = 1;
+
+    function plus() {
+        let temp_btn = `<button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <img src="/static/img/timerButton.png">
+                        </button>`
+        $("#boxWrap").append(temp_btn);
+        maxAppend++;
+
+        console.log(1234)
+
+    }
+
+    function minus() {
+        $("#boxWrap > button").last().remove();
+        alert("삭제되었습니다.")
+    }
+
+</script>
+
+
+<script>
+
+    const modal = document.getElementById("exampleModal")
+
+    function modalOn() { //모달 창 열기
+        modal.style.display = "flex"
+        {# modal.style.aria-hidden = "false" #}
+    }
+
+    function modalOff() { //모달창 닫기
+        modal.style.display = "none"
+    }
+
+</script>
+
+
+<!-- 메뉴바 -->
+<script>
+    $(document).ready(function () {
+        $("#btn_Main").click(function () {
+            $.ajax({
+                url: "/",
+                success: function (data) {
+                    $("mainPage").html(data);
+                }
+            })
+        })
+    })
+    $(document).ready(function () {
+        $("#btn_menuTimer").click(function () {
+            $.ajax({
+                url: "/item",
+                success: function (data) {
+                    $("itemPage").html(data);
+                }
+            })
+        })
+    })
+    $(document).ready(function () {
+        $("#btn_Login").click(function () {
+            $.ajax({
+                url: "/login",
+                success: function (data) {
+                    $("loginPage").html(data);
+                }
+            })
+        })
+    })
+</script>
+
+<!-- 모달 창 작업-->
+<script>
+    function postdata() {
+        const dday = document.querySelector("#input_type").value;
+        let year = dday.substring(0, 4);
+        let month = dday.substring(5, 7);
+        let day = dday.substring(8, 10);
+        $.ajax({
+            type: "POST",
+            url: "/item/add",
+            // data : {start_date_give : },
+        })
+    }
+
+
+    function midd(item) {
+        $('#middle').empty();
+        $.ajax({
+            type: "GET",
+            url: "/item/modalList",
+            data: {},
+            success: function (response) {
+                let list = response["item_lists"];
+                let item_img;
+                let item_name;
+                let item_timer;
+                let item_option;
+                for (let i = 0; i < list.length; i++) {
+                    if (item == list[i]['item_name']) {
+                        item_img = list[i]['item_img'];
+                        item_name = list[i]['item_name'];
+                        item_timer = list[i]['item_timer'];
+                        item_option = list[i]['item_place'];
+                        let temp_html = `<a><img src = ${item_img}> <br>    ${item_name} | ${item_timer} | ${item_option} | </a>
+                                            <br><a>날짜를 입력해주세요 : <input id = "input_type" type = "date"></a>`
+                        $('#middle').append(temp_html);
+                    }
+                }
+            }
+        })
+    }
+
+    function basi(str) {
+        if (str == "부엌") {
+            $('#basic').empty();
+            $.ajax({
+                type: "GET",
+                url: "/item/modalList",
+                data: {},
+                success: function (response) {
+                    let list = (response)["item_lists"]
+                    for (let i = 0; i < list.length; i++) {
+                        let place = list[i]['item_place'];
+                        if (place == "부엌") {
+                            let gu_name = list[i]['item_name'];
+
+                            let temp_html = `<li><button class="dropdown-item" id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
+                            $('#basic').append(temp_html)
+
+                        }
+                    }
+                }
+            })
+        } else if (str == "침실") {
+            $('#basic').empty();
+            $.ajax({
+                type: "GET",
+                url: "/item/modalList",
+                data: {},
+                success: function (response) {
+                    let list = (response)["item_lists"]
+                    for (let i = 0; i < list.length; i++) {
+                        let place = list[i]['item_place'];
+                        if (place == "침실") {
+                            let gu_name = list[i]['item_name'];
+                            let temp_html = `<li><button class="dropdown-item"id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
+                            $('#basic').append(temp_html)
+
+                        }
+                    }
+                }
+            })
+        } else if (str == "화장실") {
+            $('#basic').empty();
+            $.ajax({
+                type: "GET",
+                url: "/item/modalList",
+                data: {},
+                success: function (response) {
+                    let list = (response)["item_lists"]
+                    for (let i = 0; i < list.length; i++) {
+                        let place = list[i]['item_place'];
+                        if (place == "화장실") {
+                            let gu_name = list[i]['item_name'];
+                            let temp_html = `<li><button class="dropdown-item"id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
+                            $('#basic').append(temp_html)
+
+                        }
+                    }
+                }
+            })
+        }
+        if (str == "choose") {
+            $('#basic').empty();
+            $.ajax({
+                type: "GET",
+                url: "/item/modalList",
+                data: {},
+                success: function (response) {
+                    let list = (response)["item_lists"]
+                    for (let i = 0; i < list.length; i++) {
+                        let gu_name = list[i]['item_name'];
+                        let temp_html = `<li><button class="dropdown-item" id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
+                        $('#basic').append(temp_html)
+                    }
+                }
+            })
+        }
+    }
+
+    $(document).ready(function () {
+        $("#btn_Main").click(function () {
+            $.ajax({
+                url: "/item/Place",
+                data: {},
+                success: function (data) {
+                    let rows = response['doc']
+                    console.log(rows)
+                }
+            })
+        })
+    })
+    $(document).ready(function () {
+        $("#btn_menuTimer").click(function () {
+            $.ajax({
+                url: "/item",
+                success: function (data) {
+                    $("itemPage").html(data);
+                }
+            })
+        })
+    })
+    $(document).ready(function () {
+        $("#btn_Login").click(function () {
+            $.ajax({
+
+                success: function (data) {
+                    $("loginPage").html(data);
+                }
+            })
+        })
+    })
+</script>
+
+
+</html>

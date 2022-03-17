@@ -231,7 +231,7 @@
   </div>
 </div>
 
-    {#   모달 창  #}
+    <!-- 모달 창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -290,61 +290,61 @@
 
 
 
-    {#   모달 창  #}
-{#    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#        <div class="modal-dialog modal-dialog-centered">#}
-{#            <div class="modal-content">#}
-{#                <div class="modal-header">#}
-{#                    <h5 class="modal-title" id="item_place_List">#}
-{#                        <div class="dropdown">#}
-{#                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"#}
-{#                               data-bs-toggle="dropdown" aria-expanded="false">#}
-{#                                장소 선택하기#}
-{#                            </a>#}
-{#                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">#}
-{#                                <li></li>#}
-{#                                <li>#}
-{#                                    <button class="dropdown-item" onclick="basi('choose')">전체</button>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <button class="dropdown-item" onclick="basi('부엌')">부엌</button>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <button class="dropdown-item" onclick="basi('침실')">침실</button>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <button class="dropdown-item" onclick="basi('화장실')">화장실</button>#}
-{#                                </li>#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                        <div class="dropdown">#}
-{#                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"#}
-{#                               data-bs-toggle="dropdown" aria-expanded="false">#}
-{#                                dropdown-link#}
-{#                            </a>#}
-{#                            <ul class="dropdown-menu" aria-labelledby="품명">#}
-{#                                <table id="basic">#}
-{##}
-{#                                </table>#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                    </h5>#}
-{##}
-{#                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-{#                </div>#}
-{#                <div class="modal-body">#}
-{#                    <ul id="middle">#}
-{##}
-{#                    </ul>#}
-{#                </div>#}
-{#                <div class="modal-footer">#}
-{#                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
-{#                    <button type="button" class="btn btn-primary" id="input_submit" onclick="postdata()">Save changes#}
-{#                    </button>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+       <!-- 모달 창
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="item_place_List">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                장소 선택하기
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li></li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('choose')">전체</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('부엌')">부엌</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('침실')">침실</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" onclick="basi('화장실')">화장실</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                dropdown-link
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="품명">
+                                <table id="basic">
+
+                                </table>
+                            </ul>
+                        </div>
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="middle">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="input_submit" onclick="postdata()">Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
 </main>
 
@@ -365,7 +365,11 @@
     let maxAppend = 1;
 
     function plus() {
-        $("#boxWrap").append("<button onclick='modalOn()' class='hover_Box'><img src='/static/img/timerButton.png'></button>");
+        let temp_btn = `<button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <img src="/static/img/timerButton.png">
+                        </button>`
+        $("#boxWrap").append(temp_btn);
         maxAppend++;
 
         console.log(1234)
@@ -373,7 +377,7 @@
     }
 
     function minus() {
-        $("button").last().remove();
+        $("#boxWrap > button").last().remove();
         alert("삭제되었습니다.")
     }
 
@@ -386,7 +390,7 @@
 
     function modalOn() { //모달 창 열기
         modal.style.display = "flex"
-        modal.style.aria-hidden = "false"
+        {# modal.style.aria-hidden = "false" #}
     }
 
     function modalOff() { //모달창 닫기
