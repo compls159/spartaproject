@@ -40,13 +40,19 @@
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script>
-        //function postdata(){
-        //    let name = $('#')
-         //   $.ajax({
-         //       type:"POST",
+        function postdata(){
+            const dday = document.querySelector("#input_type").value;
+            let year = dday.substring(0,4);
+            let month = dday.substring(5,7);
+            let day = dday.substring(8,10);
+            $.ajax({
+                type:"POST",
+                url : "/item/add",
+               // data : {start_date_give : },
+            })
+        }
 
-         //   })
-        //}
+
 
         function midd(item){
             $('#middle').empty();
@@ -67,7 +73,7 @@
                             item_timer = list[i]['item_timer'];
                             item_option = list[i]['item_place'];
                             let temp_html = `<a><img src = ${item_img}> <br>    ${item_name} | ${item_timer} | ${item_option} | </a>
-                                            <br><a>날짜를 입력해주세요 : <input type = "date"></a>`
+                                            <br><a>날짜를 입력해주세요 : <input id = "input_type" type = "date"></a>`
                             $('#middle').append(temp_html);
                         }
                     }
@@ -311,7 +317,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <li></li>
-                                <li><button class="dropdown-item" onclick = "basi('choose')">장소선택하기</button></li>
+                                <li><button class="dropdown-item" onclick = "basi('choose')">전체</button></li>
                                 <li><button class="dropdown-item" onclick = "basi('부엌')">부엌</button></li>
                                 <li><button class="dropdown-item" onclick = "basi('침실')">침실</button></li>
                                 <li><button class="dropdown-item" onclick = "basi('화장실')">화장실</button></li>
@@ -339,7 +345,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick = "postdata()">Save changes</button>
+                    <button type="button" class="btn btn-primary" id = "input_submit" onclick = "postdata()">Save changes</button>
                 </div>
             </div>
         </div>
