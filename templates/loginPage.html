@@ -146,7 +146,7 @@
 
 </head>
 <body>
-{% if login == Ture %}
+{% if login == True %}
     <h3>로그인에 성공했습니다. {{ username }}님 어서오세요!</h3>
     <a href= {{ url_for("item") }}>생활용품 페이지로 이동</a>
 {% elif login == False %}
@@ -162,15 +162,14 @@
             </div>
             <div class="colm-form">
                 <div class="form-container">
-                    <div>
-                        <input type="id" class="email" id="login_id" width="25" , height="25" : placeholder="아이디">
-                        <input type="password" class="password" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
-                    </div>
                     <form class="btn-login" methods="get" id="login" action= {{ url_for("loginCheck") }}>
+                        <input type="id" class="email" name="login_id" id="login_id" width="25" , height="25" : placeholder="아이디">
+                        <input type="password" class="password" name="login_pw" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
                         <button type="submit">
                             <img src="/static/img/login.png" width="200" , height="40" :>
                         </button>
                     </form>
+
                     <div class="btn-new">
                         <button type="button" onclick="location.href='/signUp'">
                             <img src="/static/img/register.png" width="200" , height="40" :>
@@ -194,17 +193,16 @@
             </div>
             <div class="colm-form">
                 <div class="form-container">
-                    <div>
-                        <input type="id" class="email" id="login_id" width="25" , height="25" : placeholder="아이디">
-                        <input type="password" class="password" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
-                    </div>
-                    <div class="btn-login">
-                        <button type="button" methods="get" id="login" action= {{ url_for("loginCheck") }}>
+                    <form class="btn-login" methods="get" id="login" action= {{ url_for("loginCheck") }}>
+                        <input type="id" class="email" name="login_id" id="login_id" width="25" , height="25" : placeholder="아이디">
+                        <input type="password" class="password" name="login_pw" id="login_pw" width="25" , height="25" : placeholder="비밀번호">
+                        <button type="submit">
                             <img src="/static/img/login.png" width="200" , height="40" :>
                         </button>
-                    </div>
+                    </form>
+
                     <div class="btn-new">
-                        <button type="button" methods="get" id="login" action= {{ url_for("signUp") }}>
+                        <button type="button" onclick="location.href='/signUp'">
                             <img src="/static/img/register.png" width="200" , height="40" :>
                         </button>
                     </div>

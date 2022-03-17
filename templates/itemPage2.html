@@ -124,43 +124,53 @@
         .dropdown {
             margin-left: 10px;
         }
+
         .dropdown li {
             height: 24px;
         }
+
         {# Modal Body 시작 #}
         .modal-body {
-           height: 300px;
+            height: 300px;
 
         }
+
         .item_box {
 
 
         }
+
         .container {
             float: left;
             height: 100%;
             display: flex;
         }
+
         .item_box {
             width: 100%;
         }
+
         .item_img_box {
             height: 80%;
         }
+
         .item_name_box {
             height: 18%;
             text-align: center;
         }
+
         .item_timer_box {
             height: 50%;
             text-align: center;
         }
+
         .item_SDate_box {
             height: 50%;
             text-align: center;
             position: relative;
             line-height: 1em;
         }
+
         .input_start {
             position: absolute;
             top: 35%;
@@ -178,41 +188,107 @@
 
 
 <body>
+{% if login==True %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
+            <li>
+                <a id="username">{{ username }}님 환영합니다.</a>
+            </li>
+        </ul>
+    </header>
+{% elif login==False %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
 
+        </ul>
+    </header>
+{% else %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
+
+        </ul>
+    </header>
+{% endif %}
 {# 메뉴바 헤더 #}
-<header>
-    <ul class="navbar-nav">
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Howto" onclick="location. href='/#'">
-                이용방법
-            </button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
-        </li>
-        <li>
-            <button id="btn_nothing3">ㅇㅇ님 환영합니다.</button>
-        </li>
-    </ul>
-</header>
+
 
 <hr>
 
@@ -289,7 +365,7 @@
                         <div class="item_box">
                             <div class="item_timer_box">추천 주기</div>
                             <div class="item_SDate_box">
-                                <input class="input_start" type="date" ></div>
+                                <input class="input_start" type="date"></div>
                         </div>
                     </div>
                 </div>
@@ -542,6 +618,34 @@
             })
         })
     })
+    $(document).ready(function () {
+        showList();
+    })
+
+    function showList() {
+        username = $('#username').text().split('님')[0]
+        $.ajax({
+            type: "GET",
+            url: `/item/List?username=${username}`,
+            data: {},
+            success: function (response) {
+                let list = response['user_item']
+                for (let i=0; i<list.length; i++){
+                    let item_name = list[i]['item_name']
+                    let item_place = list[i]['item_place']
+                    let item_timer = list[i]['item_timer']
+
+                    let temp_html = `<li>${item_name}</li>
+                                        <li>${item_place}</li>
+                                        <li>${item_timer}</li>`
+                    $('#boxWrap').append(temp_html)
+
+                }
+            }
+
+        })
+
+    }
 </script>
 
 

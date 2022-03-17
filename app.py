@@ -22,7 +22,7 @@ def main():
 @app.route('/item')  # 생활용품 페이지 API
 def item():
    if "user_id" in session:
-       return render_template('itemPage2.html', login=True)
+       return render_template('itemPage2.html', username=session.get("user_id"), login=True)
    else:
        return render_template('itemPage2.html', login=False)
 
@@ -48,6 +48,7 @@ def signUp():
 def loginCheck():
     id_receive = request.args.get('login_id')
     pw_receive = request.args.get('login_pw')
+    print(id_receive,pw_receive)
     if pw_receive is None:
         flash('아이디 및 비밀번호를 입력해주세요')
         return redirect(url_for("login"))
@@ -127,7 +128,8 @@ def signUpCheck():
 @app.route('/item/List', methods=['GET'])
 def itemlistLogin():  # 로그인 시 아이템 리스트 출력
     if request.method == 'GET':
-        uid = request.args.get['id']
+        uid = request.args.get('username')
+        print(uid)
         user_item = list(db.UserItem.find({'user_id': uid}, {'_id': False}))
         return jsonify({'user_item': user_item})
 
