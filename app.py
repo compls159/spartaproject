@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for, flash
 from pymongo import MongoClient
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import hashlib
 
@@ -173,75 +173,124 @@ def itemSelectModal():
 
 @app.route('/item/add', methods=['POST'])
 def addItemModal():  # 모달 아이템을 추가
-    user_id_receive = request.form['id_give']
-    item_name_receive = request.form['item_name_give']
-    start_date_receive = request.form['start_date_give']
-    print(user_id_receive, item_name_receive, start_date_receive)
-    # ID, 아이템 이름, 주기시작일을 API값으로 받아온다.
-    # if user_id이 없거나 user_id와 item_name이 둘 다 없을 때 insert else 둘 다 있을 때 update
-    # alert ㅇㅇ님 item_name의 타이머가 item_timer일 남았습니다.
-    idDB = db.UserItem.find_one({'user_id': user_id_receive}, {'_id': False})
-    nameDB = db.UserItem.find_one({'item_name': item_name_receive}, {'_id': False})
-    # 아이디가 없고 아이템 이름이 없는 경우
-    if idDB == None and nameDB == None:
-        # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-        item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-        item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
-        start_date = start_date_receive.strftime("%Y%-m%d")
-        day = start_date_receive.split("-")[2] 2022-02-02
-        item_timer = (start_date + day).days
 
+    # 값을 받아옴 - 유저아이디, 상품 이름, 주기 시작일
+    global id_receive
+    id_receive = request.form['id_give']
+    global name_receive
+    name_receive = request.form['item_name_give']
+    global date_receive
+    date_receive = request.form['start_date_give']
+
+    # 값을 가져옴 - 상품 주기 - None Type 정의 필요
+    global timer
+    timer = db.CYCL.find_one({'item_name': name_receive}, {'_id': False})
+
+    if timer == "":
+        timer = 0
+    else:
+        timer = timer['item_timer']
+
+    # 주기 시작일에 상품 주기를 더해 디데이 생성
+    date_change = datetime.strptime(date_receive, "%Y-%m-%d")
+    day_plus = timedelta(days=timer)
+    date_end = date_change + day_plus
+    date_end = str(date_end).split(' ')[0]
+    print(date_end)
+
+    # 조회 DB 변수 설정
+    global chkId
+    chkId = db.UserItem.find_one({'user_id': id_receive}, {'_id': False})
+    if chkId == "":
+        chkId = ""
+        return chkId
+
+    else:
+        chkId = chkId['user_id']
+        chkName = db.UserItem.find_one({'item_name': name_receive}, {'_id': False})
+    if chkName == "":
+        chkName = ""
+        return chkName
+    else:
+        chkName = chkName['item_name']
+
+
+    # 조건 1 - 아이템 DB에 유저 아이디 조회, 없다면 변수  설정, 아이템 추가
+    if chkId == "" and chkName == "":
+        return jsonify({'msg': '해당하는 아이템이 존재하지 않습니다.'})
+        item_place = db.CYCL.find_one({'item_name': name_receive})
+        item_place = item_place["item_place"]
+
+        item_timer = db.CYCL.find_one({'item_name': name_receive})["item_place"]
+        item_timer = item_timer['item_timer']
+
+        item_img = db.CYCL.find_one({'item_name': name_receive})["item_img"]
+        item_img = item_img['item_img']
+    doc = [
+        {'user_id': id_receive,
+         'item_name': name_receive,
+         'item_place': item_place,
+         'item_timer': item_timer,
+         'item_startDate': date_receive,
+         'item_endDate': date_end
+         }]
+    return jsonify({'userItem': doc})
+
+
+# 조건 2 - 아이템 DB에 유저 아이디 조회, 없다면 상품 이름 조회, 있다면 아이템 추가
+    if chkId == "" and chkName == "":
         doc = [
-            {'user_id': user_id_receive,
-             'item_name': item_name,
+            {'user_id': id_receive,
+             'item_name': name_receive,
              'item_place': item_place,
              'item_timer': item_timer,
-             'item_img': item_img,
-             'item_start_Date': start_date_receive}
-        ]
-        print(doc)
-        db.UserItem.insert_many(doc)
-        return jsonify({'result': 'success'})
+             'item_startDate': date_receive,
+             'item_endDate': date_end
+             }]
+        # return jsonify({'userItem': doc})
 
-    # 아이디가 있고 아이템 이름이 없는 경우
-    elif idDB != None and nameDB == None:
-        # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-        item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-        item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
-        start_date = start_date_receive
-        day = item_name['timer']
-        item_timer = (start_date + day).days
-        doc = [
-            {'user_id': user_id_receive,
-             'item_name': item_name,
-             'item_place': item_place,
-             'item_timer': item_timer,
-             'item_img': item_img,
-             'item_start_Date': start_date_receive}
-        ]
-        db.UserItem.insert_many(doc)
-        return jsonify({'result': 'success'})
+    # 조건 3 - 아이템 DB에 유저 아이디 조회, 있다면 상품 이름 조회, 있다면 시작일 업데이트
+    if chkId != "" and chkName != "":
+        db.UserItem.update_one({"item_name": name_receive}, {"$set": {"item_startDate": date_receive}})
+    # return jsonify({'msg': '저장되었습니다.'})
 
-    # 아이디가 있고 아이템 이름도 있는 경우
-    elif idDB != None and nameDB != None:
-        # item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        # item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-        # start_date = start_date_receive
-        # day = item_name['timer']
-        # item_timer = (start_date + day).days
-        # doc = [
-        #     {'item_place': item_place,
-        #      'item_timer': item_timer,
-        #      'item_start_Date': start_date}
-        # ]
-        db.UserItem.update_one(
-            {'item_name' : item_name_receive},{"$set":{ "item_startDate": start_date_receive}}
-        )
-
-        return jsonify({'result': 'success'})
-
+# 아이디가 있고 아이템 이름이 없는 경우
+# elif idDB != None and nameDB == None:
+#     # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
+#     item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
+#     item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
+#     item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
+#     start_date = start_date_receive
+#     day = item_name['timer']
+#     item_timer = (start_date + day).days
+#     doc = [
+#         {'user_id': user_id_receive,
+#          'item_name': item_name,
+#          'item_place': item_place,
+#          'item_timer': item_timer,
+#          'item_img': item_img,
+#          'item_start_Date': start_date_receive}
+#     ]
+#     db.UserItem.insert_many(doc)
+#     return jsonify({'result': 'success'})
+#
+# # 아이디가 있고 아이템 이름도 있는 경우
+# elif idDB != None and nameDB != None:
+#     # item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
+#     # item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
+#     # start_date = start_date_receive
+#     # day = item_name['timer']
+#     # item_timer = (start_date + day).days
+#     # doc = [
+#     #     {'item_place': item_place,
+#     #      'item_timer': item_timer,
+#     #      'item_start_Date': start_date}
+#     # ]
+#     db.UserItem.update_one(
+#         {'item_name' : item_name_receive},{"$set":{ "item_startDate": start_date_receive}}
+#     )
+#
+#     return jsonify({'result': 'success'})
 
 
 if __name__ == '__main__':
