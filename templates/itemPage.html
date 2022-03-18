@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -176,14 +176,14 @@
         }
 
         {# Modal Body 끝 #}
-        :root {
-            --color-primary: #007bff;
-            --color-secondary: #6c757d;
-            --color-success: #28a745;
-            --color-info: #17a2b8;
-            --color-warning: #ffc107;
-            --color-danger: #dc3545;
-        }
+        {#:root {#}
+        {#    --color-primary: #007bff;#}
+        {#    --color-secondary: #6c757d;#}
+        {#    --color-success: #28a745;#}
+        {#    --color-info: #17a2b8;#}
+        {#    --color-warning: #ffc107;#}
+        {#    --color-danger: #dc3545;#}
+        {#}#}
     </style>
 
 </head>
@@ -440,9 +440,10 @@
 {# 모달 창 작업  js #}
 <script>
     function postdata() {
+
+        const item_name_give = $(".item_name_box").text()
+        const username = $('#username').text().split('님')[0]
         const dday = document.querySelector("#input_type").value;
-        const item_name_give = $("#item_name").text()
-        username = $('#username').text().split('님')[0]
 
         $.ajax({
             type: "POST",
@@ -453,6 +454,7 @@
                 start_date_give : dday
             }
         })
+        alert()
         window.location.reload()
     }
 
@@ -634,32 +636,32 @@
 
     }
 </script>
-<script>
-    function getRandomColorFromCSS() {
-        const props = [
-            "--color-primary",
-            "--color-secondary",
-            "--color-success",
-            "--color-info",
-            "--color-warning",
-            "--color-danger"
-        ];
-        const randomProp = props[Math.random() * props.length];
-
-        const root = document.documentElement;
-        const rootStyle = getComputedStyle(root);
-        const randomColor = rootStyle.getPropertyValue(randomProp);
-
-        return randomColor;
-    }
-
-    function changeBoxColor() {
-        const box = document.querySelector(".btn")
-        box.style.backgroundColor = getRandomColorFromCSS();
-    }
-
-    const button = document.querySelector(".btn btn-primary");
-    button.addEventListener("click", changeBoxColor);
-</script>
+{#<script>#}
+{#    function getRandomColorFromCSS() {#}
+{#        const props = [#}
+{#            "--color-primary",#}
+{#            "--color-secondary",#}
+{#            "--color-success",#}
+{#            "--color-info",#}
+{#            "--color-warning",#}
+{#            "--color-danger"#}
+{#        ];#}
+{#        const randomProp = props[Math.random() * props.length];#}
+{##}
+{#        const root = document.documentElement;#}
+{#        const rootStyle = getComputedStyle(root);#}
+{#        const randomColor = rootStyle.getPropertyValue(randomProp);#}
+{##}
+{#        return randomColor;#}
+{#    }#}
+{##}
+{#    function changeBoxColor() {#}
+{#        const box = document.querySelector(".btn")#}
+{#        box.style.backgroundColor = getRandomColorFromCSS();#}
+{#    }#}
+{##}
+{#    const button = document.querySelector(".btn btn-primary");#}
+{#    button.addEventListener("click", changeBoxColor);#}
+{#</script>#}
 
 </html>

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for, flash
-from datetime import datetime
 from pymongo import MongoClient
+
+from datetime import datetime, timedelta
+
 import hashlib
 
 # client = MongoClient('mongodb://test:test@localhost', 27017)
@@ -19,12 +21,13 @@ def main():
     else:
         return render_template('mainPage.html', login=False)
 
+
 @app.route('/item')  # 생활용품 페이지 API
 def item():
-   if "user_id" in session:
-       return render_template('itemPage2.html', username=session.get("user_id"), login=True)
-   else:
-       return render_template('itemPage2.html', login=False)
+    if "user_id" in session:
+        return render_template('itemPage.html', username=session.get("user_id"), login=True)
+    else:
+        return render_template('itemPage.html', login=False)
 
 
 @app.route('/login')  # 로그인 페이지 API
@@ -48,7 +51,7 @@ def signUp():
 def loginCheck():
     id_receive = request.args.get('login_id')
     pw_receive = request.args.get('login_pw')
-    print(id_receive,pw_receive)
+    print(id_receive, pw_receive)
     if pw_receive is None:
         flash('아이디 및 비밀번호를 입력해주세요')
         return redirect(url_for("login"))
@@ -84,7 +87,8 @@ def signUpCheck():
     # 회원가입을 위한 데이터 받아오기(POST형식)
     id_receive = request.args.get('signUpId')  # 사용자 아이디 값
     pw_receive = hashlib.sha256(request.args.get('signUpPw').encode()).hexdigest()  # 사용자 비밀번호 값을 sha256을 사용해 encrypt
-    pw2_receive = hashlib.sha256(request.args.get('signUpPw2').encode()).hexdigest()  # 사용자 비밀번호 일치값을 sha256을 사용해 encrypt
+    pw2_receive = hashlib.sha256(
+        request.args.get('signUpPw2').encode()).hexdigest()  # 사용자 비밀번호 일치값을 sha256을 사용해 encrypt
     name_receive = request.args.get('signUpName')  # 사용자 이름 값
     email_receive = request.args.get('signUpEmail')  # 사용자 이메일 값
 
@@ -123,8 +127,6 @@ def signUpCheck():
                 return redirect(url_for("signUp"))
 
 
-
-
 @app.route('/item/List', methods=['GET'])
 def itemlistLogin():  # 로그인 시 아이템 리스트 출력
     if request.method == 'GET':
@@ -140,16 +142,17 @@ def delete():  # 선택 시 물품 삭제(로그인 되었을 때)
     db.UserItem.delete_one({'item_name': item_receive})
     return jsonify({'alarm': '삭제 되었습니다.'})
 
-#if 장소 없으면 modalList , #if 장소 있으면 filter
+
+# if 장소 없으면 modalList , #if 장소 있으면 filter
 @app.route('/item/modalList', methods=['GET'])
 def itemListModal():  # 아이템 리스트 모달 출력
     item_list = list(db.CYCL.find({}, {'_id': False}))
     return jsonify({'item_lists': item_list})
 
 
-@app.route('/item/Place', methods = ['GET'])
+@app.route('/item/Place', methods=['GET'])
 def itemFilterPlace():
-    item_Place = list(db.CYCL.find({}, {'_id' : False}))
+    item_Place = list(db.CYCL.find({}, {'_id': False}))
     return jsonify({'all_place': item_Place})
 
 
@@ -170,56 +173,124 @@ def itemSelectModal():
 
 @app.route('/item/add', methods=['POST'])
 def addItemModal():  # 모달 아이템을 추가
-    user_id_receive = request.form['id_give']
-    item_name_receive = request.form['item_name_give']
-    start_date_receive = request.form['start_date_give']
-    print(user_id_receive, item_name_receive, start_date_receive)
-    # ID, 아이템 이름, 주기시작일을 API값으로 받아온다.
-    # if user_id이 없거나 user_id와 item_name이 둘 다 없을 때 insert else 둘 다 있을 때 update
-    if (db.UserItem.find_one({'user_id': user_id_receive}, {'_id': False})) == None:
-        user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-        user_name = db.Login.find_one({'user_name': user_id_receive}, {'_id': False})
-        item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        item_place = db.CYCL.find_one({'item_place': item_name_receive}, {'_id': False})
-        item_img = db.CYCL.find_one({'item_img': item_name_receive}, {'_id': False})
-        start_date = datetime.strptime(start_date_receive)
-        # ↑ 주기시작일 값을 Timer 기준일로 설정.
-        day = item_name['item_timer']
-        # ↑ item_name 값으로 db.CYCL에서 추천 주기를 find. 필요 시 나중에 yyyy, m, d로 format 변경
-        item_timer = (start_date + day).days
-        # ↑ db.UserItem에 insert할 item_timer 값 일 단위 계산
-        # ↓ db.UserItem에 insert user_id, item_name, item_place, item_timer, item_img, start_date
-        db.UserItem.insert_one(
-            {'user_id': user_id, 'item_name': item_name, 'item_place': item_place, 'item_timer': item_timer,
-             'item_img': item_img,
-             'item_start_Date': start_date})
-        return jsonify({'result': 'success', 'user_name': user_name, 'item_name': item_name, 'item_timer': item_timer})
-        # alert ㅇㅇ님 item_name의 타이머가 item_timer일 남았습니다.
-    elif (db.UserItem.find_one({'user_id': user_id_receive}, {'_id': False})) != None and (
-            db.UserItem.find_one({'item_name': item_name_receive}, {'_id': False})) == None:
-        user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-        item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        user_name = db.Login.find_one({'user_name': user_id_receive}, {'_id': False})
-        item_place = db.CYCL.find_one({'item_place': item_name_receive}, {'_id': False})
-        item_img = db.CYCL.find_one({'item_img': item_name_receive}, {'_id': False})
-        start_date = datetime.strptime(start_date_receive)
-        day = item_name['timer']
-        item_timer = (start_date + day).days
-        db.UserItem.insert_one(
-            {'user_id': user_id, 'item_name': item_name, 'item_place': item_place, 'item_timer': item_timer,
-             'item_img': item_img,
-             'item_start_Date': start_date})
-        return jsonify({'result': 'success', 'user_name': user_name, 'item_name': item_name, 'item_timer': item_timer})
-    elif (db.UserItem.find_one({'user_id': user_id_receive}, {'_id': False})) != None and (
-            db.UserItem.find_one({'item_name': item_name_receive}, {'_id': False})) != None:
-        item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-        user_name = db.Login.find_one({'user_name': user_id_receive}, {'_id': False})
-        item_place = db.CYCL.find_one({'item_place': item_name_receive}, {'_id': False})
-        start_date = datetime.strptime(start_date_receive)
-        day = item_name['timer']
-        item_timer = (start_date + day).days
-        db.UserItem.update_one({'item_place': item_place, 'item_timer': item_timer, 'item_start_Date': start_date})
-        return jsonify({'result': 'success', 'user_name': user_name, 'item_name': item_name, 'item_timer': item_timer})
+
+    # 값을 받아옴 - 유저아이디, 상품 이름, 주기 시작일
+    global id_receive
+    id_receive = request.form['id_give']
+    global name_receive
+    name_receive = request.form['item_name_give']
+    global date_receive
+    date_receive = request.form['start_date_give']
+
+    # 값을 가져옴 - 상품 주기 - None Type 정의 필요
+    global timer
+    timer = db.CYCL.find_one({'item_name': name_receive}, {'_id': False})
+
+    if timer == "":
+        timer = 0
+    else:
+        timer = timer['item_timer']
+
+    # 주기 시작일에 상품 주기를 더해 디데이 생성
+    date_change = datetime.strptime(date_receive, "%Y-%m-%d")
+    day_plus = timedelta(days=timer)
+    date_end = date_change + day_plus
+    date_end = str(date_end).split(' ')[0]
+    print(date_end)
+
+    # 조회 DB 변수 설정
+    global chkId
+    chkId = db.UserItem.find_one({'user_id': id_receive}, {'_id': False})
+    if chkId == "":
+        chkId = ""
+        return chkId
+
+    else:
+        chkId = chkId['user_id']
+        chkName = db.UserItem.find_one({'item_name': name_receive}, {'_id': False})
+    if chkName == "":
+        chkName = ""
+        return chkName
+    else:
+        chkName = chkName['item_name']
+
+
+    # 조건 1 - 아이템 DB에 유저 아이디 조회, 없다면 변수  설정, 아이템 추가
+    if chkId == "" and chkName == "":
+        return jsonify({'msg': '해당하는 아이템이 존재하지 않습니다.'})
+        item_place = db.CYCL.find_one({'item_name': name_receive})
+        item_place = item_place["item_place"]
+
+        item_timer = db.CYCL.find_one({'item_name': name_receive})["item_place"]
+        item_timer = item_timer['item_timer']
+
+        item_img = db.CYCL.find_one({'item_name': name_receive})["item_img"]
+        item_img = item_img['item_img']
+    doc = [
+        {'user_id': id_receive,
+         'item_name': name_receive,
+         'item_place': item_place,
+         'item_timer': item_timer,
+         'item_startDate': date_receive,
+         'item_endDate': date_end
+         }]
+    return jsonify({'userItem': doc})
+
+
+# 조건 2 - 아이템 DB에 유저 아이디 조회, 없다면 상품 이름 조회, 있다면 아이템 추가
+    if chkId == "" and chkName == "":
+        doc = [
+            {'user_id': id_receive,
+             'item_name': name_receive,
+             'item_place': item_place,
+             'item_timer': item_timer,
+             'item_startDate': date_receive,
+             'item_endDate': date_end
+             }]
+        # return jsonify({'userItem': doc})
+
+    # 조건 3 - 아이템 DB에 유저 아이디 조회, 있다면 상품 이름 조회, 있다면 시작일 업데이트
+    if chkId != "" and chkName != "":
+        db.UserItem.update_one({"item_name": name_receive}, {"$set": {"item_startDate": date_receive}})
+    # return jsonify({'msg': '저장되었습니다.'})
+
+# 아이디가 있고 아이템 이름이 없는 경우
+# elif idDB != None and nameDB == None:
+#     # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
+#     item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
+#     item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
+#     item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
+#     start_date = start_date_receive
+#     day = item_name['timer']
+#     item_timer = (start_date + day).days
+#     doc = [
+#         {'user_id': user_id_receive,
+#          'item_name': item_name,
+#          'item_place': item_place,
+#          'item_timer': item_timer,
+#          'item_img': item_img,
+#          'item_start_Date': start_date_receive}
+#     ]
+#     db.UserItem.insert_many(doc)
+#     return jsonify({'result': 'success'})
+#
+# # 아이디가 있고 아이템 이름도 있는 경우
+# elif idDB != None and nameDB != None:
+#     # item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
+#     # item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
+#     # start_date = start_date_receive
+#     # day = item_name['timer']
+#     # item_timer = (start_date + day).days
+#     # doc = [
+#     #     {'item_place': item_place,
+#     #      'item_timer': item_timer,
+#     #      'item_start_Date': start_date}
+#     # ]
+#     db.UserItem.update_one(
+#         {'item_name' : item_name_receive},{"$set":{ "item_startDate": start_date_receive}}
+#     )
+#
+#     return jsonify({'result': 'success'})
 
 
 if __name__ == '__main__':
