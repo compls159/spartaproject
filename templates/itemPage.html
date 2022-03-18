@@ -1,8 +1,16 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -41,6 +49,7 @@
         }
 
         main {
+            padding: 0;
             width: 100%;
             min-height: 738px;
             height: auto;
@@ -65,7 +74,29 @@
             background-image: url("/static/img/timerBackground.png");
             background-size: cover;
             background-position: center;
+            float: right;
+        }
 
+        #del_button {
+            width: 10%;
+            float: right;
+            position: fixed;
+            bottom: 700px;
+            right: 10px;
+        }
+
+        #add_Button {
+            width: 10%;
+            float: right;
+            position: fixed;
+            bottom: 850px;
+            right: 10px;
+        }
+
+        #boxWrap {
+            width: 90%;
+            height: 100%;
+            float: left;
         }
 
         .PMbtn {
@@ -73,24 +104,13 @@
             border: none;
         }
 
-        #add_Button {
-            margin-left: 1700px;
-            margin-top: 200px;
-        }
-
-        #del_button {
-            margin-left: 1700px;
-            margin-top: 100px;
-        }
-
-
         #boxWrap button + button {
             margin-left: 150px;
             margin-bottom: 300px;
         }
 
-
         #boxWrap .btn {
+            /* 사진이나 그림 띄우기 */
             float: left;
             width: 300px;
             height: 300px;
@@ -101,7 +121,6 @@
             border-width: initial;
             background-color: #cbcbcb;
             border-color: #bcbcbc;
-
             color: #333;
             transition: all 0.9s, color 0.3s;
         }
@@ -110,7 +129,6 @@
             color: #fff;
             box-shadow: 300px 0 0 0 rgba(0, 0, 0, 0.25) inset, -300px 0 0 0 rgba(0, 0, 0, 0.25) inset;
         }
-
 
         #change_BoxWrap .change_Btn {
             float: left;
@@ -127,7 +145,6 @@
 
         #item_name {
             display: inline-block;
-            background: linear-gradient(to right, rgba(255,255,255,0) 50%, #f3be00 50%);
             position: relative;
             color: white;
             font-size: 60px;
@@ -135,26 +152,19 @@
             text-align: center;
             font-family: 'Black Han Sans', sans-serif;
         }
-        #item_name:hover {
-            background-position: -100% 0;
-        }
 
-
-        #item_date {
+        .boxWrap_item {
             color: white;
             font-size: 60px;
             text-align: center;
             font-family: 'Bebas Neue', cursive;
         }
 
-
         .modal-title {
             display: flex;
             width: 100%;
             justify-content: space-around;
         }
-
-
         #item_List {
             margin-left: 20px;
         }
@@ -175,10 +185,6 @@
         {# Modal Body 시작 #}
         .modal-body {
             height: 300px;
-
-        }
-
-        .item_box {
 
         }
 
@@ -211,95 +217,165 @@
             text-align: center;
             position: relative;
             line-height: 1em;
+            margin-top : 10px;
         }
 
         .input_start {
             position: absolute;
-            top: 35%;
+            top: 40%;
             left: 50%;
-            margin-top: -1.5em;
+            margin-top: -1em;
             margin-left: -35%;
             text-align: center;
         }
 
-        {# Modal Body 끝 #}
-
-        :root {
-            --color-primary: #007bff;
-            --color-secondary: #6c757d;
-            --color-success: #28a745;
-            --color-info: #17a2b8;
-            --color-warning: #ffc107;
-            --color-danger: #dc3545;
-        }
+         {#Modal Body 끝 #}
+{##}
+{#        :root {#}
+{#            --color-primary: #007bff;#}
+{#            --color-secondary: #6c757d;#}
+{#            --color-success: #28a745;#}
+{#            --color-info: #17a2b8;#}
+{#            --color-warning: #ffc107;#}
+{#            --color-danger: #dc3545;#}
+{#        }#}
     </style>
-
 
 </head>
 
 
 <body>
+{% if login==True %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
+            <li>
+                <a id="username">{{ username }}님 환영합니다.</a>
+            </li>
+        </ul>
+    </header>
+{% elif login==False %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
 
-<!-- 메뉴바 헤더 -->
-<header>
-    <ul class="navbar-nav">
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Howto" onclick="location. href='/#'">
-                이용방법
-            </button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
-        </li>
-        <li>
-            <button id="btn_nothing1"></button>
-        </li>
-        <li>
-            <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
-        </li>
-        <li>
-            <button id="btn_nothing3">ㅇㅇ님 환영합니다.</button>
-        </li>
-    </ul>
-</header>
+        </ul>
+    </header>
+{% else %}
+    <header>
+        <ul class="navbar-nav">
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="main-menu" id="btn_Main" onclick="location. href='/'"></button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Howto" onclick="location. href='/#'">
+                    이용방법
+                </button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_menuTimer" onclick="location. href='/item'">생활용품 기간 설정</button>
+            </li>
+            <li>
+                <button id="btn_nothing1"></button>
+            </li>
+            <li>
+                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+            </li>
 
+        </ul>
+    </header>
+{% endif %}
+{# 메뉴바 헤더 #}
+
+
+<hr>
 
 <main>
 
     <div id="btn_timer_Main">
-        <button class="PMbtn" id="add_Button" onclick="plus()"><img src="/static/img/timerButton2.png"></button>
-        <button class="PMbtn" id="del_button" onclick="minus()"><img src="/static/img/timerButton3.png"></button>
-    </div>
-
-    <div id="boxWrap">
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><img
-                src="/static/img/timerButton.png">
+        <button class="PMbtn" id="add_Button" onclick="plus()">
+            <img src="/static/img/timerButton2.png">
+        </button>
+        <button class="PMbtn" id="del_button" onclick="minus()">
+            <img src="/static/img/timerButton3.png">
         </button>
     </div>
 
-    <div id="change_BoxWrap">
-        <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <span id="item_name">칫솔</span>
-            <p id="item_date">D-645</p></button>
+      <!-- 설정 전   -->
+    <div id="boxWrap">
+        <button type="button" class="btn" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+            <img src="/static/img/timerButton.png">
+        </button>
+
     </div>
 
-    <!-- Button trigger modal -->
+     <!-- 설정 후 바뀌는  -->
+    <div id="change_BoxWrap" >
+
+    </div>
 
 
     <!-- Modal -->
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -341,47 +417,47 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="item_box">
-                            <div class="item_img_box">item img</div>
-                            <div class="item_name_box">Item Name</div>
-                        </div>
-                        <div class="item_box">
-                            <div class="item_timer_box">추천 주기</div>
-                            <div class="item_SDate_box">
-                                <input class="input_start" type="date"></div>
-                        </div>
+                <div class="modal-body" >
+                    <div class="container" id ="middle">
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="postdata()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-
 </main>
+
+<div style="position: fixed; bottom: 5px; right: 5px;">
+    <a onclick="$('html, body').stop().animate({scrollTop : '0'},200);">위로 가기</a>
+</div>
 
 </body>
 
-
+{# Plus Minus btn #}
 <script>
 
     let maxAppend = 1;
 
     function plus() {
-        let temp_button = `<button class='btn' data-bs-toggle='modal' data-bs-target='#exampleModal'><img src='/static/img/timerButton.png'></button>`
-        $("#boxWrap").append(temp_button);
+        let temp_btn = `<button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <img src="/static/img/timerButton.png">
+                        </button>`
+        $("#boxWrap").append(temp_btn);
         maxAppend++;
+
     }
 
     function minus() {
         $("#boxWrap > button").last().remove();
         alert("삭제되었습니다.")
     }
+
 </script>
 
 <script>
@@ -394,82 +470,6 @@
 
 </script>
 
-
-<script> // 메뉴바
-$(document).ready(function () {
-    $("#btn_Main").click(function () {
-        $.ajax({
-            url: "/",
-            success: function (data) {
-                $("mainPage").html(data);
-            }
-        })
-    })
-})
-$(document).ready(function () {
-    $("#btn_menuTimer").click(function () {
-        $.ajax({
-            url: "/item",
-            success: function (data) {
-                $("itemPage").html(data);
-            }
-        })
-    })
-})
-$(document).ready(function () {
-    $("#btn_Login").click(function () {
-        $.ajax({
-            url: "/login",
-            success: function (data) {
-                $("loginPage").html(data);
-            }
-        })
-    })
-})
-</script>
-
-
-<script> //모달창 작업
-function postdata() {
-    const dday = document.querySelector("#input_type").value;
-    let year = dday.substring(0, 4);
-    let month = dday.substring(5, 7);
-    let day = dday.substring(8, 10);
-    $.ajax({
-        type: "POST",
-        url: "/item/add",
-        // data : {start_date_give : },
-    })
-}
-
-
-function midd(item) {
-    $('#middle').empty();
-    $.ajax({
-        type: "GET",
-        url: "/item/modalList",
-        data: {},
-        success: function (response) {
-            let list = response["item_lists"];
-            let item_img;
-            let item_name;
-            let item_timer;
-            let item_option;
-            for (let i = 0; i < list.length; i++) {
-                if (item == list[i]['item_name']) {
-                    item_img = list[i]['item_img'];
-                    item_name = list[i]['item_name'];
-                    item_timer = list[i]['item_timer'];
-                    item_option = list[i]['item_place'];
-                    let temp_html = `<a><img src = ${item_img}> <br>    ${item_name} | ${item_timer} | ${item_option} | </a>
-                                            <br><a>날짜를 입력해주세요 : <input id = "input_type" type = "date"></a>`
-                    $('#middle').append(temp_html);
-                }
-            }
-        }
-    })
-}
-</script>
 
 <script>
     $(document).ready(function () {
@@ -502,21 +502,27 @@ function midd(item) {
             })
         })
     })
-
 </script>
 
+{# 모달 창 작업  js #}
 <script>
     function postdata() {
+
+        const item_name_give = $(".item_name_box").text()
+        const username = $('#username').text().split('님')[0]
         const dday = document.querySelector("#input_type").value;
-        let year = dday.substring(0, 4);
-        let month = dday.substring(5, 7);
-        let day = dday.substring(8, 10);
+
         $.ajax({
             type: "POST",
             url: "/item/add",
-            // data : {start_date_give : },
+            data : {
+                id_give : username,
+                item_name_give : item_name_give,
+                start_date_give : dday
+            }
         })
-        window.close()
+        alert()
+        window.location.reload()
     }
 
 
@@ -533,14 +539,27 @@ function midd(item) {
                 let item_timer;
                 let item_option;
                 for (let i = 0; i < list.length; i++) {
-                    if (item == list[i]['item_name']) {
+                    if (item === list[i]['item_name']) {
                         item_img = list[i]['item_img'];
                         item_name = list[i]['item_name'];
                         item_timer = list[i]['item_timer'];
                         item_option = list[i]['item_place'];
-                        let temp_html = `<a><img src = ${item_img}> <br>    ${item_name} | ${item_timer} | ${item_option} | </a>
-                                            <br><a>날짜를 입력해주세요 : <input id = "input_type" type = "date"></a>`
+                        let temp_html = `<div class="item_box">
+                                            <div class="item_img_box"><a href="#"><img src="${item_img}"></a></div>
+                                            <div class="item_name_box" style="padding-top : 20px">${item_name}</div>
+                                        </div>
+                                        <div class="item_box">
+                                            <div class="item_timer_box"
+                                                 style="height: 50%;
+                                                 text-align: center;
+                                                 padding : 70px 0 10px 0;">추천 교환 주기는 <br> ${item_timer}일 입니다.</div>
+                                            <div class="item_SDate_box" style="margin-top : 20px;">
+                                                물품 사용 시작일을 <br>선택해 주세요<br>
+                                                <input id="input_type" class="input_start" type="date" >
+                                            </div>
+                                        </div>`
                         $('#middle').append(temp_html);
+                        document.getElementById("input_type").value = new Date().toISOString().slice(0,10);
                     }
                 }
             }
@@ -548,7 +567,7 @@ function midd(item) {
     }
 
     function basi(str) {
-        if (str == "부엌") {
+        if (str === "부엌") {
             $('#basic').empty();
             $.ajax({
                 type: "GET",
@@ -558,7 +577,7 @@ function midd(item) {
                     let list = (response)["item_lists"]
                     for (let i = 0; i < list.length; i++) {
                         let place = list[i]['item_place'];
-                        if (place == "부엌") {
+                        if (place === "부엌") {
                             let gu_name = list[i]['item_name'];
 
                             let temp_html = `<li><button class="dropdown-item" id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
@@ -568,7 +587,7 @@ function midd(item) {
                     }
                 }
             })
-        } else if (str == "침실") {
+        } else if (str === "침실") {
             $('#basic').empty();
             $.ajax({
                 type: "GET",
@@ -578,7 +597,7 @@ function midd(item) {
                     let list = (response)["item_lists"]
                     for (let i = 0; i < list.length; i++) {
                         let place = list[i]['item_place'];
-                        if (place == "침실") {
+                        if (place === "침실") {
                             let gu_name = list[i]['item_name'];
                             let temp_html = `<li><button class="dropdown-item"id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
                             $('#basic').append(temp_html)
@@ -587,7 +606,7 @@ function midd(item) {
                     }
                 }
             })
-        } else if (str == "화장실") {
+        } else if (str === "화장실") {
             $('#basic').empty();
             $.ajax({
                 type: "GET",
@@ -597,7 +616,7 @@ function midd(item) {
                     let list = (response)["item_lists"]
                     for (let i = 0; i < list.length; i++) {
                         let place = list[i]['item_place'];
-                        if (place == "화장실") {
+                        if (place === "화장실") {
                             let gu_name = list[i]['item_name'];
                             let temp_html = `<li><button class="dropdown-item"id = "${gu_name}" onclick = "midd(this.id)">${gu_name}</button></li>`
                             $('#basic').append(temp_html)
@@ -607,7 +626,7 @@ function midd(item) {
                 }
             })
         }
-        if (str == "choose") {
+        if (str === "choose") {
             $('#basic').empty();
             $.ajax({
                 type: "GET",
@@ -657,7 +676,68 @@ function midd(item) {
             })
         })
     })
-</script>
 
+    {#$(document).ready(function () {#}
+    {#    showList();    }    )#}
+
+    function showList() {
+        username = $('#username').text().split('님')[0]
+        $.ajax({
+            type: " GET",
+            url: `/item/List?username=${username}`,
+            data: {},
+            success: function (response) {
+                let list = response['user_item']
+                for (let i = 0; i < list.length; i++) {
+                    let item_name = list[i]['item_name']
+                    let item_place = list[i]['item_place']
+                    let item_timer = list[i]['item_timer']
+
+                    let temp_html = `<button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showList()">
+                                    <p class="boxWrap_item" id="item_pace">${item_place}</p>
+                                    <span id="item_name">${item_name}</span>
+                                    <p class="boxWrap_item" id="item_date">${item_timer}</p>
+                                    </button>`
+
+                    $('#change_BoxWrap').append(temp_html)
+
+                }
+            }
+        })
+    }
+</script>
+<script>
+    today = new Date();
+    today = today.toISOString().slice(0,10);
+    bir = document.getElementById("input_type");
+    bir.value = today;
+</script>
+<script>
+    function getRandomColorFromCSS() {
+        const props = [
+            "--color-primary",
+            "--color-secondary",
+            "--color-success",
+            "--color-info",
+            "--color-warning",
+            "--color-danger"
+        ];
+        const randomProp = props[Math.random() * props.length];
+
+        const root = document.documentElement;
+        const rootStyle = getComputedStyle(root);
+        const randomColor = rootStyle.getPropertyValue(randomProp);
+
+        return randomColor;
+    }
+
+    function changeBoxColor() {
+        const box = document.querySelector(".btn")
+        box.style.backgroundColor = getRandomColorFromCSS();
+    }
+
+    const button = document.querySelector(".btn btn-primary");
+    button.addEventListener("click", changeBoxColor);
+</script>
 
 </html>

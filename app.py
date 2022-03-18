@@ -269,44 +269,6 @@ def addItemModal():  # 모달 아이템을 추가
     # return jsonify({'msg': '저장되었습니다.'})
 
 
-# 아이디가 있고 아이템 이름이 없는 경우
-# elif idDB != None and nameDB == None:
-#     # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-#     item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-#     item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-#     item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
-#     start_date = start_date_receive
-#     day = item_name['timer']
-#     item_timer = (start_date + day).days
-#     doc = [
-#         {'user_id': user_id_receive,
-#          'item_name': item_name,
-#          'item_place': item_place,
-#          'item_timer': item_timer,
-#          'item_img': item_img,
-#          'item_start_Date': start_date_receive}
-#     ]
-#     db.UserItem.insert_many(doc)
-#     return jsonify({'result': 'success'})
-#
-# # 아이디가 있고 아이템 이름도 있는 경우
-# elif idDB != None and nameDB != None:
-#     # item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-#     # item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-#     # start_date = start_date_receive
-#     # day = item_name['timer']
-#     # item_timer = (start_date + day).days
-#     # doc = [
-#     #     {'item_place': item_place,
-#     #      'item_timer': item_timer,
-#     #      'item_start_Date': start_date}
-#     # ]
-#     db.UserItem.update_one(
-#         {'item_name' : item_name_receive},{"$set":{ "item_startDate": start_date_receive}}
-#     )
-#
-#     return jsonify({'result': 'success'})
-
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

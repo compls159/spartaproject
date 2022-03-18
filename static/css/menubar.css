@@ -45,14 +45,17 @@
 
         #btn_Howto {
             width: auto;
+            min-width: 12vw;
         }
 
         #btn_menuTimer {
             width: auto;
+            min-width: 12vw;
         }
 
         #btn_Login {
             width: auto;
+            min-width: 12vw;
         }
 
         #btn_nothing3 {
