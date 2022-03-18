@@ -153,7 +153,7 @@
             font-family: 'Black Han Sans', sans-serif;
         }
 
-        #item_date {
+        .boxWrap_item {
             color: white;
             font-size: 60px;
             text-align: center;
@@ -360,6 +360,7 @@
         </button>
     </div>
 
+      <!-- 설정 전   -->
     <div id="boxWrap">
         <button type="button" class="btn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
@@ -369,13 +370,9 @@
     </div>
 
      <!-- 설정 후 바뀌는  -->
-    <div id="change_BoxWrap">
-        <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <span id="item_name">칫솔</span>
-            <p id="item_date">D-645</p></button>
+    <div id="change_BoxWrap" >
+
     </div>
-
-
 
 
     <!-- Modal -->
@@ -679,33 +676,34 @@
             })
         })
     })
-    $(document).ready(function () {
-        showList();
-    })
+
+    {#$(document).ready(function () {#}
+    {#    showList();    }    )#}
 
     function showList() {
         username = $('#username').text().split('님')[0]
         $.ajax({
-            type: "GET",
+            type: " GET",
             url: `/item/List?username=${username}`,
             data: {},
             success: function (response) {
                 let list = response['user_item']
-                for (let i=0; i<list.length; i++){
+                for (let i = 0; i < list.length; i++) {
                     let item_name = list[i]['item_name']
                     let item_place = list[i]['item_place']
                     let item_timer = list[i]['item_timer']
 
-                    let temp_html = `<li>${item_name}</li>
-                                        <li>${item_place}</li>
-                                        <li>${item_timer}</li>`
-                    $('#boxWrap').append(temp_html)
+                    let temp_html = `<button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showList()">
+                                    <p class="boxWrap_item" id="item_pace">${item_place}</p>
+                                    <span id="item_name">${item_name}</span>
+                                    <p class="boxWrap_item" id="item_date">${item_timer}</p>
+                                    </button>`
+
+                    $('#change_BoxWrap').append(temp_html)
 
                 }
             }
-
         })
-
     }
 </script>
 <script>
