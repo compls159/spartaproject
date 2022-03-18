@@ -29,11 +29,19 @@
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Song+Myung&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Song+Myung&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Han+Sans&family=Do+Hyeon&family=Song+Myung&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/menubar.css">
 
     <title>Item Page</title>
 
     <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
 
         body {
             margin: 0;
@@ -43,12 +51,12 @@
         main {
             padding: 0;
             width: 100%;
-            min-height: 400px;
+            min-height: 738px;
             height: auto;
             margin: 20px 0 0 0;
             background-color: #E9E9F3;
             background-position: center;
-            overflow: scroll;
+            overflow: hidden;
         }
 
         .modal-content .modal-header:nth-child(2) {
@@ -61,20 +69,28 @@
 
         #btn_timer_Main {
             width: 100%;
-            height: 200px;
+            height: 250px;
+            margin-top: 50px;
             background-image: url("/static/img/timerBackground.png");
             background-size: cover;
             background-position: center;
-            overflow: scroll;
             float: right;
         }
 
         #del_button {
+            width: 10%;
             float: right;
+            position: fixed;
+            bottom: 700px;
+            right: 10px;
         }
 
         #add_Button {
+            width: 10%;
             float: right;
+            position: fixed;
+            bottom: 850px;
+            right: 10px;
         }
 
         #boxWrap {
@@ -89,12 +105,13 @@
         }
 
         #boxWrap button + button {
-            margin-left: 130px;
+            margin-left: 150px;
             margin-bottom: 300px;
         }
 
         #boxWrap .btn {
             /* 사진이나 그림 띄우기 */
+            float: left;
             width: 300px;
             height: 300px;
             margin-left: 250px;
@@ -104,16 +121,52 @@
             border-width: initial;
             background-color: #cbcbcb;
             border-color: #bcbcbc;
+            color: #333;
+            transition: all 0.9s, color 0.3s;
         }
 
-        #exampleModal {
+        #boxWrap .btn:hover {
+            color: #fff;
+            box-shadow: 300px 0 0 0 rgba(0, 0, 0, 0.25) inset, -300px 0 0 0 rgba(0, 0, 0, 0.25) inset;
+        }
 
+        #change_BoxWrap .change_Btn {
+            float: left;
+            width: 300px;
+            height: 300px;
+            margin-left: 250px;
+            margin-top: -200px;
+            border-style: solid;
+            border-radius: 10px;
+            border-width: thick;
+            background-color: #1877f2;
+            border-color: #1c1e21;
+        }
+
+        #item_name {
+            display: inline-block;
+            position: relative;
+            color: white;
+            font-size: 60px;
+            margin-top: 30px;
+            text-align: center;
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+        #item_date {
+            color: white;
+            font-size: 60px;
+            text-align: center;
+            font-family: 'Bebas Neue', cursive;
         }
 
         .modal-title {
             display: flex;
             width: 100%;
             justify-content: space-around;
+        }
+        #item_List {
+            margin-left: 20px;
         }
 
         .dropdown-menu {
@@ -164,26 +217,28 @@
             text-align: center;
             position: relative;
             line-height: 1em;
+            margin-top : 10px;
         }
 
         .input_start {
             position: absolute;
-            top: 35%;
+            top: 40%;
             left: 50%;
-            margin-top: -1.5em;
+            margin-top: -1em;
             margin-left: -35%;
             text-align: center;
         }
 
-        {# Modal Body 끝 #}
-        {#:root {#}
-        {#    --color-primary: #007bff;#}
-        {#    --color-secondary: #6c757d;#}
-        {#    --color-success: #28a745;#}
-        {#    --color-info: #17a2b8;#}
-        {#    --color-warning: #ffc107;#}
-        {#    --color-danger: #dc3545;#}
-        {#}#}
+         {#Modal Body 끝 #}
+{##}
+{#        :root {#}
+{#            --color-primary: #007bff;#}
+{#            --color-secondary: #6c757d;#}
+{#            --color-success: #28a745;#}
+{#            --color-info: #17a2b8;#}
+{#            --color-warning: #ffc107;#}
+{#            --color-danger: #dc3545;#}
+{#        }#}
     </style>
 
 </head>
@@ -297,11 +352,11 @@
 <main>
 
     <div id="btn_timer_Main">
-        <button class="PMbtn" id="del_button" onclick="minus()">
-            <img src="/static/img/timerButton3.png">
-        </button>
         <button class="PMbtn" id="add_Button" onclick="plus()">
             <img src="/static/img/timerButton2.png">
+        </button>
+        <button class="PMbtn" id="del_button" onclick="minus()">
+            <img src="/static/img/timerButton3.png">
         </button>
     </div>
 
@@ -313,7 +368,14 @@
 
     </div>
 
-    <!-- Button trigger modal -->
+     <!-- 설정 후 바뀌는  -->
+    <div id="change_BoxWrap">
+        <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <span id="item_name">칫솔</span>
+            <p id="item_date">D-645</p></button>
+    </div>
+
+
 
 
     <!-- Modal -->
@@ -392,14 +454,22 @@
         $("#boxWrap").append(temp_btn);
         maxAppend++;
 
-        console.log(1234)
-
     }
 
     function minus() {
         $("#boxWrap > button").last().remove();
         alert("삭제되었습니다.")
     }
+
+</script>
+
+<script>
+    onscroll = function () {
+        var nVScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        if (nVScroll >= 0) $(".PMbtn").css("position", "fixed");
+        else
+            $(".PMbtn").css("position", "relative");
+    };
 
 </script>
 
@@ -479,18 +549,20 @@
                         item_option = list[i]['item_place'];
                         let temp_html = `<div class="item_box">
                                             <div class="item_img_box"><a href="#"><img src="${item_img}"></a></div>
-                                            <div class="item_name_box">${item_name}</div>
+                                            <div class="item_name_box" style="padding-top : 20px">${item_name}</div>
                                         </div>
                                         <div class="item_box">
                                             <div class="item_timer_box"
                                                  style="height: 50%;
                                                  text-align: center;
-                                                 padding-top : 75px">추천 주기는 ${item_timer}일 입니다.</div>
-                                            <div class="item_SDate_box">
+                                                 padding : 70px 0 10px 0;">추천 교환 주기는 <br> ${item_timer}일 입니다.</div>
+                                            <div class="item_SDate_box" style="margin-top : 20px;">
+                                                물품 사용 시작일을 <br>선택해 주세요<br>
                                                 <input id="input_type" class="input_start" type="date" >
                                             </div>
                                         </div>`
                         $('#middle').append(temp_html);
+                        document.getElementById("input_type").value = new Date().toISOString().slice(0,10);
                     }
                 }
             }
@@ -636,32 +708,38 @@
 
     }
 </script>
-{#<script>#}
-{#    function getRandomColorFromCSS() {#}
-{#        const props = [#}
-{#            "--color-primary",#}
-{#            "--color-secondary",#}
-{#            "--color-success",#}
-{#            "--color-info",#}
-{#            "--color-warning",#}
-{#            "--color-danger"#}
-{#        ];#}
-{#        const randomProp = props[Math.random() * props.length];#}
-{##}
-{#        const root = document.documentElement;#}
-{#        const rootStyle = getComputedStyle(root);#}
-{#        const randomColor = rootStyle.getPropertyValue(randomProp);#}
-{##}
-{#        return randomColor;#}
-{#    }#}
-{##}
-{#    function changeBoxColor() {#}
-{#        const box = document.querySelector(".btn")#}
-{#        box.style.backgroundColor = getRandomColorFromCSS();#}
-{#    }#}
-{##}
-{#    const button = document.querySelector(".btn btn-primary");#}
-{#    button.addEventListener("click", changeBoxColor);#}
-{#</script>#}
+<script>
+    today = new Date();
+    today = today.toISOString().slice(0,10);
+    bir = document.getElementById("input_type");
+    bir.value = today;
+</script>
+<script>
+    function getRandomColorFromCSS() {
+        const props = [
+            "--color-primary",
+            "--color-secondary",
+            "--color-success",
+            "--color-info",
+            "--color-warning",
+            "--color-danger"
+        ];
+        const randomProp = props[Math.random() * props.length];
+
+        const root = document.documentElement;
+        const rootStyle = getComputedStyle(root);
+        const randomColor = rootStyle.getPropertyValue(randomProp);
+
+        return randomColor;
+    }
+
+    function changeBoxColor() {
+        const box = document.querySelector(".btn")
+        box.style.backgroundColor = getRandomColorFromCSS();
+    }
+
+    const button = document.querySelector(".btn btn-primary");
+    button.addEventListener("click", changeBoxColor);
+</script>
 
 </html>

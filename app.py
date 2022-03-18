@@ -175,15 +175,15 @@ def itemSelectModal():
 def addItemModal():  # 모달 아이템을 추가
 
     # 값을 받아옴 - 유저아이디, 상품 이름, 주기 시작일
-    global id_receive
+    # global id_receive
     id_receive = request.form['id_give']
-    global name_receive
+    # global name_receive
     name_receive = request.form['item_name_give']
-    global date_receive
+    # global date_receive
     date_receive = request.form['start_date_give']
-
+    print('포스트 리시브 : ',id_receive,name_receive,date_receive)
     # 값을 가져옴 - 상품 주기 - None Type 정의 필요
-    global timer
+    # global timer
     timer = db.CYCL.find_one({'item_name': name_receive}, {'_id': False})
 
     if timer == "":
@@ -196,101 +196,78 @@ def addItemModal():  # 모달 아이템을 추가
     day_plus = timedelta(days=timer)
     date_end = date_change + day_plus
     date_end = str(date_end).split(' ')[0]
-    print(date_end)
+    print('주기 끝 날짜 : ',date_end)
 
     # 조회 DB 변수 설정
-    global chkId
     chkId = db.UserItem.find_one({'user_id': id_receive}, {'_id': False})
-    if chkId == "":
+    chkName = db.UserItem.find_one({'item_name': name_receive}, {'_id': False})
+
+    if chkId is None:
         chkId = ""
-        return chkId
-
     else:
-        chkId = chkId['user_id']
-        chkName = db.UserItem.find_one({'item_name': name_receive}, {'_id': False})
-    if chkName == "":
+        chkId = db.UserItem.find_one({'user_id': id_receive}, {'_id': False})['user_id']
+    if chkName is None:
         chkName = ""
-        return chkName
     else:
-        chkName = chkName['item_name']
+        db.UserItem.find_one({'item_name': name_receive}, {'_id': False})['item_name']
 
+
+
+    item_place = db.CYCL.find_one({'item_name': name_receive})['item_place']
+    # item_place = item_place[0]["item_place"]
+
+    item_timer = db.CYCL.find_one({'item_name': name_receive})["item_timer"]
+    # item_timer = item_timer[0]['item_timer']
+
+    item_img = db.CYCL.find_one({'item_name': name_receive})["item_img"]
+    # item_img = item_img[0]['item_img']
+
+    print('조회 데이터베이스 변수 : ', chkId, chkName, item_place, item_timer, item_img)
 
     # 조건 1 - 아이템 DB에 유저 아이디 조회, 없다면 변수  설정, 아이템 추가
     if chkId == "" and chkName == "":
-        return jsonify({'msg': '해당하는 아이템이 존재하지 않습니다.'})
-        item_place = db.CYCL.find_one({'item_name': name_receive})
-        item_place = item_place["item_place"]
-
-        item_timer = db.CYCL.find_one({'item_name': name_receive})["item_place"]
-        item_timer = item_timer['item_timer']
-
-        item_img = db.CYCL.find_one({'item_name': name_receive})["item_img"]
-        item_img = item_img['item_img']
-    doc = [
-        {'user_id': id_receive,
-         'item_name': name_receive,
-         'item_place': item_place,
-         'item_timer': item_timer,
-         'item_startDate': date_receive,
-         'item_endDate': date_end
-         }]
-    return jsonify({'userItem': doc})
-
-
-# 조건 2 - 아이템 DB에 유저 아이디 조회, 없다면 상품 이름 조회, 있다면 아이템 추가
-    if chkId == "" and chkName == "":
         doc = [
-            {'user_id': id_receive,
-             'item_name': name_receive,
-             'item_place': item_place,
-             'item_timer': item_timer,
-             'item_startDate': date_receive,
-             'item_endDate': date_end
-             }]
-        # return jsonify({'userItem': doc})
+            {
+                'user_id': id_receive,
+                'item_name': name_receive,
+                'item_place': item_place,
+                'item_timer': item_timer,
+                'item_img': item_img,
+                'item_startDate': date_receive,
+                'item_endDate': date_end
+            }
+        ]
+
+        db.UserItem.insert_many(doc)
+
+        return jsonify({'msg': '생활용품주기가 추가되었습니다'})
+
+    # 조건 2 - 아이템 DB에 유저 아이디 조회, 있다면 상품 이름 조회, 없다면 아이템 추가
+    elif chkId != "" and chkName == "":
+        doc = [
+            {
+                'user_id': id_receive,
+                'item_name': name_receive,
+                'item_place': item_place,
+                'item_timer': item_timer,
+                'item_img': item_img,
+                'item_startDate': date_receive,
+                'item_endDate': date_end
+            }
+        ]
+
+        db.UserItem.insert_many(doc)
+
+        return jsonify({'msg': '생활용품주기가 추가되었습니다'})
+
 
     # 조건 3 - 아이템 DB에 유저 아이디 조회, 있다면 상품 이름 조회, 있다면 시작일 업데이트
-    if chkId != "" and chkName != "":
+    elif chkId != "" and chkName != "":
         db.UserItem.update_one({"item_name": name_receive}, {"$set": {"item_startDate": date_receive}})
+
+        return jsonify({'msg': '생활용품주기가 변경되었습니다'})
     # return jsonify({'msg': '저장되었습니다.'})
 
-# 아이디가 있고 아이템 이름이 없는 경우
-# elif idDB != None and nameDB == None:
-#     # user_id = db.Login.find_one({'user_id': user_id_receive}, {'_id': False})
-#     item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-#     item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-#     item_img = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_img"]
-#     start_date = start_date_receive
-#     day = item_name['timer']
-#     item_timer = (start_date + day).days
-#     doc = [
-#         {'user_id': user_id_receive,
-#          'item_name': item_name,
-#          'item_place': item_place,
-#          'item_timer': item_timer,
-#          'item_img': item_img,
-#          'item_start_Date': start_date_receive}
-#     ]
-#     db.UserItem.insert_many(doc)
-#     return jsonify({'result': 'success'})
-#
-# # 아이디가 있고 아이템 이름도 있는 경우
-# elif idDB != None and nameDB != None:
-#     # item_name = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})
-#     # item_place = db.CYCL.find_one({'item_name': item_name_receive}, {'_id': False})["item_place"]
-#     # start_date = start_date_receive
-#     # day = item_name['timer']
-#     # item_timer = (start_date + day).days
-#     # doc = [
-#     #     {'item_place': item_place,
-#     #      'item_timer': item_timer,
-#     #      'item_start_Date': start_date}
-#     # ]
-#     db.UserItem.update_one(
-#         {'item_name' : item_name_receive},{"$set":{ "item_startDate": start_date_receive}}
-#     )
-#
-#     return jsonify({'result': 'success'})
 
 
 if __name__ == '__main__':
