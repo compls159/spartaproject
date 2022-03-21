@@ -72,6 +72,7 @@
 
         }
 
+
         .PMbtn {
             background-color: transparent;
             border: none;
@@ -80,6 +81,22 @@
         #add_Button {
             margin-left: 1700px;
             margin-top: 200px;
+
+        #del_button {
+            width: 10%;
+            float: right;
+            position: fixed;
+            bottom: 500px;
+            right: 10px;
+        }
+
+        #add_Button {
+            width: 10%;
+            float: right;
+            position: fixed;
+            bottom: 650px;
+            right: 10px;
+
         }
 
         #del_button {
@@ -368,9 +385,11 @@
 
     </div>
 
-    <!-- 설정 후 바뀌는  -->
-    <div id="change_BoxWrap">
+     <!-- 설정 후 바뀌는  -->
+    <div id="change_BoxWrap" >
+        <button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >
 
+        </button>
     </div>
 
 
@@ -422,9 +441,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소</button>
-                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes
-                    </button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()" >Save changes</button>
+
                 </div>
             </div>
         </div>
@@ -680,13 +700,16 @@
     $(document).ready(function () {
         showList();    }    )
 
+
     function showList() {
 
         username = $('#username').text().split('님')[0]
         console.log("시동")
         $.ajax({
             type: "GET",
+
             url: `/item/list?username=${username}`,
+
             data: {},
             success: function (response) {
                 let list = response['user_item']
@@ -702,7 +725,8 @@
                                             <p id="item_date">D-${item_timer}</p></button>
                                     </div>`
 
-                    $('#change_BoxWrap').append(temp_html)
+
+                    $('#change_BoxBtn').empty()
 
                 }
             }
