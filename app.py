@@ -75,8 +75,13 @@ def loginCheck():
             return redirect(url_for("login"))
 
 
-@app.route("/login/logout")
-def logout():
+@app.route("/logout")
+def main_logout():
+    session.pop('user_id')
+    return redirect(url_for("login"))
+
+@app.route("/item/logout")
+def item_logout():
     session.pop('user_id')
     return redirect(url_for("login"))
 
@@ -127,7 +132,7 @@ def signUpCheck():
                 return redirect(url_for("signUp"))
 
 
-@app.route('/item/List', methods=['GET'])
+@app.route('/item/list', methods=['GET'])
 def itemlistLogin():  # 로그인 시 아이템 리스트 출력
     if request.method == 'GET':
         uid = request.args.get('username')
@@ -209,7 +214,7 @@ def addItemModal():  # 모달 아이템을 추가
     if chkName is None:
         chkName = ""
     else:
-        db.UserItem.find_one({'item_name': name_receive}, {'_id': False})['item_name']
+        chkName = db.UserItem.find_one({'item_name': name_receive}, {'_id': False})['item_name']
 
 
 
