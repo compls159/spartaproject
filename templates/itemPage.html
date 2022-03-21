@@ -81,7 +81,7 @@
             width: 10%;
             float: right;
             position: fixed;
-            bottom: 700px;
+            bottom: 500px;
             right: 10px;
         }
 
@@ -89,7 +89,7 @@
             width: 10%;
             float: right;
             position: fixed;
-            bottom: 850px;
+            bottom: 650px;
             right: 10px;
         }
 
@@ -371,7 +371,9 @@
 
      <!-- 설정 후 바뀌는  -->
     <div id="change_BoxWrap" >
+        <button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >
 
+        </button>
     </div>
 
 
@@ -424,7 +426,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
-                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes</button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()" >Save changes</button>
                 </div>
             </div>
         </div>
@@ -677,13 +679,11 @@
         })
     })
 
-    {#$(document).ready(function () {#}
-    {#    showList();    }    )#}
 
     function showList() {
         username = $('#username').text().split('님')[0]
         $.ajax({
-            type: " GET",
+            type: "GET",
             url: `/item/List?username=${username}`,
             data: {},
             success: function (response) {
@@ -693,13 +693,13 @@
                     let item_place = list[i]['item_place']
                     let item_timer = list[i]['item_timer']
 
-                    let temp_html = `<button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showList()">
+                    let temp_html = `
                                     <p class="boxWrap_item" id="item_pace">${item_place}</p>
                                     <span id="item_name">${item_name}</span>
                                     <p class="boxWrap_item" id="item_date">${item_timer}</p>
-                                    </button>`
+                                    `
 
-                    $('#change_BoxWrap').append(temp_html)
+                    $('#change_BoxBtn').empty()
 
                 }
             }
