@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-   <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -43,13 +43,8 @@
             font-family: 'Do Hyeon', sans-serif;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
 
         main {
-            padding: 0;
             width: 100%;
             min-height: 738px;
             height: auto;
@@ -74,8 +69,18 @@
             background-image: url("/static/img/timerBackground.png");
             background-size: cover;
             background-position: center;
-            float: right;
+
         }
+
+
+        .PMbtn {
+            background-color: transparent;
+            border: none;
+        }
+
+        #add_Button {
+            margin-left: 1700px;
+            margin-top: 200px;
 
         #del_button {
             width: 10%;
@@ -91,26 +96,22 @@
             position: fixed;
             bottom: 650px;
             right: 10px;
+
         }
 
-        #boxWrap {
-            width: 90%;
-            height: 100%;
-            float: left;
+        #del_button {
+            margin-left: 1700px;
+            margin-top: 100px;
         }
 
-        .PMbtn {
-            background-color: transparent;
-            border: none;
-        }
 
         #boxWrap button + button {
             margin-left: 150px;
             margin-bottom: 300px;
         }
 
+
         #boxWrap .btn {
-            /* 사진이나 그림 띄우기 */
             float: left;
             width: 300px;
             height: 300px;
@@ -121,6 +122,7 @@
             border-width: initial;
             background-color: #cbcbcb;
             border-color: #bcbcbc;
+
             color: #333;
             transition: all 0.9s, color 0.3s;
         }
@@ -129,6 +131,7 @@
             color: #fff;
             box-shadow: 300px 0 0 0 rgba(0, 0, 0, 0.25) inset, -300px 0 0 0 rgba(0, 0, 0, 0.25) inset;
         }
+
 
         #change_BoxWrap .change_Btn {
             float: left;
@@ -153,18 +156,26 @@
             font-family: 'Black Han Sans', sans-serif;
         }
 
-        .boxWrap_item {
+        #item_name:hover {
+            background-position: -100% 0;
+        }
+
+
+        #item_date {
             color: white;
             font-size: 60px;
             text-align: center;
             font-family: 'Bebas Neue', cursive;
         }
 
+
         .modal-title {
             display: flex;
             width: 100%;
             justify-content: space-around;
         }
+
+
         #item_List {
             margin-left: 20px;
         }
@@ -185,6 +196,10 @@
         {# Modal Body 시작 #}
         .modal-body {
             height: 300px;
+
+        }
+
+        .item_box {
 
         }
 
@@ -217,28 +232,27 @@
             text-align: center;
             position: relative;
             line-height: 1em;
-            margin-top : 10px;
         }
 
         .input_start {
             position: absolute;
-            top: 40%;
+            top: 35%;
             left: 50%;
-            margin-top: -1em;
+            margin-top: -1.5em;
             margin-left: -35%;
             text-align: center;
         }
 
-         {#Modal Body 끝 #}
-{##}
-{#        :root {#}
-{#            --color-primary: #007bff;#}
-{#            --color-secondary: #6c757d;#}
-{#            --color-success: #28a745;#}
-{#            --color-info: #17a2b8;#}
-{#            --color-warning: #ffc107;#}
-{#            --color-danger: #dc3545;#}
-{#        }#}
+        {# Modal Body 끝 #}
+
+        :root {
+            --color-primary: #007bff;
+            --color-secondary: #6c757d;
+            --color-success: #28a745;
+            --color-info: #17a2b8;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+        }
     </style>
 
 </head>
@@ -272,7 +286,9 @@
                 <button id="btn_nothing1"></button>
             </li>
             <li>
-                <button class="menu" id="btn_Login" onclick="location. href='/login'">로그인</button>
+                <form action ="{{ url_for("item_logout") }}">
+                    <button type="submit" class="menu" id="btn_Login">로그아웃</button>
+                </form>
             </li>
             <li>
                 <a id="username">{{ username }}님 환영합니다.</a>
@@ -360,7 +376,7 @@
         </button>
     </div>
 
-      <!-- 설정 전   -->
+    <!-- 설정 전   -->
     <div id="boxWrap">
         <button type="button" class="btn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
@@ -419,14 +435,16 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" >
-                    <div class="container" id ="middle">
+                <div class="modal-body">
+                    <div class="container" id="middle">
 
                     </div>
                 </div>
                 <div class="modal-footer">
+
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
                     <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()" >Save changes</button>
+
                 </div>
             </div>
         </div>
@@ -517,10 +535,10 @@
         $.ajax({
             type: "POST",
             url: "/item/add",
-            data : {
-                id_give : username,
-                item_name_give : item_name_give,
-                start_date_give : dday
+            data: {
+                id_give: username,
+                item_name_give: item_name_give,
+                start_date_give: dday
             }
         })
         alert()
@@ -561,7 +579,7 @@
                                             </div>
                                         </div>`
                         $('#middle').append(temp_html);
-                        document.getElementById("input_type").value = new Date().toISOString().slice(0,10);
+                        document.getElementById("input_type").value = new Date().toISOString().slice(0, 10);
                     }
                 }
             }
@@ -679,25 +697,34 @@
         })
     })
 
+    $(document).ready(function () {
+        showList();    }    )
+
 
     function showList() {
+
         username = $('#username').text().split('님')[0]
+        console.log("시동")
         $.ajax({
             type: "GET",
-            url: `/item/List?username=${username}`,
+
+            url: `/item/list?username=${username}`,
+
             data: {},
             success: function (response) {
                 let list = response['user_item']
+                console.log(list)
                 for (let i = 0; i < list.length; i++) {
                     let item_name = list[i]['item_name']
-                    let item_place = list[i]['item_place']
+                    // let item_place = list[i]['item_place']
                     let item_timer = list[i]['item_timer']
 
-                    let temp_html = `
-                                    <p class="boxWrap_item" id="item_pace">${item_place}</p>
-                                    <span id="item_name">${item_name}</span>
-                                    <p class="boxWrap_item" id="item_date">${item_timer}</p>
-                                    `
+                    let temp_html = `<div id="change_BoxWrap">
+                                        <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <span id="item_name">${item_name}</span>
+                                            <p id="item_date">D-${item_timer}</p></button>
+                                    </div>`
+
 
                     $('#change_BoxBtn').empty()
 
@@ -708,7 +735,7 @@
 </script>
 <script>
     today = new Date();
-    today = today.toISOString().slice(0,10);
+    today = today.toISOString().slice(0, 10);
     bir = document.getElementById("input_type");
     bir.value = today;
 </script>
