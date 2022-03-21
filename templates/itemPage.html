@@ -81,6 +81,7 @@
         #add_Button {
             margin-left: 1700px;
             margin-top: 200px;
+        }
 
         #del_button {
             width: 10%;
@@ -105,7 +106,7 @@
         }
 
 
-        #boxWrap button + button {
+        .boxWrap1 #boxWrap button + button {
             margin-left: 150px;
             margin-bottom: 300px;
         }
@@ -116,7 +117,7 @@
             width: 300px;
             height: 300px;
             margin-left: 250px;
-            margin-top: -200px;
+            margin-bottom: 200px;
             border-style: dashed;
             border-radius: 10px;
             border-width: initial;
@@ -138,7 +139,7 @@
             width: 300px;
             height: 300px;
             margin-left: 250px;
-            margin-top: -200px;
+            margin-bottom: 200px;
             border-style: solid;
             border-radius: 10px;
             border-width: thick;
@@ -155,11 +156,6 @@
             text-align: center;
             font-family: 'Black Han Sans', sans-serif;
         }
-
-        #item_name:hover {
-            background-position: -100% 0;
-        }
-
 
         #item_date {
             color: white;
@@ -232,6 +228,9 @@
             text-align: center;
             position: relative;
             line-height: 1em;
+
+            margin-top: 10px;
+
         }
 
         .input_start {
@@ -243,7 +242,12 @@
             text-align: center;
         }
 
+
+        {#Modal Body 끝 #}
+        {##}
+
         {# Modal Body 끝 #}
+
 
         :root {
             --color-primary: #007bff;
@@ -286,7 +290,7 @@
                 <button id="btn_nothing1"></button>
             </li>
             <li>
-                <form action ="{{ url_for("item_logout") }}">
+                <form action="{{ url_for("item_logout") }}">
                     <button type="submit" class="menu" id="btn_Login">로그아웃</button>
                 </form>
             </li>
@@ -377,7 +381,7 @@
     </div>
 
     <!-- 설정 전   -->
-    <div id="boxWrap">
+    <div class="boxWrap1" id="boxWrap">
         <button type="button" class="btn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
             <img src="/static/img/timerButton.png">
@@ -385,12 +389,7 @@
 
     </div>
 
-     <!-- 설정 후 바뀌는  -->
-    <div id="change_BoxWrap" >
-        <button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-
-        </button>
-    </div>
+    <!-- 설정 후 바뀌는  -->
 
 
     <!-- Modal -->
@@ -441,10 +440,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
-                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()" >Save changes</button>
-
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소</button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes
+                    </button>
                 </div>
             </div>
         </div>
@@ -698,36 +696,31 @@
     })
 
     $(document).ready(function () {
-        showList();    }    )
-
-
+        showList();
+    })
     function showList() {
-
         username = $('#username').text().split('님')[0]
         console.log("시동")
+
+
         $.ajax({
             type: "GET",
-
             url: `/item/list?username=${username}`,
-
             data: {},
             success: function (response) {
                 let list = response['user_item']
                 console.log(list)
+                console.log(username)
                 for (let i = 0; i < list.length; i++) {
                     let item_name = list[i]['item_name']
                     // let item_place = list[i]['item_place']
                     let item_timer = list[i]['item_timer']
-
-                    let temp_html = `<div id="change_BoxWrap">
+                    let temp_html = `<div class="boxWrap1" id="change_BoxWrap">
                                         <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <span id="item_name">${item_name}</span>
                                             <p id="item_date">D-${item_timer}</p></button>
                                     </div>`
-
-
-                    $('#change_BoxBtn').empty()
-
+                    $("main").append(temp_html);
                 }
             }
         })
