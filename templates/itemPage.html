@@ -441,7 +441,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소</button>
-                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes
+                    <button type="button" id="input_type kkkk" class="btn btn-primary" onclick="postdata(), getRandomColorFromCSS(), changeBoxColor()">Save changes
                     </button>
                 </div>
             </div>
@@ -742,22 +742,29 @@
             "--color-warning",
             "--color-danger"
         ];
-        const randomProp = props[Math.random() * props.length];
-
+        const randomProp = props[Math.floor(Math.random() * props.length)];
         const root = document.documentElement;
         const rootStyle = getComputedStyle(root);
         const randomColor = rootStyle.getPropertyValue(randomProp);
+
+        console.log("randomProp",randomProp, "randomColor",randomColor)
 
         return randomColor;
     }
 
     function changeBoxColor() {
-        const box = document.querySelector(".btn")
+        const box = document.querySelector(".boxWrap1")
         box.style.backgroundColor = getRandomColorFromCSS();
     }
 
-    const button = document.querySelector(".btn btn-primary");
+    const button = document.querySelector("#kkkk");
     button.addEventListener("click", changeBoxColor);
 </script>
+1.savechange 버튼 클릭
+2.prop 변수의 색깔 값 정의
+3.math random을 이용해서 난수생성
+4.0~5 사이 숫자 정의
+5.
+
 
 </html>
