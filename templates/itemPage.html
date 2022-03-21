@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-   <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -165,6 +165,7 @@
             width: 100%;
             justify-content: space-around;
         }
+
         #item_List {
             margin-left: 20px;
         }
@@ -217,7 +218,7 @@
             text-align: center;
             position: relative;
             line-height: 1em;
-            margin-top : 10px;
+            margin-top: 10px;
         }
 
         .input_start {
@@ -229,16 +230,16 @@
             text-align: center;
         }
 
-         {#Modal Body 끝 #}
-{##}
-{#        :root {#}
-{#            --color-primary: #007bff;#}
-{#            --color-secondary: #6c757d;#}
-{#            --color-success: #28a745;#}
-{#            --color-info: #17a2b8;#}
-{#            --color-warning: #ffc107;#}
-{#            --color-danger: #dc3545;#}
-{#        }#}
+        {#Modal Body 끝 #}
+        {##}
+        :root {
+            --color-primary: #007bff;
+            --color-secondary: #6c757d;
+            --color-success: #28a745;
+            --color-info: #17a2b8;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+        }
     </style>
 
 </head>
@@ -360,7 +361,7 @@
         </button>
     </div>
 
-      <!-- 설정 전   -->
+    <!-- 설정 전   -->
     <div id="boxWrap">
         <button type="button" class="btn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
@@ -369,9 +370,10 @@
 
     </div>
 
-     <!-- 설정 후 바뀌는  -->
-    <div id="change_BoxWrap" >
-        <button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+    <!-- 설정 후 바뀌는  -->
+    <div id="change_BoxWrap">
+        <button id="change_BoxBtn" type="button" class="change_Btn" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
 
         </button>
     </div>
@@ -419,14 +421,15 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" >
-                    <div class="container" id ="middle">
+                <div class="modal-body">
+                    <div class="container" id="middle">
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소 </button>
-                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()" >Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 취소</button>
+                    <button type="button" id="input_type" class="btn btn-primary" onclick="postdata()">Save changes
+                    </button>
                 </div>
             </div>
         </div>
@@ -517,10 +520,10 @@
         $.ajax({
             type: "POST",
             url: "/item/add",
-            data : {
-                id_give : username,
-                item_name_give : item_name_give,
-                start_date_give : dday
+            data: {
+                id_give: username,
+                item_name_give: item_name_give,
+                start_date_give: dday
             }
         })
         alert()
@@ -561,7 +564,7 @@
                                             </div>
                                         </div>`
                         $('#middle').append(temp_html);
-                        document.getElementById("input_type").value = new Date().toISOString().slice(0,10);
+                        document.getElementById("input_type").value = new Date().toISOString().slice(0, 10);
                     }
                 }
             }
@@ -679,27 +682,33 @@
         })
     })
 
+    $(document).ready(function () {
+        showList();
+    })
 
     function showList() {
+
         username = $('#username').text().split('님')[0]
+        console.log("시동")
         $.ajax({
             type: "GET",
-            url: `/item/List?username=${username}`,
+            url: `/item/list?username=${username}`,
             data: {},
             success: function (response) {
                 let list = response['user_item']
+                console.log(list)
                 for (let i = 0; i < list.length; i++) {
                     let item_name = list[i]['item_name']
-                    let item_place = list[i]['item_place']
+                    // let item_place = list[i]['item_place']
                     let item_timer = list[i]['item_timer']
 
-                    let temp_html = `
-                                    <p class="boxWrap_item" id="item_pace">${item_place}</p>
-                                    <span id="item_name">${item_name}</span>
-                                    <p class="boxWrap_item" id="item_date">${item_timer}</p>
-                                    `
+                    let temp_html = `<div id="change_BoxWrap">
+                                        <button type="button" class="change_Btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <span id="item_name">${item_name}</span>
+                                            <p id="item_date">D-${item_timer}</p></button>
+                                    </div>`
 
-                    $('#change_BoxBtn').empty()
+                    $('#change_BoxWrap').append(temp_html)
 
                 }
             }
@@ -708,7 +717,7 @@
 </script>
 <script>
     today = new Date();
-    today = today.toISOString().slice(0,10);
+    today = today.toISOString().slice(0, 10);
     bir = document.getElementById("input_type");
     bir.value = today;
 </script>
